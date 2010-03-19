@@ -28,7 +28,7 @@
             </td>
             <td>{% if paste.snippet %}<small>{{ paste.snippet|escape }}</small>{% endif %}</td>
             <td>{{ paste.size.0 }} <small>{{ paste.size.1 }}</small></td>
-            <td>{{ paste.lines }} <small>LOC</small></td>
+            <td>{% if paste.lines %}{{ paste.lines }} <small>LOC</small>{% endif %}</td>
         </tr>
         {% endfor %}
     {% if pages %}
