@@ -35,7 +35,7 @@ class RequestHandler (webapp.RequestHandler):
 
     def set_module(self, name):
         self.module = name.replace(".", "/") + ".py"
-        self.module_url = "http://code.google.com/p/paste-it/source/browse/trunk/src/" + self.module
+        self.module_url = "http://github.com/thomas-quemard/p8ste/blob/master/src/" + self.module
 
     def use_template(self, name):
         self.template_name = name
