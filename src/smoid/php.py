@@ -20,7 +20,7 @@ class PhpChildClassDeclarationCheck (check.Check):
 
     def _test(self):
         result = False
-        if self.is_re_found("class\s+[a-zA-Z_][a-zA-Z0-9_]*\s+implements\s+[a-zA-Z_][a-zA-Z0-9_]*\s*{"):
+        if self.is_re_found("class\s+[a-zA-Z_][a-zA-Z0-9_]*\s+(implements)|(extends)\s+[a-zA-Z_][a-zA-Z0-9_]*\s*{"):
             self.probability = 60
             result = True
         return result
