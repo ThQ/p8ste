@@ -1,0 +1,439 @@
+body
+{
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:1em;
+}
+
+h1
+{
+    font:normal normal normal 36px Georgia;
+    letter-spacing:-1px;
+    color:#222222;
+    margin:0 0 2px 0;
+    padding:0;
+}
+h2
+{
+    font-size:1em;
+    font-weight:normal;
+    font-family:"Lucida Grande",Arial,Sans-serif;
+    color:#222222;
+    margin:30px 0 10px 0;
+    padding:2px;
+    border:0;
+    border-bottom:1px dotted #d0d0d0;
+}
+
+img
+{
+    border:0;
+    vertical-align:middle;
+}
+form
+{
+    width:100%;
+}
+
+form ul
+{
+    margin:0;
+    padding:0;
+    width:100%;
+    list-style:none;
+}
+
+form li
+{
+    width:100%;
+    margin:30px 0 30px 0;
+    padding:0;
+}
+
+textarea, input[type="text"]
+{
+    border:1px solid #c0c0c0;
+    background-color:#ffffff;
+    color:#000000;
+    padding:3px;
+    margin:0;
+    font-family: "Courrier New", sans-serif;
+}
+
+textarea
+{
+    width:100%;
+}
+
+input[type="text"]
+{
+    width:100%;
+}
+
+input[type="submit"]
+{
+    font-weight:bold;
+}
+
+input[type="text"]:focus, textarea:focus
+{
+    border:1px solid #c0c0ff;
+
+}
+label
+{
+    font-weight:bold;
+}
+
+a:link, a:visited
+{
+    color:#5252D2;
+    text-decoration:underline;
+}
+
+a:hover
+{
+    color:#5252D2;
+    text-decoration:none;
+}
+
+table
+{
+    width:100%;
+    font-size:1em;
+    border-spacing:0px;
+    border-collapse:separate;
+    border:1px solid #d4d4d4;
+}
+
+th
+{
+    font-weight:bold;
+    text-align:left;
+    background:#f0f0f0;
+    border-bottom:1px solid #d4d4d4;
+    margin:0 10px 0 10px;
+    padding:3px;
+    font-size:0.85em;
+}
+
+td
+{
+    vertical-align:top;
+    border-bottom:1px dotted #d9d9d9;
+    padding:3px;
+}
+
+tfoot
+{
+    text-align:right;
+}
+
+table.invisible
+{
+    width:100%;
+    font-size:1em;
+    border-spacing:0;
+    border:0;
+}
+
+table.invisible td
+{
+    border:0;
+}
+
+#logs
+{
+    font-size:0.8em;
+}
+
+#logs ul
+{
+    list-style-type:none;
+}
+
+#logs ul li
+{
+    margin:0 0 10px 0;
+}
+
+#logs p
+{
+    margin:2px 0 2px 0;
+    padding:0;
+}
+
+#footers
+{
+    margin:30px 20px 10px 20px;
+    padding:10px 0 0 0;
+    border-top:1px solid #d0d0d0;
+    font-size:0.9em;
+    color:#444444;
+}
+
+#footers p
+{
+    margin: 2px 0 2px 0;
+}
+
+#footers a:link, #footers a:visited
+{
+    color:#444444;
+}
+#footers a:visited
+{
+    color:#444444;
+}
+
+#h1-headers
+{
+    font-size:0.8em;
+    color:#444444;
+}
+
+#h1-headers ul
+{
+    margin:0;
+    padding:0;
+    list-style-type:none;
+    display:inline;
+}
+#h1-headers li
+{
+    margin:0 10px 0 0;
+    padding:0;
+    display:inline;
+}
+
+
+#h1-hr
+{
+    margin:0 0 20px 0;
+}
+
+#header-hr
+{
+    border-top:1px solid #f0f0f0;
+    background-color:#dfdfdf;
+    border-bottom:1px solid #d5d5d5;
+    padding:4px 0 0 0;
+    margin:10px 0 10px 0;
+}
+
+#content
+{
+    font-size:0.8em;
+    margin:0 20px 0 20px;
+}
+
+#logo small
+{
+    font-size:0.9em;
+}
+
+#user
+{
+    margin:0 0 0 20px;
+    float:right;
+}
+
+#user a:link, #user a:visited
+{
+    margin: 0 2px 0 2px;
+    color:#5252D2;
+    text-decoration:underline;
+}
+
+#user a:hover
+{
+    margin: 0 2px 0 2px;
+    color:#5252D2;
+    text-decoration:none;
+}
+
+form .explanation
+{
+    font-size:0.8em;
+    color:#333333;
+    margin:0;
+    padding:0;
+}
+
+form .input
+{
+    margin:5px 0 5px 0;
+    border:3px solid #dcdcdc;
+}
+
+form table
+{
+    margin:0;
+    padding:0;
+    border-spacing:5px;
+}
+
+small
+{
+    font-size:1em;
+    color:#888888;
+}
+.error
+{
+    border:1px solid #d0d0d0;
+    background-color:#f0f0f0;
+    background:#f0f0f0 url(/images/silk/exclamation.png) 5px 10px no-repeat;
+    padding:10px 10px 10px 30px;
+}
+
+.success
+{
+    border:1px solid #d0d0d0;
+    background-color:#f0f0f0;
+    background:#f0f0f0 url(/images/silk/accept.png) 5px 10px no-repeat;
+    padding:10px 10px 10px 30px;
+}
+.info
+{
+    border:1px solid #d0d0d0;
+    background-color:#f0f0f0;
+    background:#f0f0f0 url(/images/silk/information.png) 5px 10px no-repeat;
+    padding:10px 10px 10px 30px;
+}
+.warning
+{
+    border:1px solid #b39d52;
+    background:#f7f7ea url(/images/silk/error.png) 5px 10px no-repeat;
+    padding:10px 10px 10px 25px;
+    margin:2px 0 2px 0;
+}
+
+.pasty
+{
+    margin:5px 0 5px 0;
+    padding:0;
+}
+
+.pasty table
+{
+    margin:0;
+    padding:0;
+    font-family: "Andale Mono", "Trebuchet MS", monospace;
+    border-spacing:0;
+    vertical-align:top;
+}
+
+.pasty > table
+{
+    border:1px solid #d0d0d0;
+    width:100%;
+}
+
+.pasty tr
+{
+    padding:0;
+}
+
+.pasty td
+{
+    padding:0;
+}
+
+.code
+{
+    width:100%;
+    border:0;
+}
+
+.code td
+{
+    margin:0;
+    padding:1px 9px 2px 9px;
+    border:0;
+    font:'Andale Mono';
+}
+.lines
+{
+    border:0;
+}
+.lines td
+{
+    background-color:#eaeaea;
+    padding:1px 20px 2px 20px;
+    text-align:right;
+    border:0;
+}
+
+.lines a:link, .lines a:visited
+{
+    text-decoration:none;
+}
+
+.lines a:hover
+{
+    text-decoration:underline;
+}
+
+.code td
+{
+    border-left:2px solid #d5d5d5;
+}
+
+.code td.hl
+{
+    background-color:#e0e0e0;
+    border-left:2px solid #653DBF;
+}
+
+.code td.r
+{
+    border-left:2px solid #E8947E;
+}
+
+.code input, .code input:focus
+{
+    margin:0;
+    padding:0;
+    border:0;
+    background-color:#D95E3E;
+    color:#ffffff;
+    font-family: monospace;
+    font-size:1em;
+}
+
+
+ul.paging
+{
+    width:100%;
+    text-align:right;
+    margin-top:20px;
+    display:inline;
+    list-style-type:none;
+    font-size:0.9em;
+}
+
+.paging li
+{
+    display:inline;
+    margin: 0 5px 0 5px;
+}
+
+.paging span
+{
+    font-weight:bold;
+    text-decoration:none;
+    margin:0 5px 0 5px;
+}
+
+.navigation ul
+{
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+
+.navigation li
+{
+    padding:0;
+    margin:4px 0 4px 5px;
+    font-size:0.9em;
+}

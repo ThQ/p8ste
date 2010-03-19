@@ -1,0 +1,10 @@
+<?php
+   //verifica se existe o campo busca
+   $busca = (isset($_GET['busca'])) ? $_GET['busca'] : '';
+   //verifica se o campo busca não está vazio para mostrar no link
+   $buscaPag = (!empty($busca)) ? '&busca='.$busca : '';
+   
+  
+   //imprimi o link da paginação com a variavel $buscaPag
+   echo '<a href="?pag='.$i.$buscaPag.'">'.$i.'</a>';
+?>

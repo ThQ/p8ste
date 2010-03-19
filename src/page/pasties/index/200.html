@@ -1,0 +1,65 @@
+{% extends "../../index.html" %}
+
+
+{% block page-title %}Pastes ({{ paste_count }}){% endblock %}
+
+{% block h1 %}All pastes{% endblock %}
+
+{% block h1-headers %}{% endblock %}
+
+{% block page-content %}
+{% if pastes %}
+<table>
+    <tr>
+        <th width="15%">Date</th>
+        <th width="10%">User</th>
+        <th style="width:16px;"></td>
+        <th>Title</th>
+        <th></th>
+        <th width="10%">Size</th>
+        <th width="10%">Lines</th>
+    </tr>
+        {% for paste in pastes %}
+        <tr>
+            <td>{{ paste.posted_at }}</td>
+            <td>{{ paste.user_name }}</td>
+            <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon }}" width="16" height="16" alt="{{ paste.language }}" />{% endif %}</td>
+            <td><a href="{{ paste.u }}"><strong>{{ paste.title }}</strong></a>
+            </td>
+            <td>{% if paste.snippet %}<small>{{ paste.snippet|escape }}</small>{% endif %}</td>
+            <td>{{ paste.size.0 }} <small>{{ paste.size.1 }}</small></td>
+            <td>{{ paste.lines }} <small>LOC</small></td>
+        </tr>
+        {% endfor %}
+    {% if pages %}
+    <tfoot>
+        <tr>
+            <td colspan="7">
+                <ul class="paging">
+                {%for page in pages %}
+                    <li>
+                    {% ifequal page.0 -1 %}
+                        ...
+                    {% endifequal %}
+
+                    {% ifnotequal page.0 -1 %}
+                    <a href="{{ page.1 }}">{% if page.2 %}<span>{% endif %}{{page.0}}{% if page.2 %}</span>{% endif %}</a>
+                    {% endifnotequal %}
+                    </li>
+                {% endfor %}
+            </td>
+        </tr>
+    {% endif %}
+
+</table>
+
+</table>
+
+{% else %}
+    <p class="info"><strong>There are no pastes for now.</strong></p>
+    <ul>
+        <li><a href="/">Paste some code</a></li>
+    </ul>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,97 @@
+<?php
+/**
+ * Zend_Sniffs_Classes_ClassFileNameSniff.
+ *
+ * PHP version 5
+ *
+ * @category PHP
+ * @package PHP_CodeSniffer
+ * @author Juan Sotuyo <juansotuyo@gmail.com>
+ * @copyright 2010 Juan Sotuyo (Buenos Aires, Argentina)
+ * @license BSD Licence
+ * @version 1.0
+ * @link http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+/**
+ * Zend_Sniffs_Classes_ClassFileNameSniff.
+ *
+ * Tests that the file's path and the name of the class contained within the file
+ * match.
+ *
+ * @category PHP
+ * @package PHP_CodeSniffer
+ * @author Juan Sotuyo <juansotuyo@gmail.com>
+ * @copyright 2010 Juan Sotuyo (Buenos Aires, Argentina)
+ * @license BSD Licence
+ * @version Release: 1.2.2
+ * @link http://pear.php.net/package/PHP_CodeSniffer
+ */
+class Zend_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
+{
+
+    /**
+     * Returns an array of tokens this test wants to listen for.
+     *
+     * @return array
+     */
+    public function register()
+    {
+        return array(
+                T_CLASS,
+                T_INTERFACE,
+               );
+
+    }//end register()
+
+
+    /**
+     * Processes this test, when one of its tokens is encountered.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int $stackPtr The position of the current token in the
+     * stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+        $fullPath = $phpcsFile->getFilename();
+        $filePath = substr($fullPath, 0, strrpos($fullPath, '.'));
+        
+        $name = $phpcsFile->getDeclarationName($stackPtr);
+        
+        // Convert file path to appropiate Zend's class name
+        $parts = preg_split('/\\' . DIRECTORY_SEPARATOR . '/', $filePath);
+        $expectedClass = '';
+        
+        foreach ($parts as $part) {
+           $expectedClass .= $part . '_';
+        }
+        
+        // Remove last underscore
+        if (strlen($expectedClass) > 1) {
+           $expectedClass = substr($expectedClass, 0, -1);
+        }
+        
+        /*
+         * Bare in mind, the full-path may differ from the actual name (since include_path will most probably not start at root)
+         * Therefore, just look that the real class name is matched exactly and at the end of the longest possible class name.
+         */
+        $match = preg_match('/' . preg_quote($name) . '$/', $expectedClass);
+
+        if ($match === false || $match === 0) {
+            $error = ucfirst($tokens[$stackPtr]['content']);
+            $error .= ' name doesn\'t match filename. Expected ';
+            $error .= '"'.$tokens[$stackPtr]['content'].' ';
+            $error .= $expectedClass.'" but found '.$name;
+            $phpcsFile->addError($error, $stackPtr);
+        }
+
+    }//end process()
+
+
+}//end class
+
+?>

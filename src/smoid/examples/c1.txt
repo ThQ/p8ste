@@ -1,0 +1,38 @@
+struct sleeplist {
+	signed int  PID; // Negative because there exists a PID 0
+	signed long DurationLeft; // Because its possible to have -6 for example sleep(1984);
+};
+
+sleeplist sleepingtasks[255] = { { -1, 0 } };
+
+signed int stentries = -1;
+
+void AddSleepingTask(uint32_t PID, unsigned long Duration) {
+	stentries++;
+	sleepingtasks[stentries].PID = PID;
+	sleepingtasks[stentries].DurationLeft = (Duration/10); // Because we get 1000ms but we only have to do 100 Interupts from PIT
+}
+
+void CheckSleepingTasks(void) {
+	// Will do dec 10ms, and delete some entrys if needed
+		signed int i;
+	
+	for (i = 0; i <= stentries; i++){
+		if (sleepingtasks[i].DurationLeft > 0) {
+			//screen<<"DuraLeft" << IntToStr(sleepingtasks[i].DurationLeft) << "\n";
+			sleepingtasks[i].DurationLeft -= 10;
+		} else {
+			sleepingtasks[i].PID = -1; // entspricht löschung
+		}
+	}	
+}
+
+bool IsTaskSleeping(signed int PID) {
+	signed int i;
+	
+	for (i = 0; i <= stentries; i++) {
+		if (sleepingtasks[i].PID == PID) {return true;}
+	}
+				
+	return false; 
+}

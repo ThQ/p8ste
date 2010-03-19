@@ -1,0 +1,31 @@
+application: paste-it
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /style.css
+  static_files: css/style.css
+  upload: css/style.css
+
+- url: /robots.txt
+  static_files: static/robots.txt
+  upload: static/robots.txt
+
+- url: /google7a57039305de2730.html
+  static_files: static/google7a57039305de2730.html
+  upload: static/google7a57039305de2730.html
+
+- url: /LiveSearchSiteAuth.xml
+  static_files: static/LiveSearchSiteAuth.xml
+  upload: static/LiveSearchSiteAuth.xml
+
+- url: /y_key_f04f979d5652fb0d.html
+  static_files: static/y_key_f04f979d5652fb0d.html
+  upload: static/y_key_f04f979d5652fb0d.html
+
+- url: /images
+  static_dir: images
+
+- url: .*
+  script: main.py

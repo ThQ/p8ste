@@ -1,0 +1,191 @@
+# -*- coding: utf-8 -*-
+
+import socket, dbm
+
+########################### Editing below this is necessary:
+HOST = "irc.freenode.net"
+PORT = 6667
+NICK = "FailBot"
+USERNAME = "FailBot"
+REALNAME = "PedroBot"
+CHANNELS = ["##devil", "##pedro3005", "##fatchat"]
+bot_prefix = "!"
+import_plugins = "BasicCommands(), UserLevel(), Fun()" #must be classes
+############################ Editing beyond here is not necessary.
+
+
+storage = dbm.open("botv2", "c")
+if "password" not in storage.keys():
+	set_passwd = raw_input("Set an ident password, put 0 if none: ")
+	if not set_passwd == '0':
+		storage["password"] = set_passwd
+	set_admin = raw_input("Set a nick to be the admin. DO NOT leave blank: ")
+	storage["users_Owners"] = set_admin
+
+class IrcMessage:
+	'''Parses the IRC message, defining msg.prefix, msg.command, and msg.args'''
+
+	def __init__(self, msg):
+		self.prefix, self.command, self.args = self.parsemsg(msg)
+
+	def parsemsg(self, s):
+		trailing = 0
+		prefix = 0
+		if s[0] == ":":
+			s = s[1:].split(' ', 1)
+			prefix = s[0]
+			s = s[1]
+		if " :" in s:
+			s = s.split(" :", 1)
+			trailing = s[1]
+			s = s[0]
+		args = s.split()
+		command = args.pop(0)
+		if trailing != 0:
+			args.append(trailing)
+		return prefix, command, args
+
+class Privmsg:
+	'''Parses a PRIVMSG on IRC, defining msg.nick, msg.channel, msg.message, msg.bot_command, and msg.bot_command_args. Also contains methods: reply (send message into channel), reply_act(send a /me into channel).'''
+
+	def __init__(self, msg):
+		self.nick = msg.prefix.split("!", 1)[0]
+		self.channel = msg.args[0]
+		self.message = msg.args[1]
+		self.bot_command = self.message.split()[0]
+		if not self.bot_command == self.message.split():
+			self.bot_command_args = self.message.split()[1:]
+
+	def reply(self, msg):
+		socket.send("PRIVMSG %s :%s\r\n" % (self.channel, msg))
+
+	def reply_act(self, msg):
+		socket.send("PRIVMSG %s :\x01ACTION %s\x01\r\n" % (self.channel, msg))
+
+class BasicCommands:
+	'''A basic suit of commands. Include: <bot prefix>say (to say stuff in the channel) and <bot prefix>act (for /me). '''
+
+	def say(self, privmsg):
+		if has_permission("users_BasicCommands", privmsg.nick) :
+			privmsg.reply(" ".join(privmsg.bot_command_args))
+		else :
+			privmsg.reply("Permission denied.")
+
+
+	def act(self, privmsg):
+		if has_permission("users_BasicCommands", privmsg.nick) :
+			privmsg.reply_act(" ".join(privmsg.bot_command_args))
+		else :
+			privmsg.reply("Permission denied.")
+
+class UserLevel:
+	'''An user level plugin. '''
+
+	groups = []
+	for x in storage.keys() :
+		if x.startswith("users_") :
+			groups.append(x)
+
+	def set_group(self, privmsg):
+		groups_edited = []
+		for grp in privmsg.bot_command_args[2:] :
+			if privmsg.bot_command_args[1] == '+' and has_permission("users_Owners", privmsg.nick) :
+				if storage.get(grp, "") :
+					usr_list = storage[grp].split()
+					usr_list.append(privmsg.bot_command_args[0])
+					storage[grp] = " ".join(usr_list)
+					groups_edited.append(grp)
+				else :
+					storage[grp] = privmsg.bot_command_args[0]
+					groups_edited.append(grp)
+					self.groups.append(grp)
+
+			elif privmsg.bot_command_args[1] == '-' and has_permission("users_Owners", privmsg.nick) and storage.get(grp, "") :
+				usr_list = storage[grp].split()
+				if privmsg.bot_command_args[0] in usr_list :
+					usr_list.remove(privmsg.bot_command_args[0])
+				storage[grp] = " ".join(usr_list)
+				groups_edited.append(grp)
+		if privmsg.bot_command_args[1] == '+':
+			privmsg.reply("Added user %s to groups: %s" % (privmsg.bot_command_args[0], ", ".join(groups_edited)))
+		elif privmsg.bot_command_args[1] == '-':
+			privmsg.reply("Removed user %s from groups: %s" % (privmsg.bot_command_args[0], ", ".join(groups_edited)))
+
+	def read_group(self, privmsg):
+		if privmsg.bot_command_args[0] == '*' :
+			privmsg.reply("Groups: %s" % ", ".join(self.groups))
+		else :
+			if privmsg.bot_command_args[0] in self.groups :
+				privmsg.reply("People in the group %s: %s" % (privmsg.bot_command_args[0], ", ".join(storage[privmsg.bot_command_args[0]].split())))
+			else :
+				privmsg.reply("Group %s not found" % privmsg.bot_command_args[0])
+	
+	def del_group(self, privmsg):
+		grps_removed = []
+		grps_notfound = []
+		if has_permission("users_Owners", privmsg.nick) :
+			for grp in privmsg.bot_command_args :
+				if grp in self.groups :
+					self.groups.remove(grp)
+					del storage[grp]
+					grps_removed.append(grp)
+				else :
+					grps_notfound.append(grp)
+			privmsg.reply("Removed groups: %s. Could not find groups: %s." % (", ".join(grps_removed), ", ".join(grps_notfound)))
+		else :
+			privmsg.reply("Permission denied.")
+
+class Fun:
+	def kill(self, privmsg):
+		privmsg.reply_act("kills %s and drinks the blood." % privmsg.bot_command_args[0])
+
+def has_permission(group, user):
+	if "UserLevel()" in import_plugins.split(", ") :
+		try :
+			if user in storage["users_Owners"].split() :
+				return True
+			elif user in storage[group].split() :
+				return True
+			else :
+				return False
+		except :
+			return False
+	else :
+		return True
+
+exec("plugins = %s" % import_plugins)
+
+#INITIAL HANDSHAKE
+socket = socket.socket()
+socket.connect((HOST, PORT))
+if storage["password"]:
+	socket.send("PASS :%s\r\n" % (storage["password"]))
+socket.send("NICK %s\r\n" % (NICK))
+socket.send("USER %s * * :%s\r\n" % (USERNAME, REALNAME))
+for channel in CHANNELS:
+	socket.send("JOIN %s\r\n" % (channel))
+#END OF HANDSHAKE
+
+recv = ""
+while True:
+	 recv = recv + socket.recv(4096)
+	 s = recv.split("\r\n")
+	 recv = s.pop()
+	 for msg in s:
+		print msg
+		msg = IrcMessage(msg)
+		if msg.command == "PRIVMSG":
+			privmsg = Privmsg(msg)
+			for plugin in plugins:
+				if hasattr(plugin, privmsg.bot_command[1:]) and privmsg.message.startswith(bot_prefix) :
+					command = getattr(plugin, privmsg.bot_command[1:])
+					try :
+						if privmsg.bot_command_args :
+							command(privmsg)
+						else :
+							command()
+					except :
+						privmsg.reply("Error calling function.")
+		elif msg.command == "PING":
+			socket.send("PONG\r\n")
+
