@@ -66,12 +66,13 @@ class RequestHandler (webapp.RequestHandler):
             self.content['u_user_login'] = users.create_login_url(paste.url("a"))
 
         logs = []
-        for logrec in paste.log.DebugHandler.logs:
-            log = {}
-            log["message"] = logrec.getMessage()
-            log["path"] = logrec.pathname
-            log["path_with_line"] = logrec.pathname + ":" + str(logrec.lineno)
-            logs.append(log)
+        if paste.log.DebugHandler:
+            for logrec in paste.log.DebugHandler.logs:
+                log = {}
+                log["message"] = logrec.getMessage()
+                log["path"] = logrec.pathname
+                log["path_with_line"] = logrec.pathname + ":" + str(logrec.lineno)
+                logs.append(log)
         self.content["logs"] = logs
 
         self.response.out.write(template.render(self.template_name, self.content))
