@@ -25,8 +25,8 @@ import page.error.error404
 
 pages = [
     ('/', page.pasties.add.Add),
-    ('/([a-zA-Z0-9_-]+)', page.pasties.pasty.Pasty),
-    ('/([a-zA-Z0-9_-]+).txt', page.pasties.pasty_txt.PastyTxt),
+    ('/(P[a-zA-Z0-9_-]+)', page.pasties.pasty.Pasty),
+    ('/(P[a-zA-Z0-9_-]+).txt', page.pasties.pasty_txt.PastyTxt),
     ('/pastes/', page.pasties.index.Index),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
     ('/.*', page.error.error404.Error404)
