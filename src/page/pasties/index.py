@@ -43,6 +43,7 @@ class Index(paste.web.RequestHandler):
                     dpaste["title"] = cgi.escape(opaste.slug)
                 dpaste["u"] = paste.url("%s", opaste.slug)
                 dpaste["snippet"] = opaste.snippet
+                dpaste["is_moderated"] = opaste.is_moderated
                 dpaste["user_name"] = cgi.escape(opaste.posted_by_user_name)
 
                 if opaste.language and opaste.language in smoid.languages.languages:

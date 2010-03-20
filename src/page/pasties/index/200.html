@@ -24,7 +24,7 @@
             <td>{{ paste.posted_at }}</td>
             <td>{{ paste.user_name }}</td>
             <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon }}" width="16" height="16" alt="{{ paste.language }}" />{% endif %}</td>
-            <td><a href="{{ paste.u }}"><strong>{{ paste.title }}</strong></a>
+            <td><a href="{{ paste.u }}">{% if paste.is_moderated %}<strike>{% else %}<strong>{% endif %}{{ paste.title }}{% if paste.is_moderated %}</strike>{% else %}</strong>{% endif %}</a>
             </td>
             <td>{% if paste.snippet %}<small>{{ paste.snippet|escape }}</small>{% endif %}</td>
             <td>{{ paste.size.0 }} <small>{{ paste.size.1 }}</small></td>
