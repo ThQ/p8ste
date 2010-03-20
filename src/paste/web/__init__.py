@@ -36,6 +36,7 @@ class RequestHandler (webapp.RequestHandler):
     def set_module(self, name):
         self.module = name.replace(".", "/") + ".py"
         self.module_url = "http://github.com/thomas-quemard/p8ste/blob/master/src/" + self.module
+        self.module_history_url = "http://github.com/thomas-quemard/p8ste/commits/master/src/" + self.module
 
     def use_template(self, name):
         self.template_name = name
@@ -53,6 +54,7 @@ class RequestHandler (webapp.RequestHandler):
         self.content["header_scripts"] = self.scripts
         self.content["module"] = self.module
         self.content["u_module"] = self.module_url
+        self.content["u_module_history"] = self.module_history_url
         self.content["u_blank_image"] = paste.url("images/blank.gif")
         user = users.get_current_user()
         if user:
