@@ -17,6 +17,7 @@ import paste.web
 class PastyTxt(paste.web.RequestHandler):
 
     def get(self, pasty_slug):
+        self.set_module("page.pasties.pasty_txt.py")
         pasties = paste.model.Pasty.all()
         pasties.filter("slug =", pasty_slug)
 
@@ -29,7 +30,8 @@ class PastyTxt(paste.web.RequestHandler):
             self.get_200()
 
     def get_200(self):
-        self.content["content"] = self.pasty.code
+        if not self.pasty.is_moderated:
+            self.content["content"] = self.pasty.code
         self.set_header("Content-Type", "text/plain")
         self.write_out("page/pasties/pasty_txt/200.tpl")
 
