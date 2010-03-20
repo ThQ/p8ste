@@ -25,6 +25,7 @@ class Pasty (db.Model):
     code_colored = db.TextProperty(default="")
     forks = db.IntegerProperty(default=0)
     indirect_forks = db.IntegerProperty(default=0)
+    is_moderated = db.BooleanProperty(default=False)
     language = db.StringProperty(choices=["php", "python"])
     lines = db.IntegerProperty(default=0)
     posted_at = db.DateTimeProperty(auto_now=True)
