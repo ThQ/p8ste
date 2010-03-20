@@ -199,6 +199,8 @@ class Pasty(paste.web.RequestHandler):
     def get_404(self):
         self.error(404)
         self.content["pasty_slug"] = cgi.escape(self.pasty_slug)
+        self.content["u_paste"] = paste.url("")
+        self.content["u_pastes"] = paste.url("pastes/")
         self.write_out("page/pasties/pasty/404.html")
 
     def get_parent_paste(self):
