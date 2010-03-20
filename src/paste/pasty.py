@@ -5,7 +5,7 @@
 # by the Free Software Foundation; either version 3.0, or (at your option)
 # any later version.
 #
-# Paste-It  is distributed in the hope that it will be useful, but
+# Paste-It is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
@@ -27,7 +27,7 @@ def filter_user_name(name):
 def make_slug(length):
     chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     char_count = len(chars)
-    slug = ""
+    slug = "P"
     for i in range(0, length):
         at = random.randint(0, char_count)
         slug += chars[at : at + 1]
