@@ -18,6 +18,7 @@ import paste.web
 
 class Error404(paste.web.RequestHandler):
     def get(self):
+        self.set_module("page.error.error404")
         self.content["http_query"] = self.request.path
         if self.request.query != "":
             self.content["http_query"] = self.content["http_query"] + self.request.query
