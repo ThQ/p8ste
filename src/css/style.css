@@ -171,6 +171,21 @@ table.invisible td
     color:#444444;
 }
 
+#footers ul
+{
+    list-style-type:none;
+    display:inline;
+    margin:2px 0 2px 0;
+    padding:0;
+}
+
+#footers li
+{
+    display:table-cell;
+    margin:0;
+    padding:0 15px 0 0;
+}
+
 #footers p
 {
     margin: 2px 0 2px 0;
