@@ -1,12 +1,10 @@
 == ACTIONS ==
-src/paste/model.py : Create a model for paste <-> tag relation : PasteTag
-src/page/pasties/paste.py : Can make a diff
-src/page/pasties/add.py : Add tags to db
-Make an index page for tags (Tag cloud)
-Make a browsing page for tags
+src/page/pasties/paste_atom.py : Export as atom
+src/page/threads/thread.py : A page that details a thread
+src/page/thread/thread_atom.py : The last forks of the thread
 
 == PROJECTS ==
-src/page/pasties/add.py : Find a CATCHPA system (the one with old books ?)
+src/page/pasties/add.py : Find a CATCHPA system (reCATCHPA)
 src/smoid.py : Improve language detection
-Create syntax highlighting
+Integrate Pygments
 
