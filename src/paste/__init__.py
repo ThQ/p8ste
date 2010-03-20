@@ -68,4 +68,5 @@ else:
     config["pasty_tags_max_count"] = 10
     config["pasty_tags_max_length"] = 150
     config["user_name_max_length"] = 100
+config["pasty_snippet_length"] = 50
 config["default_user_name"] = "John_Doe"

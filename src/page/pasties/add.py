@@ -222,7 +222,7 @@ class Add(paste.web.RequestHandler):
         self.paste.posted_by_user_name = paste.pasty.filter_user_name(self.form_user_name)
         self.paste.replies = 0
         self.paste.slug = slug
-        self.paste.snippet = ""
+        self.paste.snippet = self.make_snippet(self.paste.code)
         self.paste.tags = self.prepare_tags(self.form_tags)
         self.paste.title = paste.pasty.filter_title(self.form_title, slug)
 
@@ -305,6 +305,23 @@ class Add(paste.web.RequestHandler):
                 dtag.pastes = 1
                 dtag.put()
 
+    def make_snippet (self, code):
+        snippet = ""
+        newline_block = False
+        char_count = 0
+        for c in code:
+            if c != "\r" and c != "\n":
+                if newline_block :
+                    newline_block = False
+                    snippet += " "
+                snippet += c
+            else:
+                newline_block = True
+            char_count += 1
+            if char_count > paste.config["pasty_snippet_length"]:
+                snippet = snippet[0: char_count - 3] + "..."
+                break
+        return snippet
 
     def on_form_not_sent(self):
         self.content["pasty_token"] = paste.form.put_form_token(self.request.remote_addr)
