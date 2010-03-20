@@ -1,0 +1,4 @@
+*.pyc
+*~
+images/
+src/pygments/
