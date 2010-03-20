@@ -15,18 +15,19 @@
         <div id="content">
             <div id="logo">
                 <a href="/"><img src="/images/tango/22x22/actions/edit-paste.png" width="22" height="22" alt="" /></a>
-                 <a href="/"><strong>Paste code!</strong></a>
-<small>|
-                     <a href="/pastes/">All pastes</a>
-                    <div style="float:right;">
+                <a href="/"><strong>Paste code!</strong></a>
+                <small>| <a href="/pastes/">All pastes</a></small>
+
+                <div style="float:right;">
+                    <small>
                     {%if user_signed_in %}
                     <strong>{{ user_email }}</strong>
                      | <a href="{{ u_user_logout }}">Sign Out</a>
                     {% else %}
                     <a href="{{ u_user_login }}">Sign In</a>
                     {% endif %}
-                    </div>
-</small>
+                    </small>
+                </div>
             </div>
             <div id="header-hr"></div>
             <h1>{% block h1 %}{% endblock %}</h1>
