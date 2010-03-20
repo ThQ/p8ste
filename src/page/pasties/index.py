@@ -18,21 +18,58 @@ import paste.web
 import paste.web.ui
 import smoid.languages
 
+
 class Index(paste.web.RequestHandler):
+    """
+    A listing of the pastes.
+    """
+
     def __init__(self):
         paste.web.RequestHandler.__init__(self)
         self.set_module("page.pasties.index")
         self.page = 1
         self.pastes_per_page = 10
+        self.paste_count = 0
 
     def get(self):
         if self.request.get("page").isdigit() and int(self.request.get("page")) > 1:
             self.page = int(self.request.get("page"))
 
+        pastes = self.get_pastes()
+        self.paste_count = self.get_paste_count()
+
+        paging = self.make_paging()
+
+        if paging.page_count > 1:
+            self.content["pages"] = paging.pages
+        self.content["paste_count"] = self.paste_count
+        self.content["pastes"] = pastes
+        self.use_template("page/pasties/index/200.html")
+        self.write_out()
+
+    def get_paste_count (self):
+        """
+        Retrieve the total paste count from the datastore.
+        """
+
+        count = 0
+        stats = paste.model.PasteStats.all()
+        stats.id = 1
+        stat = stats.get()
+        if stat != None:
+            count = stat.paste_count
+        return count
+
+    def get_pastes (self):
+        """
+        Retrieve the pastes for the current page.
+        """
+
+        pastes = []
+
         db = paste.model.Pasty.all()
         db.order("-posted_at")
         dbpastes = db.fetch(self.pastes_per_page, (self.page - 1) * self.pastes_per_page)
-        pastes = []
 
         if dbpastes != None:
             for opaste in dbpastes:
@@ -63,12 +100,16 @@ class Index(paste.web.RequestHandler):
                     dpaste["language"] = ""
 
                 pastes.append(dpaste)
+        return pastes
 
-        paste_count = self.get_paste_count()
+    def make_paging (self):
+        """
+        Makes the paging UI component.
+        """
 
         paging = paste.web.ui.CursorPaging()
         paging.page = self.page
-        paging.items = paste_count
+        paging.items = self.paste_count
         paging.page_length = 10
         paging.left_margin = 2
         paging.right_margin = 2
@@ -76,18 +117,4 @@ class Index(paste.web.RequestHandler):
         paging.page_url = paste.url("pastes/?page={page}")
         paging.prepare()
 
-        if paging.page_count > 1:
-            self.content["pages"] = paging.pages
-        self.content["paste_count"] = paste_count
-        self.content["pastes"] = pastes
-        self.use_template("page/pasties/index/200.html")
-        self.write_out()
-
-    def get_paste_count(self):
-        count = 0
-        stats = paste.model.PasteStats.all()
-        stats.id = 1
-        stat = stats.get()
-        if stat != None:
-            count = stat.paste_count
-        return count
+        return paging
