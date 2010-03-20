@@ -176,6 +176,7 @@ class Pasty(paste.web.RequestHandler):
         self.content["page-title"] =  cgi.escape(self.pasty.title)
         self.content["pasty_title"] =  cgi.escape(self.pasty.title)
         self.content["pasty_slug"] = self.pasty.slug
+        self.content["pasty_is_moderated"] = self.pasty.is_moderated
         if self.pasty.characters:
             self.content["pasty_size"] = paste.util.make_filesize_readable(self.pasty.characters)
         self.content["pasty_loc"] = self.pasty.lines
@@ -232,6 +233,7 @@ class Pasty(paste.web.RequestHandler):
             lpaste["title"] = dbpaste.title
             lpaste["slug"] = dbpaste.slug
             lpaste["user_name"] = dbpaste.posted_by_user_name
+            lpaste["is_moderated"] = dbpaste.is_moderated
             lpaste["u"] = paste.url("%s", dbpaste.slug)
             lpaste["ident"] = ("&nbsp;&nbsp;&nbsp;&nbsp;" * dbpaste.thread_level)
             if dbpaste.language:
