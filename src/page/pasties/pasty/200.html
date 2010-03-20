@@ -70,7 +70,11 @@
                         <small>
                             &middot; {{thread_paste.user_name}}
                             {% ifnotequal thread_paste.slug pasty_slug %}
-                            / {{ thread_paste.diff_size.2 }}{{ thread_paste.diff_size.0 }}{{ thread_paste.diff_size.1 }}
+                            / {% ifequal thread_paste.diff_size.0 0 %}
+                                =B
+                            {%else%}
+                                {{ thread_paste.diff_size.2 }}{{ thread_paste.diff_size.0 }}{{ thread_paste.diff_size.1 }}
+                            {% endifequal %}
                             {% endifnotequal %}
                         </small>
                         {% ifequal pasty_slug thread_paste.slug %}</strong>{% endifequal %}
