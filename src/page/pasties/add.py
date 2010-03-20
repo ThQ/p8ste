@@ -155,6 +155,8 @@ class Add(paste.web.RequestHandler):
             pasties = paste.model.Pasty.all()
             pasties.filter("slug =", self.parent_slug)
             parent = pasties.get()
+            if parent.is_moderated:
+                parent = None
 
         return parent
 
