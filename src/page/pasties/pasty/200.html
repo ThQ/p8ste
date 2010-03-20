@@ -42,6 +42,9 @@
             </h2>
 
             <div class="pasty">
+                {% if pasty_is_moderated %}
+                <p class="error">This paste has been <strong>moderated</strong>.</p>
+                {% else %}
                 <table>
                     <tr class="snippet">
                         <td>
@@ -55,6 +58,7 @@
                         </td>
                     </tr>
                 </table>
+                {% endif %}
             </div>
 
             {% if is_thread %}
@@ -65,8 +69,10 @@
                         <td>
                         {{ thread_paste.ident }}
                         {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image }}" width="16" height="16" /> {% endif %}
+
                         {% ifequal pasty_slug thread_paste.slug %}<strong>{% endifequal %}
-                        <a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>
+                        {% if thread_paste.is_moderated %}<strike>{% endif %}<a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>{% if thread_paste.is_moderated %}</strike>{% endif %}
+
                         <small>
                             &middot; {{thread_paste.user_name}}
                             {% ifnotequal thread_paste.slug pasty_slug %}
