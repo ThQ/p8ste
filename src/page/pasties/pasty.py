@@ -170,7 +170,7 @@ class Pasty(paste.web.RequestHandler):
         tc.import_string(self.pasty.tags)
         thread_pastes = self.get_thread_pastes()
 
-        self.content["is_thread"] = len(thread_pastes) > 0
+        self.content["is_thread"] = len(thread_pastes) > 1
         self.content["thread_pastes"] = thread_pastes
         self.content["h1"] = "p" + self.pasty_slug
         self.content["page-title"] =  cgi.escape(self.pasty.title)
