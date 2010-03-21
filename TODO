@@ -1,5 +1,4 @@
 == ACTIONS ==
-src/page/pasties/paste_atom.py : Export as atom
 src/page/threads/thread.py : A page that details a thread
 src/page/thread/thread_atom.py : The last forks of the thread
 
