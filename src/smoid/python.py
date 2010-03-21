@@ -15,6 +15,20 @@ import re
 import check
 
 
+class PythonClassDeclarationCheck (check.Check):
+    def __init__ (self):
+        check.Check.__init__(self)
+        self.name = "Class declaration (class * (*):)"
+
+    def _test(self):
+        result = False
+        re_class = "(?:[a-zA-Z_][a-zA-Z0-9_]*)"
+        re_class_full = re_class + "(?:\." + re_class + ")*"
+        if self.is_re_found("\s*class\s+" + re_class + "\s*\(\s*" + re_class_full + "\s*\)\s*:\s*") :
+            self.probability = 50
+            result = True
+        return result
+
 class PythonSourceEncodingCheck(check.Check):
     def __init__ (self):
         check.Check.__init__(self)
@@ -60,7 +74,7 @@ class PythonImportCheck(check.Check):
     def _test(self):
         result = False
         # (^|\n)\s*(from\s+[a-zA-Z_.]\s+)?
-        if self.is_re_found("import(\s+[a-zA-Z_.]+)(\s*,\s*[a-zA-Z_.]+)+(\n|\r)") :
+        if self.is_re_found("import(\s+[a-zA-Z_.]+)((\s*,\s*[a-zA-Z_.]+)+)?(\n|\r)") :
             self.probability = 60
             result = True
         return result
@@ -71,6 +85,7 @@ class PythonCheck (check.LanguageCheck):
         self.name = "python"
         self.checkers.append(PythonHeaderCheck())
         self.checkers.append(PythonImportCheck())
+        self.checkers.append(PythonClassDeclarationCheck())
         self.checkers.append(PythonInitMethodCheck())
         self.checkers.append(PythonSourceEncodingCheck())
 

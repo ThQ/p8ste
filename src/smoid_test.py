@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import smoid
 import sys
 
