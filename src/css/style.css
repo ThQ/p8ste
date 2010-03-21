@@ -292,6 +292,18 @@ small
     font-size:1em;
     color:#888888;
 }
+small a:link, small a:visited
+{
+    color:#777777;
+    text-decoration:underline;
+}
+
+small a:hover
+{
+    color:#777777;
+    text-decoration:none;
+}
+
 .error
 {
     border:1px solid #d0d0d0;
