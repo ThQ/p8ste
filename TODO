@@ -1,6 +1,5 @@
 == ACTIONS ==
 src/page/threads/thread.py : A page that details a thread
-src/page/thread/thread_atom.py : The last forks of the thread
 
 == PROJECTS ==
 src/page/pasties/add.py : Find a CATCHPA system (reCATCHPA)
