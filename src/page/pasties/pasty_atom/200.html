@@ -10,5 +10,7 @@
 	<author>
 		<name>{{ paste_username|escape }}</name>
 	</author>
+    {% if paste_code %}
     <subtitle type="text">{{ paste_code|escape }}</subtitle>
+    {% endif %}
 </feed>
