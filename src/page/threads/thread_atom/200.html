@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+    <title>[{{ paste_title|escape }}] thread</title>
+    <link href="{{ u_thread_self }}" rel="self" />
+    <link href="{{ u_thread }}" />
+    <id>{{ u_thread }}</id>
+    <updated>{{ paste_posted_at }}</updated>
+    <author>
+        <name>{{ paste_username|escape }}</name>
+    </author>
+
+    {% if forks %}
+    {% for fork in forks %}
+    <entry>
+        <id>{{ fork.u}}</id>
+        <title>{% if fork.is_moderated %}{{ fork.slug }}{% else %}{{ fork.title|escape }}{% endif %}</title>
+        <published>{{ fork.published_at }}</published>
+        <updated>{{ fork.updated_at }}</updated>
+        <link rel="alternate">{{ fork.u }}</link>
+        <author>
+            <name>{{ fork.author_name }}</name>
+        </author>
+        <summary type="text">{% if fork.is_moderated %}This paste has been moderated.{% else %}{{ fork.summary|escape }}{% endif %}</summary>
+    </entry>
+    {% endfor %}
+    {% endif %}
+</feed>

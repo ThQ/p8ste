@@ -15,6 +15,7 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+import page.error.error404
 import page.index
 import page.pasties.add
 import page.pasties.index
@@ -22,7 +23,7 @@ import page.pasties.pasty
 import page.pasties.pasty_txt
 import page.pasties.pasty_atom
 import page.pasties.sitemap
-import page.error.error404
+import page.threads.thread_atom
 
 pages = [
     ('/', page.pasties.add.Add),
@@ -30,6 +31,7 @@ pages = [
     ('/(P[a-zA-Z0-9_-]+).txt', page.pasties.pasty_txt.PastyTxt),
     ('/(P[a-zA-Z0-9_-]+).atom', page.pasties.pasty_atom.PastyAtom),
     ('/pastes/', page.pasties.index.Index),
+    ('/threads/(P[a-zA-Z0-9_-]+).atom', page.threads.thread_atom.ThreadAtom),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
     ('/.*', page.error.error404.Error404)
 ]
