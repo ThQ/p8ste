@@ -5,25 +5,105 @@
 # by the Free Software Foundation; either version 3.0, or (at your option)
 # any later version.
 #
-# Paste-It  is distributed in the hope that it will be useful, but
+# Paste-It is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
-import re
 
-class RubyTestHeader(Test):
-    name = "RubyTestHeader"
+import check
+
+
+class RubyClassDeclarationCheck (check.Check):
+    def __init__ (self):
+        check.Check.__init__(self)
+        self.name = "Class declaration"
 
     def _test(self):
-        self.confidence = 0
         result = False
-        if self.is_re_matched("^#!/(.+)ruby(\n|$)") :
+        re_class = "[a-zA-Z_][a-zA-Z_0-9]+"
+        if self.is_re_found("(^|\r|\n)\s*class\s+" + re_class + "\s*<<?\s*" + re_class + "\s*(\r|\n|$)") :
+            self.probability = 40
             result = True
         return result
 
 
-class RubyTestChain (TestChain):
-    def __init__(self):
-        self.tests.append(RubyTestHeader())
+class RubyFunctionDeclarationCheck (check.Check):
+    def __init__ (self):
+        check.Check.__init__(self)
+        self.name = "Function declaration"
 
+    def _test(self):
+        result = False
+        re_class = "[a-zA-Z_][a-zA-Z_0-9]+"
+        if self.is_re_found("(^|\r|\n)\s*def\s+(self\.)?[a-zA-Z_][a-zA-Z_0-9]*(!|\?)?"):
+            self.probability = 40
+            result = True
+        return result
+
+
+class RubyHeaderCheck (check.Check):
+    def __init__ (self):
+        check.Check.__init__(self)
+        self.name = "Headers"
+
+    def _test(self):
+        result = False
+        if self.is_re_matched("^#!/(.+)ruby(\n|$)") :
+            self.probability = 60
+            result = True
+        return result
+
+
+class RubyModuleDeclarationCheck (check.Check):
+    def __init__ (self):
+        check.Check.__init__(self)
+        self.name = "Module declaration"
+
+    def _test(self):
+        result = False
+        re_class = "[a-zA-Z_][a-zA-Z_0-9]+"
+        if self.is_re_found("(^|\r|\n)\s*module\s+[a-zA-Z_][a-zA-Z_0-9]*"):
+            self.probability = 40
+            result = True
+        return result
+
+
+class RubyRequireCheck (check.Check):
+    def __init__ (self):
+        check.Check.__init__(self)
+        self.name = "Require"
+
+    def _test(self):
+        result = False
+        if self.is_re_found("(^|\n|\r)\s*require\s+'[^']+'\s*(\r|\n|$)") :
+            self.probability = 40
+            result = True
+        return result
+
+
+class RubyStrangeFunctionNamesCheck (check.Check):
+    def __init__ (self):
+        check.Check.__init__(self)
+        self.name = "Strange function names"
+
+    def _test(self):
+        result = False
+        if self.is_re_found("\.[a-zA-Z_][a-zA-Z_0-9]\?|!") :
+            self.probability = 20
+            result = True
+        return result
+
+
+class RubyCheck (check.LanguageCheck):
+    def __init__(self):
+        check.LanguageCheck.__init__(self)
+
+        self.name="ruby"
+
+        self.checkers.append(RubyHeaderCheck())
+        self.checkers.append(RubyRequireCheck())
+        self.checkers.append(RubyClassDeclarationCheck())
+        self.checkers.append(RubyModuleDeclarationCheck())
+        self.checkers.append(RubyFunctionDeclarationCheck())
+        self.checkers.append(RubyStrangeFunctionNamesCheck())
