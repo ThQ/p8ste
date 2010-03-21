@@ -20,6 +20,7 @@ import page.pasties.add
 import page.pasties.index
 import page.pasties.pasty
 import page.pasties.pasty_txt
+import page.pasties.pasty_atom
 import page.pasties.sitemap
 import page.error.error404
 
@@ -27,6 +28,7 @@ pages = [
     ('/', page.pasties.add.Add),
     ('/(P[a-zA-Z0-9_-]+)', page.pasties.pasty.Pasty),
     ('/(P[a-zA-Z0-9_-]+).txt', page.pasties.pasty_txt.PastyTxt),
+    ('/(P[a-zA-Z0-9_-]+).atom', page.pasties.pasty_atom.PastyAtom),
     ('/pastes/', page.pasties.index.Index),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
     ('/.*', page.error.error404.Error404)

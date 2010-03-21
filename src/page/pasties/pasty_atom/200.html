@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+ 
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+	<title>{{ paste_title|escape }}</title>
+	<link href="{{ u_paste_self }}" rel="self" />
+	<link href="{{ u_paste }}" />
+	<id>{{ u_paste }}</id>
+	<updated>{{ paste_posted_at }}</updated>
+	<author>
+		<name>{{ paste_username|escape }}</name>
+	</author>
+    <subtitle type="text">{{ paste_code|escape }}</subtitle>
+</feed>
