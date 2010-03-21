@@ -192,7 +192,9 @@ class Pasty(paste.web.RequestHandler):
         self.content["u"] = paste.url("%s", self.pasty_slug)
         self.content["u_edit"] = paste.url("?edit=%s", self.pasty_slug)
         self.content["u_raw_text"] = paste.url("%s.txt", self.pasty_slug)
+        self.content["u_atom"] = paste.url("%s.atom", self.pasty_slug)
 
+        self.add_atom_feed(paste.url("%s.atom", self.pasty_slug), self.pasty_slug + " (Atom feed)", "alternate")
         self.write_out("page/pasties/pasty/200.html")
 
         #self.update_expiration_time()
