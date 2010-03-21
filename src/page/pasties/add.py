@@ -211,6 +211,7 @@ class Add(paste.web.RequestHandler):
         self.paste.characters = len(self.form_code)
         self.paste.code = self.form_code
         self.paste.code_colored = self.prepare_code(self.form_code)
+        self.paste.edited_at = datetime.datetime.now()
         self.paste.edited_by_ip = self.request.remote_addr
         self.paste.expired_at = datetime.datetime.now() + paste.config["pasty_expiration_delta"]
         self.paste.forks = 0
@@ -218,6 +219,7 @@ class Add(paste.web.RequestHandler):
         self.paste.language = smoid.GrandChecker().find_out_language(self.paste.code)
         self.paste.lines = self.form_code.count("\n") + 1
         self.paste.parent_paste = ""
+        self.paste.posted_at = datetime.datetime.now()
         self.paste.posted_by_ip = self.request.remote_addr
         self.paste.posted_by_user_name = paste.pasty.filter_user_name(self.form_user_name)
         self.paste.replies = 0
