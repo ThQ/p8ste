@@ -171,7 +171,9 @@ class Pasty(paste.web.RequestHandler):
         thread_pastes = self.get_thread_pastes()
 
         self.content["is_thread"] = len(thread_pastes) > 1
-        self.content["thread_pastes"] = thread_pastes
+        if self.content["is_thread"] == True:
+            self.content["thread_pastes"] = thread_pastes
+            self.content["u_thread"] = paste.url("threads/%s.atom", self.pasty.thread)
         self.content["h1"] = "p" + self.pasty_slug
         self.content["page-title"] =  cgi.escape(self.pasty.title)
         self.content["pasty_title"] =  cgi.escape(self.pasty.title)
