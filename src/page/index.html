@@ -9,6 +9,11 @@
             <script type="text/javascript" src="{{ script }}"></script>
             {% endfor %}
         {% endif %}
+        {% if feeds %}
+            {% for feed in feeds %}
+            <link href="{{ feed.url }}" type="{{ feed.type }}" rel="{{ feed.rel }}" title="{{ feed.title|escape }}" />
+            {% endfor %}
+        {% endif %}
     </head>
 
     <body>
@@ -22,9 +27,9 @@
                     <small>
                     {%if user_signed_in %}
                     <strong>{{ user_email }}</strong>
-                     | <a href="{{ u_user_logout }}">Sign Out</a>
+                     | <a href="{{ u_user_logout|escape }}">Sign Out</a>
                     {% else %}
-                    <a href="{{ u_user_login }}">Sign In</a>
+                    <a href="{{ u_user_login|escape }}">Sign In</a>
                     {% endif %}
                     </small>
                 </div>

@@ -26,6 +26,14 @@ class RequestHandler (webapp.RequestHandler):
         self.module_url = ""
         self.content = {}
         self.scripts = []
+        self.feeds = []
+
+    def add_atom_feed (self, url, title, rel):
+        self.add_feed (url, "application/atom+xml", title, rel)
+
+    def add_feed (self, url, type, title, rel):
+        feed = {"url":url, "type": type, "title": title, "rel": rel}
+        self.feeds.append(feed)
 
     def set_header(self, name, value):
         if not name in self.response.headers:
@@ -52,6 +60,7 @@ class RequestHandler (webapp.RequestHandler):
         if paste.config["env"] == "debug":
             self.content["debug"] = True
         self.content["header_scripts"] = self.scripts
+        self.content["feeds"] = self.feeds
         self.content["module"] = self.module
         self.content["u_module"] = self.module_url
         self.content["u_module_history"] = self.module_history_url
