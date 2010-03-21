@@ -35,10 +35,27 @@ indexes:
 - kind: Pasty
   properties:
   - name: thread
+  - name: posted_at
+
+- kind: Pasty
+  properties:
+  - name: thread
+  - name: posted_at
+    direction: desc
+
+- kind: Pasty
+  properties:
+  - name: thread
   - name: thread_position
 
 - kind: Pasty
   properties:
   - name: thread
   - name: thread_position
+    direction: desc
+
+- kind: Pasty
+  properties:
+  - name: thread=
+  - name: posted_at
     direction: desc
