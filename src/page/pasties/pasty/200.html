@@ -61,13 +61,14 @@
                 {% endif %}
             </div>
 
-            {% if is_thread %}
             <h2>
                 <strong>Thread</strong>
                 <small style="float:right;">
                     <a href="{{ u_thread }}"><img src="/images/silk/feed.png" alt="Thread atom feed" width="16" height="16" /></a>
                 </small>
             </h2>
+
+            {% if is_thread %}
             <table>
                 {% for thread_paste in thread_pastes %}
                     <tr>
@@ -93,6 +94,8 @@
                     </tr>
                 {% endfor %}
             </table>
+            {% else %}
+            <p class="info"><strong>Did you know ?</strong> You can <a href="{{u_edit}}"><strong>fork</strong></a> this paste : you create a copy of it and make whatever change you want on that copy.</p>
             {% endif %}
 
 {% endblock %}
