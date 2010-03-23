@@ -19,3 +19,9 @@ languages["ruby"] = {
     "home_url" : "http://www.ruby-lang.org",
     "u_icon" : paste.url("images/languages/ruby.png")
 }
+
+languages["xml"] = {
+    "name" : "XML",
+    "home_url" : "http://www.w3.org/TR/2006/REC-xml11-20060816/",
+    "u_icon" : paste.url("images/languages/xml.png")
+}

@@ -22,7 +22,7 @@ class XmlDeclarationCheck (check.Check):
     def _test(self):
         result = False
         if self.is_re_found("^<\?xml\s+") :
-            self.probability = 40
+            self.probability = 100
             result = True
         return result
 
@@ -31,6 +31,6 @@ class XmlCheck (check.LanguageCheck):
     def __init__(self):
         check.LanguageCheck.__init__(self)
 
-        self.name="ruby"
+        self.name="xml"
 
         self.checkers.append(XmlDeclarationCheck())
