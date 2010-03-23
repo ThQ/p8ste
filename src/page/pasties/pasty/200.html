@@ -69,11 +69,15 @@
             </h2>
 
             {% if is_thread %}
-            <table>
+            <ul>
                 {% for thread_paste in thread_pastes %}
-                    <tr>
-                        <td>
-                        {{ thread_paste.ident }}
+                {% if thread_paste.open_list %}
+                <li><ul>
+                {% endif %}
+                {% if thread_paste.close_list %}
+                </ul></li>
+                {% endif %}
+                        <li>
                         {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image }}" width="16" height="16" /> {% endif %}
 
                         {% ifequal pasty_slug thread_paste.slug %}<strong>{% endifequal %}
@@ -90,10 +94,9 @@
                             {% endifnotequal %}
                         </small>
                         {% ifequal pasty_slug thread_paste.slug %}</strong>{% endifequal %}
-                        </td>
-                    </tr>
+                        </li>
                 {% endfor %}
-            </table>
+            </ul>
             {% else %}
             <p class="info"><strong>Did you know ?</strong> You can <a href="{{u_edit}}"><strong>fork</strong></a> this paste : you create a copy of it and make whatever change you want on that copy.</p>
             {% endif %}

@@ -232,6 +232,8 @@ class Pasty(paste.web.RequestHandler):
         dbqry.filter("thread =", self.pasty.thread)
         dbqry.order("thread_position")
         dbpastes = dbqry.fetch(1000)
+
+        cur_level = 0
         for dbpaste in dbpastes:
             lpaste = {}
             lpaste["title"] = dbpaste.title
@@ -240,6 +242,7 @@ class Pasty(paste.web.RequestHandler):
             lpaste["is_moderated"] = dbpaste.is_moderated
             lpaste["u"] = paste.url("%s", dbpaste.slug)
             lpaste["ident"] = ("&nbsp;&nbsp;&nbsp;&nbsp;" * dbpaste.thread_level)
+
             if dbpaste.language:
                 lpaste["u_language_image"] = smoid.languages.languages[dbpaste.language]["u_icon"]
             else:
@@ -258,6 +261,12 @@ class Pasty(paste.web.RequestHandler):
                 lpaste["diff_loc"] = ""
             lpaste["diff_loc"] += str(dbpaste.lines - default_loc)
 
+            if dbpaste.thread_level > cur_level:
+                cur_level = dbpaste.thread_level
+                lpaste["open_list"] = 1
+            elif dbpaste.thread_level < cur_level:
+                cur_level = dbpaste.thread_level
+                lpaste["close_list"] = 1
             pastes.append(lpaste)
         return pastes
 
