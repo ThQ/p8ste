@@ -78,7 +78,7 @@
                 </ul></li>
                 {% endif %}
                         <li>
-                        {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image }}" width="16" height="16" /> {% endif %}
+                        {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image }}" alt="{{ thread_paste.language_name }}" title="{{ thread_paste.language_name }}" width="16" height="16" /> {% endif %}
 
                         {% ifequal pasty_slug thread_paste.slug %}<strong>{% endifequal %}
                         {% if thread_paste.is_moderated %}<strike>{% endif %}<a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>{% if thread_paste.is_moderated %}</strike>{% endif %}
