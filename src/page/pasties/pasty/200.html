@@ -2,7 +2,7 @@
 
 {%block page-title %}
     
-    {{ pasty_title }}{% if language %} ({{ language }} paste){% endif %} - {{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC
+    {{ pasty_title }}{% if pasty_language_name %} ({{ pasty_language_name }} paste){% endif %} - {{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC
 
 {% endblock %}
 {%block h1 %}
