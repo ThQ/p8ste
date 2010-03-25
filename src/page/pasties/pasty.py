@@ -242,9 +242,9 @@ class Pasty(paste.web.RequestHandler):
             lpaste["is_moderated"] = dbpaste.is_moderated
             lpaste["u"] = paste.url("%s", dbpaste.slug)
             lpaste["ident"] = ("&nbsp;&nbsp;&nbsp;&nbsp;" * dbpaste.thread_level)
-            lpaste["language_name"] = smoid.languages.languages[dbpaste.language]["name"]
 
             if dbpaste.language:
+                lpaste["language_name"] = smoid.languages.languages[dbpaste.language]["name"]
                 lpaste["u_language_image"] = smoid.languages.languages[dbpaste.language]["u_icon"]
             else:
                 lpaste["u_language_image"] = paste.url("images/silk/page_white_text.png")
