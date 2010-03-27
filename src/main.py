@@ -33,7 +33,7 @@ pages = [
     ('/pastes/', page.pasties.index.Index),
     ('/threads/(P[a-zA-Z0-9_-]+).atom', page.threads.thread_atom.ThreadAtom),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
-    ('/languages/autodetected', page.languages.autodetected.AutoDetected),
+    ('/languages/auto-detected', page.languages.autodetected.AutoDetected),
     ('/.*', page.error.error404.Error404)
 ]
 application = webapp.WSGIApplication(pages, debug=True)
