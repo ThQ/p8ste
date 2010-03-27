@@ -16,7 +16,6 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import page.error.error404
-import page.index
 import page.pasties.add
 import page.pasties.index
 import page.pasties.pasty
