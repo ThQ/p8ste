@@ -10,7 +10,7 @@
 {% block page-content %}
 {% if pastes %}
 <table>
-
+    <thead>
     <tr>
         <th style="width:15%;">Date</th>
         <th style="width:10%;">User</th>
@@ -20,19 +20,7 @@
         <th style="width:10%;">Size</th>
         <th style="width:10%;">Lines</th>
     </tr>
-
-    {% for paste in pastes %}
-    <tr>
-        <td>{{ paste.posted_at }}</td>
-        <td>{{ paste.user_name }}</td>
-        <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon }}" alt="{{ paste.language }}" width="16" height="16" />{% endif %}</td>
-        <td><a href="{{ paste.u }}">{% if paste.is_moderated %}<strike>{% else %}<strong>{% endif %}{{ paste.title|escape }}{% if paste.is_moderated %}</strike>{% else %}</strong>{% endif %}</a>
-        </td>
-        <td>{% if paste.snippet %}<small>{{ paste.snippet|escape }}</small>{% endif %}</td>
-        <td>{{ paste.size.0 }} <small>{{ paste.size.1 }}</small></td>
-        <td>{% if paste.lines %}{{ paste.lines }} <small>LOC</small>{% endif %}</td>
-    </tr>
-    {% endfor %}
+    </thead>
 
     {% if pages %}
     <tfoot>
@@ -55,6 +43,21 @@
         </tr>
     </tfoot>
     {% endif %}
+
+    <tbody>
+    {% for paste in pastes %}
+    <tr>
+        <td>{{ paste.posted_at }}</td>
+        <td>{{ paste.user_name }}</td>
+        <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon }}" alt="{{ paste.language }}" width="16" height="16" />{% endif %}</td>
+        <td><a href="{{ paste.u }}">{% if paste.is_moderated %}<strike>{% else %}<strong>{% endif %}{{ paste.title|escape }}{% if paste.is_moderated %}</strike>{% else %}</strong>{% endif %}</a>
+        </td>
+        <td>{% if paste.snippet %}<small>{{ paste.snippet|escape }}</small>{% endif %}</td>
+        <td>{{ paste.size.0 }} <small>{{ paste.size.1 }}</small></td>
+        <td>{% if paste.lines %}{{ paste.lines }} <small>LOC</small>{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
 
 </table>
 
