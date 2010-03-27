@@ -1,6 +1,6 @@
 body
 {
-    font-family: Verdana, Helvetica, sans-serif;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
     font-size:1em;
 }
 
@@ -51,10 +51,10 @@ form li
 
 textarea, input[type="text"]
 {
-    border:1px solid #c0c0c0;
+    border:1px solid #cccccc;
     background-color:#ffffff;
     color:#000000;
-    padding:3px;
+    padding:2px;
     margin:0;
     font-family: "Courrier New", sans-serif;
 }
@@ -79,11 +79,20 @@ input[type="text"]:focus, textarea:focus
     border:1px solid #c0c0ff;
 
 }
+
 label
 {
     font-weight:bold;
+    border-bottom:1px solid #dcdcdc;
+    display:block;
+    padding:0 0 5px 0;
+    margin:0 0 8px 0;
 }
 
+label small
+{
+    font-weight:normal;
+}
 a:link, a:visited
 {
     color:#5252D2;
@@ -288,13 +297,14 @@ form .explanation
     font-size:0.8em;
     color:#333333;
     margin:0;
-    padding:0;
+    padding:1px;
 }
 
 form .input
 {
     margin:5px 0 5px 0;
-    border:3px solid #dcdcdc;
+    padding:1px;
+    border:1px solid #dcdcdc;
 }
 
 form table

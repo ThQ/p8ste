@@ -20,19 +20,23 @@
                         {% if pasty_code_error %}
                         <p class="warning">{{ pasty_code_error }}</p>
                         {% endif %}
-                        <p class="input"><textarea name="pasty_code" id="pasty_code" rows="20" cols="50">{{ pasty_code }}</textarea></p>
+                        <div class="input">
+                            <div><textarea name="pasty_code" id="pasty_code" rows="20" cols="50">{{ pasty_code }}</textarea></div>
+                        </div>
+                        <p class="info">We will try to guess which language you're using, if it's <a href="languages/auto-detected">supported</a> we will highlight your code.</p>
+                        <p style="text-align:right;"><input type="submit" value="Paste!" /></p>
                     </li>
                 </ul>
             </td>
             <td style="width:300px;padding:0 0 0 30px;">
                 <ul>
                     <li>
-                        <label for="pasty_title">Title</label> <small>(optional)</small>
+                        <label for="pasty_title">Title <small>(optional)</small></label>
                         <p class="input"><input type="text" name="pasty_title" id="pasty_title" value="{{ pasty_title }}"/></p>
                         <small>Ex: GAE Blobstore test</small>
                     </li>
                     <li>
-                        <label for="pasty_tags">Tags</label> <small>(optional)</small>:
+                        <label for="pasty_tags">Tags <small>(optional)</small></label>
                         <p class="input">
                             <input type="text" name="pasty_tags" id="pasty_tags" value="{{ pasty_tags }}"/>
                         </p>
@@ -40,13 +44,12 @@
                         <small>Ex: python, googleappengine</small>
                     </li>
                     <li>
-                        <label for="pasty_user_name">User name</label> <small>(optional)</small>
+                        <label for="pasty_user_name">User name <small>(optional)</small></label>
                         <p class="input">
                             <input type="text" name="pasty_user_name" id="pasty_user_name" value="{{ pasty_user_name }}"/>
                         </p>
                         <small>Ex: John_Connor</small>
                     </li>
-                    <li><input type="submit" value="Paste!" /></li>
                 </ul>
             </td>
         </tr>
