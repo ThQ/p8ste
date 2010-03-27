@@ -1,0 +1,28 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}
+    Auto-detected languages
+{% endblock %}
+
+
+{%block h1 %}Auto-detected languages{% endblock %}
+
+{% block page-content %}
+
+<table>
+    <thead>
+        <tr>
+            <th style="width:16px;"></th>
+            <th>Language</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for language in languages%}
+        <tr>
+            <td>{% if language.u_icon %}<img src="{{ language.u_icon }}" alt="{{ language.name }}" width="16" height="16" />{% endif %}</td>
+            <td><strong>{{language.name}}</strong></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

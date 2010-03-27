@@ -16,6 +16,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import page.error.error404
+import page.languages.autodetected
 import page.pasties.add
 import page.pasties.index
 import page.pasties.pasty
@@ -32,6 +33,7 @@ pages = [
     ('/pastes/', page.pasties.index.Index),
     ('/threads/(P[a-zA-Z0-9_-]+).atom', page.threads.thread_atom.ThreadAtom),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
+    ('/languages/autodetected', page.languages.autodetected.AutoDetected),
     ('/.*', page.error.error404.Error404)
 ]
 application = webapp.WSGIApplication(pages, debug=True)
