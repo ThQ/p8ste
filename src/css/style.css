@@ -393,7 +393,7 @@ small a:hover
     margin:0;
     padding:1px 9px 2px 9px;
     border:0;
-    font:'Andale Mono';
+    font-family:'Andale Mono';
 }
 .lines
 {
