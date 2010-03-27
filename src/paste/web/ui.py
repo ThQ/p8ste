@@ -33,7 +33,7 @@ class Paging:
         self.prepared = True
 
     def append_page_range(self, start, end):
-        for i in range(int(start), (end)):
+        for i in range(int(start), int(end)):
             self.pages.append(self.make_page(i))
 
 class CursorPaging (Paging):
