@@ -79,21 +79,21 @@ class Pasty(paste.web.RequestHandler):
         r_lines = ""
         i = 1
         for line in self.lines:
-            r_lines += "<tr><td class=\"line\">"
-            r_lines += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a>"
-            r_lines += "</td></tr>\n"
+            #r_lines += "<tr><td class=\"line\">"
+            r_lines += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a>\n"
+            #r_lines += "</td></tr>\n"
 
-            r_code += "<tr>"
-            if i in self.highlights: r_code += "<td class=\"hl\">"
-            else: r_code += "<td>"
+            #r_code += "<tr>"
+            #if i in self.highlights: r_code += "<td class=\"hl\">"
+            #else: r_code += "<td>"
 
             if self.has_edited_lines and self.edited_lines.has_key(str(i)):
                 r_code += self.format_line_start(cgi.escape(self.request.get("e" + str(i))))
             else:
-                if line == "": r_code += "<br/>"
+                if line == "": r_code += "\n"
                 else: r_code += self.format_line_start(line)
 
-            r_code += "</td></tr>\n"
+            #r_code += "</td></tr>\n"
             i += 1
 
         return (r_lines, r_code)
@@ -103,11 +103,12 @@ class Pasty(paste.web.RequestHandler):
         r_code = ""
         i = 1
         for line in self.lines:
-            r_lines += "<tr><td class=\"line\"><a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a></td></tr>"
-            r_code += "<tr><td>"
-            if line == "": r_code += "<br />"
-            else: r_code += self.format_line_start(line)
-            r_code += "</td></tr>\n"
+            #r_lines += "<tr><td class=\"line\"><a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a></td></tr>"
+            r_lines += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a>\n"
+            #r_code += "<tr><td>"
+            if line == "": r_code += "\n"
+            else: r_code += self.format_line_start(line) + "\n"
+            #r_code += "</td></tr>\n"
             i += 1
         return (r_lines, r_code)
 

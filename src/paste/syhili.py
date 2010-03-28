@@ -30,18 +30,27 @@ class HtmlFormatter (pygments.formatter.Formatter):
         result = ""
 
         for token in tokens:
-            print token
+
             if token[0] in Token.Keyword:
                 result += self._format_value(token[1], "kw")
 
-            elif token[0] in Token.Comment or token[0] in Token.String.Doc:
+            elif token[0] in Token.Comment:
                 result += self._format_value(token[1], "cmt")
+
+            elif token[0] in Token.String.Doc:
+                result += self._format_value(token[1], "doc")
 
             elif token[0] in Token.Name.Builtin:
                 result += self._format_value(token[1], "bui")
 
             elif token[0] in Token.Literal.String:
                 result += self._format_value(token[1], "str")
+
+            elif token[0] in Token.Number:
+                result += self._format_value(token[1], "nb")
+
+            elif token[0] in Token.Name.Tag:
+                result += self._format_value(token[1], "tag")
 
             else:
                 result += cgi.escape(token[1])

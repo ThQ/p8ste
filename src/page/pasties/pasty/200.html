@@ -33,33 +33,29 @@
             {% else %}
             <strong>Code</strong>
             {% endif %}
-            <small style="float:right;">
-                <img src="/images/silk/page_white_edit.png" alt="" width="16" height="16" />
-                <a href="{{ u_edit }}"><strong>Fork</strong></a>
-                <img src="/images/silk/page_white_text.png" alt="" width="16" height="16" />
-                Export as <a href="{{ u_raw_text }}">text</a> or <a href="{{ u_atom }}">atom</a>
-            </small>
+            <ul>
+                <li>
+                    <img src="/images/silk/page_white_edit.png" alt="" width="16" height="16" />
+                    <small><a href="{{ u_edit }}"><strong>Fork</strong></a></small>
+                </li>
+                <li>
+                    <img src="/images/silk/page_white_text.png" alt="" width="16" height="16" />
+                    <small><a href="{{ u_raw_text }}">Export as text</a> or <a href="{{ u_atom }}">atom</a></small>
+                </li>
+            </ul>
             </h2>
 
-            <div class="pasty">
-                {% if pasty_is_moderated %}
-                <p class="error">This paste has been <strong>moderated</strong>.</p>
-                {% else %}
-                <table class="snippet">
-                    <tr>
-                        <td>
-                            <table class="lines">
-                                {{ pasty_lines}}
-                                <tr><td><a href="#">Top</a></td></tr>
-                            </table>
-                        </td>
-                        <td style="width:100%;">
-                            <table class="code" id="paste_code">{{ pasty_code }}</table>
-                        </td>
-                    </tr>
-                </table>
-                {% endif %}
-            </div>
+            {% if pasty_is_moderated %}
+            <p class="error">This paste has been <strong>moderated</strong>.</p>
+            {% else %}
+
+            <table class="snippet">
+                <tr>
+                    <td class="lines"><pre>{{ pasty_lines}}</pre></td>
+                    <td class="code"><pre>{{ pasty_code }}</pre></td>
+                </tr>
+            </table>
+            {% endif %}
 
             <h2>
                 <strong>Thread</strong>
