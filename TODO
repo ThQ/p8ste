@@ -2,7 +2,5 @@
 src/page/threads/thread.py : A page that details a thread
 
 == PROJECTS ==
-src/page/pasties/add.py : Find a CATCHPA system (reCATCHPA)
 src/smoid.py : Improve language detection
 Integrate Pygments
-
