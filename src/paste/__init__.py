@@ -68,5 +68,7 @@ else:
     config["pasty_tags_max_count"] = 10
     config["pasty_tags_max_length"] = 150
     config["user_name_max_length"] = 100
+
+config["recaptcha::key::public"] = "6LclHgwAAAAAANgHdkrnhFf4GpH94dIAyUF8caht"
 config["pasty_snippet_length"] = 50
 config["default_user_name"] = "John_Doe"
