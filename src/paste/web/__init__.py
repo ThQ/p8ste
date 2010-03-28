@@ -27,6 +27,7 @@ class RequestHandler (webapp.RequestHandler):
         self.content = {}
         self.scripts = []
         self.feeds = []
+        self.styles = []
 
     def add_atom_feed (self, url, title, rel):
         self.add_feed (url, "application/atom+xml", title, rel)
@@ -52,6 +53,9 @@ class RequestHandler (webapp.RequestHandler):
     def use_script(self, url):
         self.scripts.append(url)
 
+    def use_style (self, url):
+        self.styles.append(url)
+
     def write_out(self, template_path=""):
 
         if template_path != "":
@@ -61,6 +65,7 @@ class RequestHandler (webapp.RequestHandler):
             self.content["debug"] = True
         self.content["header_scripts"] = self.scripts
         self.content["feeds"] = self.feeds
+        self.content["styles"] = self.styles
         self.content["module"] = self.module
         self.content["u_module"] = self.module_url
         self.content["u_module_history"] = self.module_history_url

@@ -50,7 +50,7 @@ if os.environ["SERVER_NAME"] == "localhost":
     config["pasty_code_line_max_length"] = 100
     config["pasty_code_max_lines"] = 15
     config["pasty_expiration_delta"] = datetime.timedelta(minutes=10)
-    config["pasty_form_expiration_delta"] = datetime.timedelta(seconds=15)
+    config["pasty_form_expiration_delta"] = datetime.timedelta(seconds=60)
     config["pasty_title_max_length"] = 50
     config["pasty_tags_max_count"] = 10
     config["pasty_tags_max_length"] = 150

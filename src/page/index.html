@@ -3,7 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>{% block page-title %}Paste code on Paste-It{% endblock %}</title>
-        <link href="/style.css" type="text/css" rel="stylesheet" />
+        <link href="/style/style.css" type="text/css" rel="stylesheet" />
+        {% for style in styles %}
+            <link href="{{ style }}" type="text/css" rel="stylesheet" />
+        {% endfor %}
         {% if header_scripts %}
             {% for script in header_scripts %}
             <script type="text/javascript" src="{{ script }}"></script>
