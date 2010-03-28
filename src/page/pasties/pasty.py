@@ -26,6 +26,7 @@ class Pasty(paste.web.RequestHandler):
     def __init__(self):
         paste.web.RequestHandler.__init__(self)
         self.set_module(__name__)
+        self.use_style(paste.url("style/code.css"))
         self.highlights = set([])
         self.has_edited_lines = False
         self.has_highlights = False

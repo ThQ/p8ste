@@ -11,15 +11,19 @@
 # License for more details.
 
 from google.appengine.api import users
+
 import cgi
 import datetime
 import logging
+import pygments.lexers
+import pygments.formatters
 
 import paste
 import paste.form
 import paste.model
 import paste.pasty
 import paste.private
+import paste.syhili
 import paste.tag
 import paste.web
 import recaptcha.client.captcha
@@ -212,13 +216,13 @@ class Add(paste.web.RequestHandler):
 
         self.paste.characters = len(self.form_code)
         self.paste.code = self.form_code
-        self.paste.code_colored = self.prepare_code(self.form_code)
         self.paste.edited_at = datetime.datetime.now()
         self.paste.edited_by_ip = self.request.remote_addr
         self.paste.expired_at = datetime.datetime.now() + paste.config["pasty_expiration_delta"]
         self.paste.forks = 0
         self.paste.indirect_forks = 0
         self.paste.language = smoid.GrandChecker().find_out_language(self.paste.code)
+        self.paste.code_colored = self.prepare_code(self.form_code, self.paste.language)
         self.paste.lines = self.form_code.count("\n") + 1
         self.paste.parent_paste = ""
         self.paste.posted_at = datetime.datetime.now()
@@ -406,8 +410,19 @@ class Add(paste.web.RequestHandler):
             self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
             self.display_form()
 
-    def prepare_code(self, code):
-        result = cgi.escape(code)
+    def prepare_code(self, code, language):
+        result = ""
+
+        if language != "":
+            if "lexer" in smoid.languages.languages[language]:
+                lexer = pygments.lexers.get_lexer_by_name(language)
+                formatter = paste.syhili.HtmlFormatter(linenos=True, cssclass="code")
+                if lexer and formatter:
+                    result = pygments.highlight(code, lexer, formatter)
+
+        if result == "":
+            result = cgi.escape(code)
+
         return result
 
     def prepare_tags(self, tags):
