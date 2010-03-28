@@ -1,0 +1,111 @@
+.pasty
+{
+    margin:5px 0 5px 0;
+    padding:0;
+}
+
+.pasty table
+{
+    margin:0;
+    padding:0;
+    font-family: "Trebuchet MS", verdana;
+    border-spacing:0;
+    vertical-align:top;
+}
+
+.pasty > table
+{
+    border:1px solid #d0d0d0;
+    width:100%;
+}
+
+.pasty tr
+{
+    padding:0;
+}
+
+.pasty td
+{
+    padding:0;
+}
+
+.lines
+{
+    border:0;
+}
+.lines td
+{
+    background-color:#eaeaea;
+    padding:1px 20px 2px 20px;
+    text-align:right;
+    border:0;
+}
+
+.lines a:link, .lines a:visited
+{
+    text-decoration:none;
+}
+
+.lines a:hover
+{
+    text-decoration:underline;
+}
+
+.code
+{
+    width:100%;
+    border:0;
+}
+
+.code td
+{
+    margin:0;
+    padding:1px 9px 2px 9px;
+    border:0;
+}
+
+.code td
+{
+    border-left:2px solid #d5d5d5;
+}
+
+.code td.hl
+{
+    background-color:#e0e0e0;
+    border-left:2px solid #653DBF;
+}
+
+.code td.r
+{
+    border-left:2px solid #E8947E;
+}
+
+.code input, .code input:focus
+{
+    margin:0;
+    padding:0;
+    border:0;
+    background-color:#D95E3E;
+    color:#ffffff;
+    font-size:1em;
+}
+
+.code .cmt
+{
+    color:#8a8a8a;
+}
+
+.code .str
+{
+    color:#008800;
+}
+
+.code .kw
+{
+    font-weight:bold;
+}
+
+.code .bui
+{
+    color:#2898BF;
+}
