@@ -19,8 +19,10 @@ import paste
 import paste.form
 import paste.model
 import paste.pasty
+import paste.private
 import paste.tag
 import paste.web
+import recaptcha.client.captcha
 import smoid
 
 paste.form.make_token()
@@ -326,6 +328,8 @@ class Add(paste.web.RequestHandler):
         return snippet
 
     def on_form_not_sent(self):
+        self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
+
         self.content["pasty_token"] = paste.form.put_form_token(self.request.remote_addr)
 
         if self.request.get("tags") != "":
@@ -399,6 +403,7 @@ class Add(paste.web.RequestHandler):
 
             paste.form.delete_token(self.form_token, self.request.remote_addr)
         else:
+            self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
             self.display_form()
 
     def prepare_code(self, code):
@@ -419,6 +424,16 @@ class Add(paste.web.RequestHandler):
         code = self.form_code
         token = self.form_token
 
+
+        cap_challenge = self.request.get("recaptcha_challenge_field")
+        cap_response = self.request.get("recaptcha_response_field")
+
+        recaptcha_response = recaptcha.client.captcha.submit(cap_challenge,
+                                                             cap_response,
+                                                             paste.private.config["recaptcha::key::private"],
+                                                             self.request.remote_addr
+                                                            )
+
         if not paste.form.has_valid_token(self.request.remote_addr, token):
             if token != "":
                 self.content["pasty_error"] = "<strong>Your form has expired</strong>, you probably took too much time to fill it. <a href=\"" + paste.url("") + "\"><strong>Refresh this page</strong></a>."
@@ -426,6 +441,10 @@ class Add(paste.web.RequestHandler):
 
         elif result == True and len(code) == 0:
             self.content["pasty_code_error"] = "You must paste some code."
+            result = False
+
+        elif not recaptcha_response.is_valid:
+            self.content["pasty_captcha_error"] = "Please try again."
             result = False
 
         return result

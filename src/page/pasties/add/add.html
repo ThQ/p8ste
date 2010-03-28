@@ -50,6 +50,15 @@
                         </p>
                         <small>Ex: John_Connor</small>
                     </li>
+
+                    <li>
+                        <label for="pasty_user_name">Are you human ?</label>
+                        {% if pasty_captcha_error %}
+                        <p class="warning">{{ pasty_captcha_error }}</p>
+                        {% endif %}
+                        {{ recaptcha }}
+                        <small>We are using this kind of test so as to ensure you are human, it's a way to avoid <a href="http://en.wikipedia.org/wiki/Spam_%28electronic%29">spam</a>.</small>
+                    </li>
                 </ul>
             </td>
         </tr>
