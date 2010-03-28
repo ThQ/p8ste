@@ -361,37 +361,6 @@ small a:hover
     margin:2px 0 2px 0;
 }
 
-.pasty
-{
-    margin:5px 0 5px 0;
-    padding:0;
-}
-
-.pasty table
-{
-    margin:0;
-    padding:0;
-    font-family: "Andale Mono", "Trebuchet MS", monospace;
-    border-spacing:0;
-    vertical-align:top;
-}
-
-.pasty > table
-{
-    border:1px solid #d0d0d0;
-    width:100%;
-}
-
-.pasty tr
-{
-    padding:0;
-}
-
-.pasty td
-{
-    padding:0;
-}
-
 ul.paging
 {
     width:100%;
