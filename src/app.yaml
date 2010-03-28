@@ -4,6 +4,9 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /style
+  static_dir: css/
+
 - url: /style.css
   static_files: css/style.css
   upload: css/style.css
