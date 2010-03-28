@@ -26,6 +26,19 @@ class PhpChildClassDeclarationCheck (check.Check):
         return result
 
 
+class PhpClosingTagCheck (check.Check):
+
+    def __init__ (self):
+        check.Check.__init__ (self)
+        self.name = "Closing tag (?>)"
+
+    def _test(self):
+        result = False
+        if self.is_re_matched("^|\n|\r?>"):
+            result = True
+            self.probability = 50
+        return result
+
 class PhpHeaderCheck (check.Check):
     def __init__ (self):
         check.Check.__init__ (self)
@@ -82,5 +95,6 @@ class PhpCheck (check.LanguageCheck):
         self.name = "php"
         self.checkers.append (PhpHeaderCheck())
         self.checkers.append (PhpOpeningTagCheck())
+        self.checkers.append (PhpClosingTagCheck())
         self.checkers.append (PhpGetPostVariablesCheck())
         self.checkers.append (PhpChildClassDeclarationCheck())
