@@ -1,4 +1,4 @@
-# Copyright 2008 Thomas Quemard
+#_slug Copyright 2008 Thomas Quemard
 #
 # Paste-It is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published
@@ -194,7 +194,7 @@ class Pasty(paste.web.RequestHandler):
             self.content["pasty_language_name"] = lang["name"]
             self.content["pasty_language_url"] = lang["home_url"]
         self.content["u"] = paste.url("%s", self.pasty_slug)
-        self.content["u_edit"] = paste.url("?edit=%s", self.pasty_slug)
+        self.content["u_fork"] = paste.url("%s/fork", self.pasty_slug)
         self.content["u_raw_text"] = paste.url("%s.txt", self.pasty_slug)
         self.content["u_atom"] = paste.url("%s.atom", self.pasty_slug)
 

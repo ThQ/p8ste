@@ -1,10 +1,9 @@
 {% extends "../../index.html" %}
 
 {%block page-title %}
-    
-    {{ pasty_title }}{% if pasty_language_name %} ({{ pasty_language_name }} paste){% endif %} - {{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC
-
+   {{ pasty_title }}{% if pasty_language_name %} ({{ pasty_language_name }} paste){% endif %} - {{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC
 {% endblock %}
+
 {%block h1 %}
     {{ pasty_title }}
     {% if pasty_language_name %} <small>(<a href="{{ pasty_language_url }}">{{ pasty_language_name }}</a>)</small>{% endif %}
@@ -36,7 +35,7 @@
             <ul>
                 <li>
                     <img src="/images/silk/page_white_edit.png" alt="" width="16" height="16" />
-                    <small><a href="{{ u_edit }}"><strong>Fork</strong></a></small>
+                    <small><a href="{{ u_fork }}"><strong>Fork</strong></a></small>
                 </li>
                 <li>
                     <img src="/images/silk/page_white_text.png" alt="" width="16" height="16" />
@@ -94,7 +93,7 @@
                 {% endfor %}
             </ul>
             {% else %}
-            <p class="info"><strong>Did you know ?</strong> You can <a href="{{u_edit}}"><strong>fork</strong></a> this paste : it creates a copy of it so as to let you make whatever change you want on that copy.</p>
+            <p class="info"><strong>Did you know ?</strong> You can <a href="{{u_fork}}"><strong>fork</strong></a> this paste : it creates a copy of it so as to let you make whatever change you want on that copy.</p>
             {% endif %}
 
 {% endblock %}
