@@ -15,8 +15,6 @@ import logging
 import os
 import urllib
 
-import paste.log
-
 def url (format, *args):
     domain = "http://" + os.environ["SERVER_NAME"]
     if os.environ["SERVER_PORT"] != "80":
@@ -55,9 +53,6 @@ if os.environ["SERVER_NAME"] == "localhost":
     config["pasty_tags_max_count"] = 10
     config["pasty_tags_max_length"] = 150
     config["user_name_max_length"] = 100
-
-    h = paste.log.DebugHandler()
-    logging.getLogger().addHandler(h)
 else:
     config["env"] = "production"
     config["pasty_code_line_max_length"] = 500
