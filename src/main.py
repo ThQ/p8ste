@@ -28,6 +28,7 @@ import page.threads.thread_atom
 pages = [
     ('/', page.pasties.add.Add),
     ('/(P[a-zA-Z0-9_-]+)', page.pasties.pasty.Pasty),
+    ('/(P[a-zA-Z0-9_-]+)/fork', page.pasties.add.Add),
     ('/(P[a-zA-Z0-9_-]+).txt', page.pasties.pasty_txt.PastyTxt),
     ('/(P[a-zA-Z0-9_-]+).atom', page.pasties.pasty_atom.PastyAtom),
     ('/pastes/', page.pasties.index.Index),

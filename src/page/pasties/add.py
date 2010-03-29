@@ -45,6 +45,7 @@ class Add(paste.web.RequestHandler):
         self.url_parent_slug = ""
         self.paste = None
         self.parent_paste = None
+        self.parent_paste_slug = ""
 
     def decrement_paste_counter(self, count):
         stats = paste.model.PasteStats.all()
@@ -135,7 +136,8 @@ class Add(paste.web.RequestHandler):
     def display_form(self):
         self.write_out("page/pasties/add/add.html")
 
-    def get(self):
+    def get(self, parent_paste_slug=""):
+        self.parent_paste_slug = parent_paste_slug
         self.on_load()
 
     def get_form_data(self):
@@ -146,14 +148,14 @@ class Add(paste.web.RequestHandler):
         self.form_parent_slug = self.request.get("pasty_parent_slug")
         self.form_tags = self.request.get("pasty_tags")
         self.form_token = self.request.get("pasty_token")
-        self.url_parent_slug = self.request.get("edit")
+        #self.url_parent_slug = self.request.get("fork")
         self.parent_slug = ""
 
     def get_parent_paste(self):
         parent = None
         self.parent_slug = ""
-        if self.url_parent_slug != "":
-            self.parent_slug = self.url_parent_slug
+        if self.parent_paste_slug != "":
+            self.parent_slug = self.parent_paste_slug
         elif self.form_parent_slug != "":
             self.parent_slug = self.form_parent_slug
 
