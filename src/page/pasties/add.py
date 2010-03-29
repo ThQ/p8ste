@@ -348,6 +348,10 @@ class Add(paste.web.RequestHandler):
                 self.content["pasty_title"] += str(self.parent_paste.forks + 1)
             self.content["pasty_title"] += ": " + cgi.escape(self.parent_paste.title)
             self.content["u_parent"] = paste.url("%s", self.parent_paste.slug)
+            self.content["parent_slug"] = self.parent_paste.slug
+            self.content["u_form"] = paste.url("%s/fork", self.parent_paste.slug)
+        else:
+            self.content["u_form"] = paste.url("")
 
         if self.request.get("code") != "":
             self.content["pasty_code"] = cgi.escape(self.request.get("code"))
@@ -404,7 +408,7 @@ class Add(paste.web.RequestHandler):
 
             self.content["u_pasty"] = paste.url("%s", slug)
             self.content["u_pasty_encoded"] = cgi.escape(self.content["u_pasty"])
-            self.content["u_edit_pasty"] = paste.url("?edit=%s", slug)
+            self.content["u_fork"] = paste.url("%s/fork", slug)
             self.write_out("page/pasties/add/added.html")
 
             paste.form.delete_token(self.form_token, self.request.remote_addr)
@@ -432,7 +436,8 @@ class Add(paste.web.RequestHandler):
         tc.import_string(tags)
         return tc.export_to_datastore()
 
-    def post(self):
+    def post(self, parent_paste_slug=""):
+        self.parent_paste_slug = parent_paste_slug
         self.on_load()
 
     def validate_form(self):
