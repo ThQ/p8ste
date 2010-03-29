@@ -1,0 +1,51 @@
+{% extends "../../index.html" %}
+
+{% block page-title %}Diff [{{ pastes.0.slug|escape }}] against [{{ pastes.1.slug|escape }}]{% endblock %}
+
+{% block h1%}Diff [{{ pastes.0.slug|escape }}] against [{{ pastes.1.slug|escape }}]{% endblock %}
+
+{%block page-content %}
+    <p class="info">
+        <strong>You are viewing a diff of <a href="{{ pastes.0.u}}">{{ pastes.0.slug|escape }}</a> against <a href="{{ pastes.1.u }}">{{ pastes.1.slug|escape }}</a></strong> (<a href="{{ u_reverse }}">reverse</a>).</p>
+
+
+<h2><strong>The pastes</strong></h2>
+<table>
+    <thead>
+        <tr>
+            <th style="width:15%;">Pasted at</th>
+            <th style="width:15%;">User</th>
+            <th style="width:16px;"></th>
+            <th>Paste</th>
+            <th style="width:10%;">Size</th>
+            <th style="width:10%;">LOC</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for paste in pastes %}
+        <tr>
+            <td>{{ paste.posted_at }}</td>
+            <td>{{ paste.posted_by }}</td>
+            <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon}}" alt="{{ paste.language }}" width="16" height="16" />{% endif %}</td>
+            <td><a href="{{ paste.u }}"><strong>{{ paste.slug|escape }}</strong></a></td>
+            <td>{{ paste.size.0 }}<small>{{ paste.size.1 }}</td>
+            <td>{{ paste.loc }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2><strong>Diff</strong></h2>
+        <p class="info">Lines starting with "-" disappeared from {{ pastes.0.slug|escape }}, those starting with "+" appeared in {{ pastes.1.slug|escape }}, the others are common to both pastes.</p>
+
+<table class="snippet">
+    <tr>
+        <td class="lines"><pre>{% for line in diff %}<a href="#LL{{line.0}}" name="LL{{line.0}}">{{ line.0 }}</a>
+{% endfor %}</pre></td>
+        <td class="lines"><pre>{% for line in diff %}<a href="#LR{{line.1}}" name="LR{{line.1}}">{{ line.1 }}</a>
+{% endfor %}</pre></td>
+        <td class="code"><pre>{% for line in diff %}{{ line.2 }}
+{% endfor %}</pre></td>
+    </tr>
+</table>
+{% endblock %}
