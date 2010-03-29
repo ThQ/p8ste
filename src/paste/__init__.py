@@ -72,3 +72,4 @@ else:
 config["recaptcha::key::public"] = "6LclHgwAAAAAANgHdkrnhFf4GpH94dIAyUF8caht"
 config["pasty_snippet_length"] = 50
 config["default_user_name"] = "John_Doe"
+config["datetime.format"] = "%b, %d %Y - %I:%M%p %z"
