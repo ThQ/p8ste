@@ -243,6 +243,7 @@ class Pasty(paste.web.RequestHandler):
             lpaste["user_name"] = dbpaste.posted_by_user_name
             lpaste["is_moderated"] = dbpaste.is_moderated
             lpaste["u"] = paste.url("%s", dbpaste.slug)
+            lpaste["u_diff"] = paste.url("%s/diff/%s", self.pasty.slug, dbpaste.slug)
             lpaste["ident"] = ("&nbsp;&nbsp;&nbsp;&nbsp;" * dbpaste.thread_level)
 
             if dbpaste.language:

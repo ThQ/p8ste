@@ -81,11 +81,12 @@
                         <small>
                             &middot; {{thread_paste.user_name}}
                             {% ifnotequal thread_paste.slug pasty_slug %}
-                            / {% ifequal thread_paste.diff_size.0 0 %}
+                            [ {% ifequal thread_paste.diff_size.0 0 %}
                                 =B
                             {%else%}
                                 {{ thread_paste.diff_size.2 }}{{ thread_paste.diff_size.0 }}{{ thread_paste.diff_size.1 }}
                             {% endifequal %}
+                            &middot; <a href="{{thread_paste.u_diff}}">Diff</a> ]
                             {% endifnotequal %}
                         </small>
                         {% ifequal pasty_slug thread_paste.slug %}</strong>{% endifequal %}
