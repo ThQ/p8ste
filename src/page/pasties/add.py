@@ -279,6 +279,10 @@ class Add(paste.web.RequestHandler):
         self.get_form_data()
         self.parent_paste = self.get_parent_paste()
 
+        if self.parent_paste:
+            self.content["is_fork"] = True
+            self.content["u_parent_paste"] = paste.url("%s", self.parent_paste.slug)
+
         if self.form_token == "":
             self.on_form_not_sent()
         else:
@@ -396,19 +400,21 @@ class Add(paste.web.RequestHandler):
         self.content["pasty_token"] = self.form_token
         self.content["pasty_slug"] = cgi.escape(slug)
         self.content["pasty_user_name"] = self.form_user_name
+        if self.parent_paste:
+            self.content["u_diff"] = paste.url("%s/diff/%s", self.parent_paste.slug, slug)
 
         if self.validate_form():
             self.insert_paste(slug)
             self.increment_fork_count()
             if self.parent_paste:
                 self.move_all_same_level_forks_down()
-                pass
             self.insert_tags(slug)
             self.increment_paste_counter()
 
             self.content["u_pasty"] = paste.url("%s", slug)
             self.content["u_pasty_encoded"] = cgi.escape(self.content["u_pasty"])
             self.content["u_fork"] = paste.url("%s/fork", slug)
+            self.content["u_add"] = paste.url("")
             self.write_out("page/pasties/add/added.html")
 
             paste.form.delete_token(self.form_token, self.request.remote_addr)

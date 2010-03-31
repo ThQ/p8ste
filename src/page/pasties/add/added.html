@@ -1,17 +1,20 @@
 {% extends "../../index.html" %}
 
-{%block page-title %}Paste [{{ pasty_slug }}] added{% endblock %}
+{%block page-title %}Paste [{{pasty_slug}}] added{% endblock %}
 {%block h1 %}Paste added{% endblock %}
 {%block page-content %}
 
-<p class="success"><strong>Your paste has been added</strong> and is now visible by anyone.</p>
+<p class="success"><strong>Your <a href="{{u_pasty}}">paste</a> has been added</strong> and is now visible by anyone.</p>
 
 <ul>
-    <li>Share your paste : <a href="{{ u_pasty }}"><strong>{{ u_pasty_encoded }}</strong></a></li>
+    <li>Share your paste : <a href="{{u_pasty}}"><strong>{{u_pasty_encoded}}</strong></a></li>
 </ul>
 <ul>
-    <li><a href="{{ u_fork }}">Fork your paste</a></li>
-    <li><a href="{{ u_add }}">Paste some other code</a></li>
+    {% if is_fork %}
+    <li>View <a href="{{u_parent_paste}}">parent paste</a> or <a href="{{u_diff}}">diff</a></li>
+    {% endif %}
+    <li><a href="{{u_fork}}">Fork your paste</a></li>
+    <li><a href="{{u_add}}">Paste some other code</a></li>
 </ul>
 
 {% endblock %}

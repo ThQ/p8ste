@@ -1,10 +1,11 @@
 {% extends "../../index.html" %}
 
+{%block page-title %}{% if not u_parent %}Paste code{% else %}Fork [{{parent_slug|escape}}]{% endif %}{% endblock %}
 {%block h1 %}{% if not u_parent %}Paste code{% else %}Fork{% endif %}{% endblock %}
 {%block page-content %}
 
 {% if u_parent %}
-<p class="info"><strong>You are forking <a href="{{ u_parent }}">{{ parent_slug }}</a></strong> : it's a <i>copy</i>, you're not editing the original paste, just making changes on a copy of your own.</p>
+<p class="info"><strong>You are forking <a href="{{ u_parent }}">{{parent_slug|escape}}</a></strong> : it's a <i>copy</i>, you're not editing the original paste, just making changes on a copy of your own.</p>
 {% endif %}
 
 <form method="post" action="{{ u_form }}">
