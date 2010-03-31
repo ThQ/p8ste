@@ -12,6 +12,7 @@
 
 import sys
 
+import languages.perl
 import languages.php
 import languages.python
 import languages.ruby
@@ -22,6 +23,7 @@ class GrandChecker:
     def __init__ (self):
         self.languages = []
         self.checkers = []
+        self.checkers.append(languages.perl.PerlCheck())
         self.checkers.append(languages.php.PhpCheck())
         self.checkers.append(languages.python.PythonCheck())
         self.checkers.append(languages.ruby.RubyCheck())
@@ -52,7 +54,7 @@ class GrandChecker:
             for checker in self.checkers:
                 print "[", checker.name, "] =", checker.probability
 
-        if len(self.checkers) > 1 and self.checkers[0].probability >= 60:
+        if len(self.checkers) > 1 and self.checkers[0].probability > 0:
             language = self.checkers[0].name
         return language
 
