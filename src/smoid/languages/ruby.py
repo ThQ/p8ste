@@ -11,12 +11,12 @@
 # License for more details.
 
 
-import check
+from smoid.languages import Check, LanguageCheck
 
 
-class RubyClassDeclarationCheck (check.Check):
+class RubyClassDeclarationCheck (Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Class declaration"
 
     def _test(self):
@@ -28,9 +28,9 @@ class RubyClassDeclarationCheck (check.Check):
         return result
 
 
-class RubyFunctionDeclarationCheck (check.Check):
+class RubyFunctionDeclarationCheck (Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Function declaration"
 
     def _test(self):
@@ -42,9 +42,9 @@ class RubyFunctionDeclarationCheck (check.Check):
         return result
 
 
-class RubyHeaderCheck (check.Check):
+class RubyHeaderCheck (Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Headers"
 
     def _test(self):
@@ -55,9 +55,9 @@ class RubyHeaderCheck (check.Check):
         return result
 
 
-class RubyModuleDeclarationCheck (check.Check):
+class RubyModuleDeclarationCheck (Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Module declaration"
 
     def _test(self):
@@ -69,9 +69,9 @@ class RubyModuleDeclarationCheck (check.Check):
         return result
 
 
-class RubyRequireCheck (check.Check):
+class RubyRequireCheck (Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Require"
 
     def _test(self):
@@ -82,28 +82,28 @@ class RubyRequireCheck (check.Check):
         return result
 
 
-class RubyStrangeFunctionNamesCheck (check.Check):
+class RubyStrangeFunctionNamesCheck (Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Strange function names"
 
     def _test(self):
         result = False
-        if self.is_re_found("\.[a-zA-Z_][a-zA-Z_0-9]\?|!") :
+        if self.is_re_found("\.[a-zA-Z_][a-zA-Z_0-9](\?|!)") :
             self.probability = 20
             result = True
         return result
 
 
-class RubyCheck (check.LanguageCheck):
+class RubyCheck (LanguageCheck):
     def __init__(self):
-        check.LanguageCheck.__init__(self)
+        LanguageCheck.__init__(self)
 
-        self.name="ruby"
+        self.name = "ruby"
 
-        self.checkers.append(RubyHeaderCheck())
-        self.checkers.append(RubyRequireCheck())
         self.checkers.append(RubyClassDeclarationCheck())
-        self.checkers.append(RubyModuleDeclarationCheck())
         self.checkers.append(RubyFunctionDeclarationCheck())
+        self.checkers.append(RubyHeaderCheck())
+        self.checkers.append(RubyModuleDeclarationCheck())
+        self.checkers.append(RubyRequireCheck())
         self.checkers.append(RubyStrangeFunctionNamesCheck())

@@ -11,12 +11,12 @@
 # License for more details.
 
 
-import check
+from smoid.languages import Check, LanguageCheck
 
 
-class XmlDeclarationCheck (check.Check):
+class XmlDeclarationCheck (Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "XML declaration : <?xml etc."
 
     def _test(self):
@@ -27,10 +27,10 @@ class XmlDeclarationCheck (check.Check):
         return result
 
 
-class XmlCheck (check.LanguageCheck):
+class XmlCheck (LanguageCheck):
     def __init__(self):
-        check.LanguageCheck.__init__(self)
+        LanguageCheck.__init__(self)
 
-        self.name="xml"
+        self.name = "xml"
 
         self.checkers.append(XmlDeclarationCheck())

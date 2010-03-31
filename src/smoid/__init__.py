@@ -12,20 +12,20 @@
 
 import sys
 
-import php
-import python
-import ruby
-import xml
+import languages.php
+import languages.python
+import languages.ruby
+import languages.xml
 
 
 class GrandChecker:
     def __init__ (self):
         self.languages = []
         self.checkers = []
-        self.checkers.append(php.PhpCheck())
-        self.checkers.append(python.PythonCheck())
-        self.checkers.append(ruby.RubyCheck())
-        self.checkers.append(xml.XmlCheck())
+        self.checkers.append(languages.php.PhpCheck())
+        self.checkers.append(languages.python.PythonCheck())
+        self.checkers.append(languages.ruby.RubyCheck())
+        self.checkers.append(languages.xml.XmlCheck())
         self.verbose = False
 
     def find_out_language_of_file (self, file_path):

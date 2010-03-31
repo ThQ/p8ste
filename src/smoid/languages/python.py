@@ -12,12 +12,12 @@
 
 import re
 
-import check
+from smoid.languages import Check, LanguageCheck
 
 
-class PythonClassDeclarationCheck (check.Check):
+class PythonClassDeclarationCheck (Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Class declaration (class * (*):)"
 
     def _test(self):
@@ -29,9 +29,10 @@ class PythonClassDeclarationCheck (check.Check):
             result = True
         return result
 
-class PythonSourceEncodingCheck(check.Check):
+
+class PythonSourceEncodingCheck(Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Source encoding (# -*- coding: * -*-)"
 
     def _test(self):
@@ -42,9 +43,9 @@ class PythonSourceEncodingCheck(check.Check):
         return result
 
 
-class PythonInitMethodCheck(check.Check):
+class PythonInitMethodCheck(Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "__init__ method"
 
     def _test(self):
@@ -54,9 +55,10 @@ class PythonInitMethodCheck(check.Check):
             result = True
         return result
 
-class PythonHeaderCheck(check.Check):
+
+class PythonHeaderCheck(Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Header (#!.../pyton)"
 
     def _test(self):
@@ -66,9 +68,10 @@ class PythonHeaderCheck(check.Check):
             result = True
         return result
 
-class PythonImportCheck(check.Check):
+
+class PythonImportCheck(Check):
     def __init__ (self):
-        check.Check.__init__(self)
+        Check.__init__(self)
         self.name = "Imports"
 
     def _test(self):
@@ -79,14 +82,13 @@ class PythonImportCheck(check.Check):
             result = True
         return result
 
-class PythonCheck (check.LanguageCheck):
+
+class PythonCheck (LanguageCheck):
     def __init__(self):
-        check.LanguageCheck.__init__ (self)
+        LanguageCheck.__init__ (self)
         self.name = "python"
+        self.checkers.append(PythonClassDeclarationCheck())
         self.checkers.append(PythonHeaderCheck())
         self.checkers.append(PythonImportCheck())
-        self.checkers.append(PythonClassDeclarationCheck())
         self.checkers.append(PythonInitMethodCheck())
         self.checkers.append(PythonSourceEncodingCheck())
-
-

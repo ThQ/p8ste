@@ -10,12 +10,14 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
-import check
+
+from smoid.languages import Check, LanguageCheck
 
 
-class PhpChildClassDeclarationCheck (check.Check):
+class PhpChildClassDeclarationCheck (Check):
+
     def __init__ (self):
-        check.Check.__init__ (self)
+        Check.__init__ (self)
         self.name = "Class declaration (class * implements *)"
 
     def _test(self):
@@ -26,22 +28,24 @@ class PhpChildClassDeclarationCheck (check.Check):
         return result
 
 
-class PhpClosingTagCheck (check.Check):
+class PhpClosingTagCheck (Check):
 
     def __init__ (self):
-        check.Check.__init__ (self)
+        Check.__init__ (self)
         self.name = "Closing tag (?>)"
 
     def _test(self):
         result = False
-        if self.is_re_matched("^|\n|\r?>"):
+        if self.is_re_matched("(^|\n|\r)\?>"):
             result = True
             self.probability = 50
         return result
 
-class PhpHeaderCheck (check.Check):
+
+class PhpHeaderCheck (Check):
+
     def __init__ (self):
-        check.Check.__init__ (self)
+        Check.__init__ (self)
         self.name = "Header (#!.../php)"
 
     def _test(self):
@@ -52,7 +56,7 @@ class PhpHeaderCheck (check.Check):
         return result
 
 
-class PhpInstanceMemberCheck (check.Check):
+class PhpInstanceMemberCheck (Check):
     name = "PhpInstanceMember"
 
     def _test(self):
@@ -62,9 +66,9 @@ class PhpInstanceMemberCheck (check.Check):
         return result
 
 
-class PhpGetPostVariablesCheck (check.Check):
+class PhpGetPostVariablesCheck (Check):
     def __init__ (self):
-        check.Check.__init__ (self)
+        Check.__init__ (self)
         self.name = "$_GET / $_POST variables"
 
     def _test(self):
@@ -75,10 +79,10 @@ class PhpGetPostVariablesCheck (check.Check):
         return result
 
 
-class PhpOpeningTagCheck (check.Check):
+class PhpOpeningTagCheck (Check):
 
     def __init__ (self):
-        check.Check.__init__ (self)
+        Check.__init__ (self)
         self.name = "Opening tag (<?php)"
 
     def _test(self):
@@ -89,12 +93,14 @@ class PhpOpeningTagCheck (check.Check):
         return result
 
 
-class PhpCheck (check.LanguageCheck):
+class PhpCheck (LanguageCheck):
     def __init__ (self):
-        check.LanguageCheck.__init__(self)
+        LanguageCheck.__init__(self)
+
         self.name = "php"
-        self.checkers.append (PhpHeaderCheck())
-        self.checkers.append (PhpOpeningTagCheck())
-        self.checkers.append (PhpClosingTagCheck())
-        self.checkers.append (PhpGetPostVariablesCheck())
-        self.checkers.append (PhpChildClassDeclarationCheck())
+
+        self.checkers.append(PhpChildClassDeclarationCheck())
+        self.checkers.append(PhpClosingTagCheck())
+        self.checkers.append(PhpGetPostVariablesCheck())
+        self.checkers.append(PhpHeaderCheck())
+        self.checkers.append(PhpOpeningTagCheck())
