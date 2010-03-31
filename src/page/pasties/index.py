@@ -87,7 +87,7 @@ class Index(paste.web.RequestHandler):
                     dpaste["u_language_icon"] = smoid.languages.languages[opaste.language]['u_icon']
 
                 if opaste.posted_at != None:
-                    dpaste["posted_at"] = opaste.posted_at.strftime("%b, %d %Y - %H:%M")
+                    dpaste["posted_at"] = opaste.posted_at.strftime(paste.config["datetime.format"])
                 else:
                     dpaste["posted_at"] = ""
 
