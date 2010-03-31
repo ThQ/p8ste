@@ -22,6 +22,10 @@ import smoid.languages
 
 
 class Diff(paste.web.RequestHandler):
+    """
+    Shows a diff of two pastes (maybe more in the future ?)
+    """
+
     def __init__ (self):
         paste.web.RequestHandler.__init__(self)
         self.set_module("page.pasties.diff.__init__")
@@ -31,32 +35,63 @@ class Diff(paste.web.RequestHandler):
         self.paste2_slug = ""
         self.paste2 = None
         self.pastes = []
+        self.paste_slugs = []
 
     def get (self, paste1_slug, paste2_slug):
-        self.paste1_slug = paste1_slug
-        self.paste1 = self.get_paste (self.paste1_slug)
-        self.paste2_slug = paste2_slug
-        self.paste2 = self.get_paste (self.paste2_slug)
+        self.pastes = [self.get_paste (paste1_slug), self.get_paste (paste2_slug)]
+        self.paste_slugs = [paste1_slug, paste2_slug]
 
-        self.pastes = [self.paste1, self.paste2]
-
-        if self.paste1 and self.paste2:
+        if None in self.pastes:
+            self.get_404()
+        else:
             self.get_200()
 
     def get_200 (self):
-        self.content["u_reverse"] = paste.url(self.paste2_slug + "/diff/" + self.paste1_slug)
+        """
+        Shows the diff if all the pastes submitted are found.
+        """
+
+        self.content["u_reverse"] = paste.url(self.paste_slugs[1] + "/diff/" + self.paste_slugs[0])
         tpl_pastes = [self.get_template_info_for_paste(0), self.get_template_info_for_paste(1)]
         self.content["pastes"] = tpl_pastes
         self.content["diff"] = self.get_diff()
         self.use_template("page/pasties/diff/200.html")
         self.write_out()
 
+    def get_404 (self):
+        """
+        Shows an 404 error page if one, or more, pastes were not found.
+        """
+
+        self.content["error"] = {}
+        self.content["error"]["pastes_not_found"] = []
+        self.content["error"]["pastes_found"] = []
+        self.content["u_pastes"] = paste.url("pastes/")
+        i = 0
+        for opaste in self.pastes:
+           tpl_paste = {}
+           tpl_paste["u"] = paste.url("%s", self.paste_slugs[i])
+           tpl_paste["slug"] = self.paste_slugs[i]
+           if opaste == None:
+               self.content["error"]["pastes_not_found"].append(tpl_paste)
+           else:
+               self.content["error"]["pastes_found"].append(tpl_paste)
+           i = i + 1
+
+        self.use_template("page/pasties/diff/404.html")
+        self.write_out()
+
     def get_diff (self):
+        """
+        Computes a diff and annotate each line with a line number.
+        """
+
         diff = []
         differ = difflib.Differ()
 
         lineno1 = 0
         lineno2 = 0
+
         for line in differ.compare(self.pastes[0].code.splitlines(), self.pastes[1].code.splitlines()):
             if line.startswith("- "):
                 lineno1 += 1
@@ -72,25 +107,31 @@ class Diff(paste.web.RequestHandler):
         return diff
 
     def get_paste (self, slug):
+        """
+        Retrieves a paste from the datastore given its slug.
+        """
         qry_paste = paste.model.Pasty.all()
         qry_paste.filter("slug =", slug)
         return qry_paste.get()
 
     def get_template_info_for_paste (self, paste_index):
-        opaste = self.pastes[paste_index]
+        """
+        Builds an info map about a paste for using in the template.
+        """
         info = {}
+        opaste = self.pastes[paste_index]
+        if opaste:
+            info["slug"] = opaste.slug
+            info["posted_at"] = opaste.posted_at.strftime(paste.config["datetime.format"])
+            info["u"] = url("%s", opaste.slug)
+            info["posted_by"] = opaste.posted_by_user_name
 
-        info["slug"] = opaste.slug
-        info["posted_at"] = opaste.posted_at.strftime(paste.config["datetime.format"])
-        info["u"] = url("%s", opaste.slug)
-        info["posted_by"] = opaste.posted_by_user_name
-
-        if opaste.language in smoid.languages.languages:
-            info["language"] = smoid.languages.languages[opaste.language]["name"]
-            info["u_language_icon"] = smoid.languages.languages[opaste.language]["u_icon"]
-        if opaste.characters:
-            info["size"] = make_filesize_readable(opaste.characters)
-        if opaste.lines:
-            info["loc"] = opaste.lines
+            if opaste.language in smoid.languages.languages:
+                info["language"] = smoid.languages.languages[opaste.language]["name"]
+                info["u_language_icon"] = smoid.languages.languages[opaste.language]["u_icon"]
+            if opaste.characters:
+                info["size"] = make_filesize_readable(opaste.characters)
+            if opaste.lines:
+                info["loc"] = opaste.lines
 
         return info
