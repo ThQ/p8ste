@@ -1,6 +1,14 @@
 == ACTIONS ==
-src/page/threads/thread.py : A page that details a thread
++ src/page/threads/thread/__init__.py : A page that details a thread
++ src/page/pasties/update/__init__.py : Re-run synthax highlighting, char count, etc.
+src/page/pasties/diff/__init__.py : Make a 404 page
++ src/smoid/perl.py : Support perl
++ src/smoid/java.py : Support java
++ src/smoid/csharp.py : Support c#
++ src/smoid/c.py : Support C
++ src/smoid/cpp.py : Support C++
 
 == PROJECTS ==
 src/smoid.py : Improve language detection
-Integrate Pygments
+src/smoid.py : Should also detect licenses
+
