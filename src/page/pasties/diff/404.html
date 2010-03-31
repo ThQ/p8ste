@@ -1,0 +1,20 @@
+{% extends "../../index.html" %}
+
+{% block page-title %}Couldn't find paste{{error.pastes_not_found|length|pluralize}} {% for paste in error.pastes_not_found %}{% if not forloop.first%}, {%endif%}{{paste.slug}}{% endfor %}{% endblock %}
+
+{% block h1%}Paste{{error.pastes_not_found|length|pluralize}} not found{% endblock %}
+
+{%block page-content %}
+    <p class="error">
+        <strong>We couldn't find paste{{error.pastes_not_found|length|pluralize}} in our database</strong> : {% for paste in error.pastes_not_found%}{% if not forloop.first%}, {%endif%}<a href="{{paste.u}}">{{paste.slug|escape}}</a>{% endfor %}. Either your mistyped the URL or you followed a bad link.
+    </p>
+
+{% if error.pastes_found %}
+<ul>
+    <li><strong>View paste{{error.pastes_found|length|pluralize}} : {% for paste in error.pastes_found %}<a href="{{paste.u}}">{{paste.slug|escape}}</a> {% endfor %}.</strong></li>
+</ul>
+{% endif %}
+<ul>
+    <li><a href="{{u_pastes}}">View all pastes</a></li>
+</ul>
+{% endblock %}
