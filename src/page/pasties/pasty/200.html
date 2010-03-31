@@ -79,7 +79,7 @@
                         {% if thread_paste.is_moderated %}<strike>{% endif %}<a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>{% if thread_paste.is_moderated %}</strike>{% endif %}
 
                         <small>
-                            &middot; {{thread_paste.user_name}}
+                            &mdash; {{thread_paste.user_name}}
                             {% ifnotequal thread_paste.slug pasty_slug %}
                             [ {% ifequal thread_paste.diff_size.0 0 %}
                                 =B
