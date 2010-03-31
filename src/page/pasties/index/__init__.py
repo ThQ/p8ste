@@ -26,7 +26,7 @@ class Index(paste.web.RequestHandler):
 
     def __init__(self):
         paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pasties.index")
+        self.set_module("page.pasties.index.__init__")
         self.page = 1
         self.pastes_per_page = 10
         self.paste_count = 0
