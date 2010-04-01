@@ -86,6 +86,9 @@ class Index(paste.web.RequestHandler):
                 if opaste.language and opaste.language in smoid.languages.languages:
                     dpaste["u_language_icon"] = smoid.languages.languages[opaste.language]['u_icon']
 
+                if opaste.forks > 0:
+                    dpaste["forks"] = opaste.forks
+
                 if opaste.posted_at != None:
                     dpaste["posted_at"] = opaste.posted_at.strftime(paste.config["datetime.format"])
                 else:

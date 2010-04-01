@@ -48,7 +48,9 @@
         <td>{{ paste.posted_at }}</td>
         <td>{{ paste.user_name }}</td>
         <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon|url }}" alt="{{ paste.language }}" width="16" height="16" />{% endif %}</td>
-        <td><a href="{{ paste.u }}">{% if paste.is_moderated %}<strike>{% else %}<strong>{% endif %}{{ paste.title|escape }}{% if paste.is_moderated %}</strike>{% else %}</strong>{% endif %}</a>
+        <td>
+            <a href="{{ paste.u }}">{% if paste.is_moderated %}<strike>{% else %}<strong>{% endif %}{{ paste.title|escape }}{% if paste.is_moderated %}</strike>{% else %}</strong>{% endif %}</a>
+            {% if paste.forks %}<small>({{paste.forks}})</small>{%endif%}
         </td>
         <td>{% if paste.snippet %}<small>{{ paste.snippet|escape }}</small>{% endif %}</td>
         <td>{{ paste.size.0 }} <small>{{ paste.size.1 }}</small></td>
