@@ -4,5 +4,5 @@ images/
 src/paste/private.py
 src/pygments/
 src/recaptcha/
-static/favicon.ico
+src/static/favicon.ico
 
