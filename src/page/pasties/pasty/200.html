@@ -11,11 +11,11 @@
 
 {% block h1-headers %}
 <ul>
-    <li><img src="/images/silk/user.png" alt="" width="16" height="16" /> {{ user_name }}</li>
-    <li><img src="/images/silk/date.png" alt="" width="16" height="16" /> {{ posted_at }}</li>
+    <li><img src="{{"images/silk/user.png"|url}}" alt="" width="16" height="16" /> {{ user_name }}</li>
+    <li><img src="{{"images/silk/date.png"|url}}" alt="" width="16" height="16" /> {{ posted_at }}</li>
     {% if pasty_tags %}
     <li>
-        <img src="/images/silk/tag_blue.png" alt="" width="16" height="16" />
+        <img src="{{"images/silk/tag_blue.png"|url}}" alt="" width="16" height="16" />
         {{ pasty_tags }}
     </li>
     {% endif %}
@@ -34,11 +34,11 @@
             {% endif %}
             <ul>
                 <li>
-                    <img src="/images/silk/page_white_edit.png" alt="" width="16" height="16" />
+                    <img src="{{"images/silk/page_white_edit.png"|url}}" alt="" width="16" height="16" />
                     <small><a href="{{ u_fork }}"><strong>Fork</strong></a></small>
                 </li>
                 <li>
-                    <img src="/images/silk/page_white_text.png" alt="" width="16" height="16" />
+                    <img src="{{"images/silk/page_white_text.png"|url}}" alt="" width="16" height="16" />
                     <small><a href="{{ u_raw_text }}">Export as text</a> or <a href="{{ u_atom }}">atom</a></small>
                 </li>
             </ul>
@@ -59,7 +59,7 @@
             <h2>
                 <strong>Thread</strong>
                 <small style="float:right;">
-                    <a href="{{ u_thread }}"><img src="/images/silk/feed.png" alt="Thread atom feed" width="16" height="16" /></a>
+                    <a href="{{ u_thread }}"><img src="{{"/images/silk/feed.png"|url}}" alt="Thread atom feed" width="16" height="16" /></a>
                 </small>
             </h2>
 
@@ -73,7 +73,7 @@
                 </ul></li>
                 {% endif %}
                         <li>
-                        {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image }}" alt="{{ thread_paste.language_name }}" title="{{ thread_paste.language_name }}" width="16" height="16" /> {% endif %}
+                        {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image|url }}" alt="{{ thread_paste.language_name }}" title="{{ thread_paste.language_name }}" width="16" height="16" /> {% endif %}
 
                         {% ifequal pasty_slug thread_paste.slug %}<strong>{% endifequal %}
                         {% if thread_paste.is_moderated %}<strike>{% endif %}<a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>{% if thread_paste.is_moderated %}</strike>{% endif %}
