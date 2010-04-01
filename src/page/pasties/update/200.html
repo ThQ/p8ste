@@ -1,0 +1,17 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}
+    Update [{{paste_slug|escape}}]
+{% endblock %}
+
+{%block h1 %}
+    Update [{{paste_slug|escape}}]
+{% endblock %}
+
+{%block page-content %}
+<p class="info"><strong>The paste <a href="{{u_paste}}">{{paste_slug|escape}}</a> has been updated</strong> : lines and characters were counted, code was colored...</p>
+
+<ul>
+    <li><strong>Go back to <a href="{{u_paste}}">{{paste_slug|escape}}</strong></a></li>
+</ul>
+{% endblock %}

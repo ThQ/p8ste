@@ -1,0 +1,17 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}
+    Paste not found : [{{paste_slug|escape}}]
+{% endblock %}
+
+{%block h1 %}
+    Paste not found
+{% endblock %}
+
+{%block page-content %}
+<p class="error"><strong>The paste <a href="{{u_paste}}">{{paste_slug|escape}}</a> cannot be found.</strong> Either it has been deleted or you mistyped the URL.</p>
+
+<ul>
+    <li><a href="{{u_pastes}}"><strong>View all pastes</strong></a></li>
+</ul>
+{% endblock %}
