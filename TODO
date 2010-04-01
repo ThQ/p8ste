@@ -1,7 +1,6 @@
 == ACTIONS ==
 + src/page/threads/thread/__init__.py : A page that details a thread
 + src/page/pasties/update/__init__.py : Re-run synthax highlighting, char count, etc.
-+ src/smoid/perl.py : Support perl
 + src/smoid/java.py : Support java
 + src/smoid/csharp.py : Support c#
 + src/smoid/c.py : Support C
