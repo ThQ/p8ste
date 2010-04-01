@@ -19,7 +19,7 @@
     <tbody>
     {% for language in languages%}
         <tr>
-            <td>{% if language.u_icon %}<img src="{{ language.u_icon }}" alt="{{ language.name }}" width="16" height="16" />{% endif %}</td>
+            <td>{% if language.u_icon %}<img src="{{ language.u_icon|url }}" alt="{{ language.name }}" width="16" height="16" />{% endif %}</td>
             <td><strong>{{language.name}}</strong></td>
         </tr>
     {% endfor %}
