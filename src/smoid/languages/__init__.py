@@ -13,7 +13,7 @@ languages["perl"] = {
     "lexer": "perl",
     "name": "Perl",
     "home_url": "http://www.perl.org",
-    "u_icon": "images/languages/python.png"
+    "u_icon": "images/languages/perl.png"
 }
 
 languages["python"] = {
