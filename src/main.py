@@ -13,6 +13,7 @@
 
 
 from google.appengine.ext import webapp
+from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import page.error.error404
@@ -26,6 +27,8 @@ import page.pasties.pasty_atom
 import page.pasties.sitemap
 import page.pasties.update
 import page.threads.thread_atom
+
+template.register_template_library('common.url')
 
 re_paste = "P[a-zA-Z0-9_-]+"
 pages = [
