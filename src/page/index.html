@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>{% block page-title %}Paste code on Paste-It{% endblock %}</title>
-        <link href="/style/style.css" type="text/css" rel="stylesheet" />
+        <link href="{{"style/style.css"|url}}" type="text/css" rel="stylesheet" />
         {% for style in styles %}
             <link href="{{ style }}" type="text/css" rel="stylesheet" />
         {% endfor %}
@@ -22,9 +22,9 @@
     <body>
         <div id="content">
             <div id="logo">
-                <a href="/"><img src="/images/tango/22x22/actions/edit-paste.png" width="22" height="22" alt="" /></a>
-                <a href="/"><strong>Paste code!</strong></a>
-                <small>| <a href="/pastes/">All pastes</a></small>
+                <a href="{{u_home}}"><img src="{{"images/tango/22x22/actions/edit-paste.png"|url}}" width="22" height="22" alt="" /></a>
+                <a href="{{u_home}}"><strong>Paste code!</strong></a>
+                <small>| <a href="{{u_pastes}}">All pastes</a></small>
 
                 <div style="float:right;">
                     <small>
@@ -46,13 +46,13 @@
 
         <div id="footers">
             <ul style="float:right">
-                <li><a href="http://validator.w3.org/check?uri=referer"><img src="/images/silk/xhtml_valid.png" height="16" width="16" alt="XHTML valid" /></a></li>
-                <li><a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="/images/silk/css_valid.png" height="16" width="16" alt="CSS valid" /></a></li>
+                <li><a href="http://validator.w3.org/check?uri=referer"><img src="{{"images/silk/xhtml_valid.png"|url}}" height="16" width="16" alt="XHTML valid" /></a></li>
+                <li><a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="{{"images/silk/css_valid.png"|url}}" height="16" width="16" alt="CSS valid" /></a></li>
             </ul>
 
             <ul>
-                <li><strong><a href="/">Paste code</a></strong></li>
-                <li><a href="/pastes/">All pastes</a></li>
+                <li><strong><a href="{{u_home}}">Paste code</a></strong></li>
+                <li><a href="{{u_pastes}}">All pastes</a></li>
                 <li><a href="http://groups.google.com/group/paste-it">Community</a></li>
                 <li><a href="http://twitter.com/p8ste">News</a></li>
                 <li><a href="http://github.com/thomas-quemard/p8ste">Source code</a></li>

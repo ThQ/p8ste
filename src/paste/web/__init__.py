@@ -66,6 +66,8 @@ class RequestHandler (webapp.RequestHandler):
         self.content["feeds"] = self.feeds
         self.content["styles"] = self.styles
         self.content["module"] = self.module
+        self.content["u_home"] = paste.url("")
+        self.content["u_pastes"] = paste.url("pastes/")
         self.content["u_module"] = self.module_url
         self.content["u_module_history"] = self.module_history_url
         self.content["u_blank_image"] = paste.url("images/blank.gif")
