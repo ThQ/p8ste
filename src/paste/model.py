@@ -58,6 +58,11 @@ class PasteTag (db.Model):
     edited_by_ip = db.StringProperty()
 
 
+class PasteCount (db.Model):
+    count = db.IntegerProperty(default=0)
+    last_checked = db.DateTimeProperty()
+    path = db.StringProperty()
+
 class PasteStats(db.Model):
     paste_count = db.IntegerProperty()
     last_posted_at = db.DateTimeProperty(auto_now=True)

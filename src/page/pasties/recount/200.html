@@ -1,0 +1,19 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}
+    Recount [{{paste_slug|escape}}]
+{% endblock %}
+
+{%block h1 %}
+    Recount [{{paste_slug|escape}}]
+{% endblock %}
+
+{%block page-content %}
+
+<table>
+        <tr><th>Pasted at</th><td>{{pasted_at}}</td><td></td></tr>
+        <tr><th>Hour</th><td>{{hour_start}} &mdash; {{hour_end}}</td><td>{{pastes_in_hour}}</td></tr>
+        <tr><th>Day</th><td>{{day_start}} &mdash; {{day_end}}</td><td>{{pastes_in_day}}</td></tr>
+        <tr><th>Month start</th><td>{{month_start}} &mdash; {{month_end}}</td><td>{{pastes_in_month}}</td></tr>
+</table>
+{% endblock %}

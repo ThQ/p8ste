@@ -81,3 +81,11 @@ class RequestHandler (webapp.RequestHandler):
             self.content['u_user_login'] = users.create_login_url(paste.url("a"))
 
         self.response.out.write(template.render(self.template_name, self.content))
+
+
+class PasteRequestHandler (RequestHandler):
+
+    def get_paste (self, pasty_slug):
+        qry_pastes = paste.model.Pasty.all()
+        qry_pastes.filter("slug =", pasty_slug)
+        return qry_pastes.get()
