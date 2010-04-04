@@ -11,8 +11,10 @@
 # License for more details.
 
 import cgi
+
 import paste.model
 import paste.web
+
 
 class PastyTxt(paste.web.RequestHandler):
 
