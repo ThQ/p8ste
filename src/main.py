@@ -28,6 +28,8 @@ import page.pasties.recount
 import page.pasties.sitemap
 import page.pasties.update
 import page.threads.thread_atom
+import page.users.signin
+import page.users.signout
 
 template.register_template_library('common.url')
 
@@ -44,6 +46,8 @@ pages = [
     ('/pastes/', page.pasties.index.Index),
     ('/threads/(P[a-zA-Z0-9_-]+).atom', page.threads.thread_atom.ThreadAtom),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
+    ('/users/signin', page.users.signin.SignIn),
+    ('/users/signout', page.users.signout.SignOut),
     ('/languages/auto-detected', page.languages.autodetected.AutoDetected),
     ('/.*', page.error.error404.Error404)
 ]

@@ -75,10 +75,10 @@ class RequestHandler (webapp.RequestHandler):
         if user:
             self.content['user_signed_in'] = True
             self.content['user_email'] = user.email()
-            self.content['u_user_logout'] = users.create_logout_url(paste.url("a"))
+            self.content['u_user_logout'] = paste.url("users/signout?url=%s", self.request.url)
         else:
             self.content['user_signed_in'] = False
-            self.content['u_user_login'] = users.create_login_url(paste.url("a"))
+            self.content['u_user_login'] = paste.url("users/signin?url=%s", self.request.url)
 
         self.response.out.write(template.render(self.template_name, self.content))
 
