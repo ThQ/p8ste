@@ -10,10 +10,10 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
-from google.appengine.api import users
-
 import cgi
 import datetime
+from google.appengine.api import users
+from google.appengine.api.labs.taskqueue import Task
 import logging
 import pygments.lexers
 import pygments.formatters
@@ -260,6 +260,9 @@ class Add(paste.web.RequestHandler):
         result = pasty_key != None
 
         if result == True:
+            task = Task(name = self.paste.slug, method="GET", url = "/" + self.paste.slug + "/recount")
+            task.add(queue_name="paste-recount")
+
             if not is_reply:
                 dbPaste = paste.model.Pasty.get(pasty_key)
                 if dbPaste != None:

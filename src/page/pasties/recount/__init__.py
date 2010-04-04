@@ -104,12 +104,16 @@ class Recount (paste.web.PasteRequestHandler):
         while True:
             qry_pastes = paste.model.Pasty.all()
             qry_pastes.filter("posted_at >", self.hour_start)
+            qry_pastes.order("posted_at")
             db_pastes = qry_pastes.fetch(20)
             if db_pastes:
                 i = 0
                 for db_paste in db_pastes:
-                    i += 1
-                    self.pastes_in_hour += 1
+                    if db_paste.posted_at <= self.hour_end:
+                        i += 1
+                        self.pastes_in_hour += 1
+                    else:
+                        break
                 if i < 20:
                     break
 
