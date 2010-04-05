@@ -19,31 +19,6 @@ class Form (db.Model):
     expired_at = db.DateTimeProperty()
 
 
-class Pasty (db.Model):
-    characters = db.IntegerProperty(default=0)
-    code = db.TextProperty(default="")
-    code_colored = db.TextProperty(default="")
-    forks = db.IntegerProperty(default=0)
-    indirect_forks = db.IntegerProperty(default=0)
-    is_moderated = db.BooleanProperty(default=False)
-    language = db.StringProperty(choices=["perl", "php", "python", "ruby", "xml"])
-    lines = db.IntegerProperty(default=0)
-    posted_at = db.DateTimeProperty()
-    posted_by_ip = db.StringProperty(default="")
-    posted_by_user_name = db.StringProperty(default="")
-    edited_at = db.DateTimeProperty()
-    edited_by_ip = db.StringProperty(default="")
-    edited_by_user_name = db.StringProperty(default="")
-    expired_at = db.DateTimeProperty()
-    parent_paste = db.StringProperty(default="")
-    slug = db.StringProperty(default="")
-    snippet = db.TextProperty(default="")
-    tags = db.TextProperty(default="")
-    thread = db.StringProperty(default="")
-    thread_level = db.IntegerProperty(default=0)
-    thread_position = db.IntegerProperty(default=0)
-    title = db.TextProperty(default="")
-
 class PasteReply (db.Model):
     parent_paste = db.StringProperty()
     reply = db.StringProperty()
@@ -86,3 +61,30 @@ class User (db.Model):
 
     def get_gravatar (self, size):
         return "http://www.gravatar.com/avatar/" + self.gravatar_id + ".jpg?s=" + str(size)
+
+class Pasty (db.Model):
+    characters = db.IntegerProperty(default=0)
+    code = db.TextProperty(default="")
+    code_colored = db.TextProperty(default="")
+    forks = db.IntegerProperty(default=0)
+    indirect_forks = db.IntegerProperty(default=0)
+    is_moderated = db.BooleanProperty(default=False)
+    language = db.StringProperty(choices=["perl", "php", "python", "ruby", "xml"])
+    lines = db.IntegerProperty(default=0)
+    posted_at = db.DateTimeProperty()
+    posted_by_ip = db.StringProperty(default="")
+    posted_by_user_name = db.StringProperty(default="")
+    edited_at = db.DateTimeProperty()
+    edited_by_ip = db.StringProperty(default="")
+    edited_by_user_name = db.StringProperty(default="")
+    expired_at = db.DateTimeProperty()
+    parent_paste = db.StringProperty(default="")
+    slug = db.StringProperty(default="")
+    snippet = db.TextProperty(default="")
+    tags = db.TextProperty(default="")
+    thread = db.StringProperty(default="")
+    thread_level = db.IntegerProperty(default=0)
+    thread_position = db.IntegerProperty(default=0)
+    title = db.TextProperty(default="")
+    user = db.ReferenceProperty(User)
+

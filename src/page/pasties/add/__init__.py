@@ -233,6 +233,7 @@ class Add(paste.web.RequestHandler):
         self.paste.snippet = self.make_snippet(self.paste.code)
         self.paste.tags = self.prepare_tags(self.form_tags)
         self.paste.title = paste.pasty.filter_title(self.form_title, slug)
+        self.paste.user = self.user.db_user
 
         if self.user.is_logged_in:
             self.paste.posted_by_user_name = self.user.id
