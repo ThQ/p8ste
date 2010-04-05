@@ -11,7 +11,7 @@
 
 {% block h1-headers %}
 <ul>
-    <li><img src="{{"images/silk/user.png"|url}}" alt="" width="16" height="16" /> {{ user_name }}</li>
+    <li><img src="{% if u_gravatar %}{{u_gravatar}}{%else%}{{"images/silk/user.png"|url}}{%endif%}" alt="{{user_name}}" width="16" height="16" /> {{ user_name }}</li>
     <li><img src="{{"images/silk/date.png"|url}}" alt="" width="16" height="16" /> {{ posted_at }}</li>
     {% if pasty_tags %}
     <li>
