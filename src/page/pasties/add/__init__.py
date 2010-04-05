@@ -36,7 +36,7 @@ class Add(paste.web.RequestHandler):
 
     def __init__(self):
         paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pasties.add")
+        self.set_module("page.pasties.add.__init__")
         self.form_code = ""
         self.form_title = ""
         self.form_tags = ""
