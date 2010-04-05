@@ -21,21 +21,22 @@
 
     <body>
         <div id="user_bar">
-            <small>
             {%if user_signed_in %}
-            <img class="user" src="{{u_user_gravatar}}" width="16" height="16" alt="{{user_id}}" />
+            <a href="http://en.gravatar.com/"><img class="user" src="{{u_user_gravatar}}" width="16" height="16" alt="{{user_id}}" /></a>
             <strong>{{ user_id }}</strong>
+            <small>
             ({{user_paste_count}} paste{{user_paste_count|pluralize}})
              &mdash; <a href="{{ u_user_logout|escape }}">Sign Out</a>
+            </small>
             {% else %}
             {% if user_logged_in_google %}
             <a href="{{u_user_signup}}"><strong>Sign Up</strong></a>
 
             {% else %}
-            <a href="{{ u_user_login|escape }}"><strong>Sign In</strong></a> &mdash; or <a href="{{u_user_signup}}">Sign Up</a>
-            {% endif %}
-            {% endif %}
+            <small><a href="{{ u_user_login|escape }}"><strong>Sign In</strong></a> &mdash; or <a href="{{u_user_signup}}">Sign Up</a>
             </small>
+            {% endif %}
+            {% endif %}
         </div>
 
         <div id="content">
