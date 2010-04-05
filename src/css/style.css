@@ -43,7 +43,7 @@ h2 li
 img
 {
     border:0;
-    vertical-align:middle;
+    vertical-align:baseline;
 }
 form
 {
@@ -183,26 +183,6 @@ ul ul
     border-left:2px solid #D0D0D0;
     margin:0 0 0 3px;
 }
-#logs
-{
-    font-size:0.8em;
-}
-
-#logs ul
-{
-    list-style-type:none;
-}
-
-#logs ul li
-{
-    margin:0 0 10px 0;
-}
-
-#logs p
-{
-    margin:2px 0 2px 0;
-    padding:0;
-}
 
 #footers
 {
@@ -322,6 +302,16 @@ ul ul
     color:#5252D2;
     text-decoration:none;
 }
+
+ol#logs
+{
+    margin: 0 20px 20px 20px;
+    list-style-type:none;
+    font-size:0.9em;
+    border-top:1px solid #d0d0d0;
+    padding:10px 0 0 0;
+}
+
 
 img.user
 {

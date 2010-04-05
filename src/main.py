@@ -12,10 +12,12 @@
 # License for more details.
 
 
+from google.appengine.api import apiproxy_stub_map
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+import paste
 import page.error.error404
 import page.languages.autodetected
 import page.pasties.add
@@ -32,7 +34,13 @@ import page.users.signin
 import page.users.signup
 import page.users.signout
 
+
 template.register_template_library('common.url')
+if paste.config["env"] == "debug":
+    import paste.appengine.hook
+    paste.appengine.hook.datastore_logs = []
+    apiproxy_stub_map.apiproxy.GetPreCallHooks().Append('db_log', paste.appengine.hook.hook_datastore, 'datastore_v3')
+
 
 re_paste = "P[a-zA-Z0-9_-]+"
 pages = [

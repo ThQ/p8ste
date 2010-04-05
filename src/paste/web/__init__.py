@@ -17,11 +17,15 @@ from google.appengine.ext.webapp import template
 import os
 
 import paste
+import paste.appengine.hook
 import paste.user
 
 
 class RequestHandler (webapp.RequestHandler):
     def __init__(self):
+        import paste.appengine.hook
+        paste.appengine.hook.datastore_logs = []
+
         webapp.RequestHandler.__init__(self)
         self.module = ""
         self.module_url = ""
@@ -91,6 +95,10 @@ class RequestHandler (webapp.RequestHandler):
             self.content['u_user_logout'] = paste.url("sign-out?url=%s", self.request.url)
         else:
             self.content['u_user_login'] = paste.url("sign-in?url=%s", self.request.url)
+
+        if paste.config["env"] == "debug":
+            self.content["datastore_logs"] = paste.appengine.hook.datastore_logs
+
         self.response.out.write(template.render(self.template_name, self.content))
 
 
