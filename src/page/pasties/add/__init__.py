@@ -327,18 +327,24 @@ class Add(paste.web.RequestHandler):
         snippet = ""
         newline_block = False
         char_count = 0
+        last_char = ""
+        whitespaces = ["\n", "\r", "\t", " "]
+
         for c in code:
-            if c != "\r" and c != "\n":
-                if newline_block :
-                    newline_block = False
+            if c in whitespaces:
+                if last_char != " ":
                     snippet += " "
-                snippet += c
+                    last_char = " "
+                    char_count += 1
             else:
-                newline_block = True
-            char_count += 1
+                snippet += c
+                last_char = c
+                char_count += 1
+
             if char_count > paste.config["pasty_snippet_length"]:
                 snippet = snippet[0: char_count - 3] + "..."
                 break
+
         return snippet
 
     def on_form_not_sent(self):
