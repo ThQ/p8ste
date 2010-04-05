@@ -83,3 +83,6 @@ class User (db.Model):
     gravatar_id = db.TextProperty()
     paste_count = db.IntegerProperty()
     registered_at = db.DateTimeProperty()
+
+    def get_gravatar (self, size):
+        return "http://www.gravatar.com/avatar/" + self.gravatar_id + ".jpg?s=" + str(size)

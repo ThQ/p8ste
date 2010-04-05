@@ -21,7 +21,7 @@ import paste.model
 class User:
     def __init__ (self):
         guser = users.get_current_user()
-
+        self.db_user = None
         if guser:
             self.google_id = guser.user_id()
             self.google_email = guser.email()
@@ -36,16 +36,13 @@ class User:
         if self.google_id != "":
             qry_user = paste.model.User.all()
             qry_user.filter("google_id =", self.google_id)
-            db_user = qry_user.get()
-            if db_user:
+            self.db_user = qry_user.get()
+            if self.db_user:
                 self.is_logged_in = True
-                self.id = db_user.id
-                self.paste_count = db_user.paste_count
+                self.id = self.db_user.id
+                self.paste_count = self.db_user.paste_count
                 self.url = paste.url("users/%s", self.id)
             else:
                 self.is_logged_in = False
         else:
             self.is_logged_in = False
-
-    def get_gravatar (self, size):
-        return "http://www.gravatar.com/avatar/" + self.gravatar_id + ".jpg?s=" + str(size)

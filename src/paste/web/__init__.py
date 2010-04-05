@@ -80,7 +80,7 @@ class RequestHandler (webapp.RequestHandler):
             self.content['user_id'] = self.user.id
             self.content['user_paste_count'] = self.user.paste_count
             self.content["u_user"] = self.user.url
-            self.content["u_user_gravatar"] = self.user.get_gravatar(16)
+            self.content["u_user_gravatar"] = self.user.db_user.get_gravatar(16)
         else:
             self.content['user_signed_in'] = False
 
