@@ -1,7 +1,9 @@
-body
+html,body
 {
     font-family: Arial, Verdana, Helvetica, sans-serif;
     font-size:1em;
+    margin:0;
+    padding:0;
 }
 
 h1
@@ -275,6 +277,15 @@ ul ul
     margin:10px 0 10px 0;
 }
 
+#user_bar
+{
+    font-size:0.8em;
+    margin:0 0 10px 0;
+    border-bottom:1px solid #dfdfdf;
+    text-align:right;
+    padding:3px 20px 3px 20px;
+}
+
 #content
 {
     font-size:0.8em;
@@ -304,6 +315,13 @@ ul ul
     margin: 0 2px 0 2px;
     color:#5252D2;
     text-decoration:none;
+}
+
+img.user
+{
+    border:1px solid #cfcfcf;
+    padding:1px;
+    background-color:#ffffff;
 }
 
 form .explanation

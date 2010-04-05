@@ -20,30 +20,31 @@
     </head>
 
     <body>
+        <div id="user_bar">
+            <small>
+            {%if user_signed_in %}
+            <img class="user" src="{{u_user_gravatar}}" width="16" height="16" alt="{{user_id}}" />
+            <strong>{{ user_id }}</strong>
+            ({{user_paste_count}} paste{{user_paste_count|pluralize}})
+             &mdash; <a href="{{ u_user_logout|escape }}">Sign Out</a>
+            {% else %}
+            {% if user_logged_in_google %}
+            <a href="{{u_user_signup}}"><strong>Sign Up</strong></a>
+
+            {% else %}
+            <a href="{{ u_user_login|escape }}"><strong>Sign In</strong></a> &mdash; or <a href="{{u_user_signup}}">Sign Up</a>
+            {% endif %}
+            {% endif %}
+            </small>
+        </div>
+
         <div id="content">
             <div id="logo">
                 <a href="{{u_home}}"><img src="{{"images/tango/22x22/actions/edit-paste.png"|url}}" width="22" height="22" alt="" /></a>
                 <a href="{{u_home}}"><strong>Paste code!</strong></a>
                 <small>| <a href="{{u_pastes}}">All pastes</a></small>
 
-                <div style="float:right;">
-                    <small>
-                    {%if user_signed_in %}
-                    <img src="{{u_user_gravatar}}" width="16" height="16" alt="{{user_id}}" />
-                    <strong>{{ user_id }}</strong>
-                    ({{user_paste_count}} paste{{user_paste_count|pluralize}})
-                     &mdash; <a href="{{ u_user_logout|escape }}">Sign Out</a>
-                    {% else %}
-                    {% if user_logged_in_google %}
-                    <a href="{{u_user_signup}}"><strong>Sign Up</strong></a>
-
-                    {% else %}
-                    <a href="{{ u_user_login|escape }}"><strong>Sign In</strong></a> &mdash; or <a href="{{u_user_signup}}">Sign Up</a>
-                    {% endif %}
-                    {% endif %}
-                    </small>
-                </div>
-            </div>
+                            </div>
             <div id="header-hr"></div>
             <h1>{% block h1 %}{% endblock %}</h1>
             <div id="h1-headers">{% block h1-headers %}{% endblock %}</div>
