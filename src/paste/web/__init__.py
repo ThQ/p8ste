@@ -108,3 +108,10 @@ class PasteRequestHandler (RequestHandler):
         qry_pastes = paste.model.Pasty.all()
         qry_pastes.filter("slug =", pasty_slug)
         return qry_pastes.get()
+
+class UserRequestHandler (RequestHandler):
+
+    def get_user (self, user_id):
+        qry_user = paste.model.User.all()
+        qry_user.filter("id =", user_id)
+        return qry_user.get()

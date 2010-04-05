@@ -33,6 +33,7 @@ import page.threads.thread_atom
 import page.users.signin
 import page.users.signup
 import page.users.signout
+import page.users.user
 
 
 template.register_template_library('common.url')
@@ -43,6 +44,8 @@ if paste.config["env"] == "debug":
 
 
 re_paste = "P[a-zA-Z0-9_-]+"
+re_user = "[a-zA-Z0-9_-]+"
+
 pages = [
     ('/', page.pasties.add.Add),
 
@@ -55,7 +58,7 @@ pages = [
     ('/(' + re_paste + ')/diff/(' + re_paste + ')', page.pasties.diff.Diff),
     ('/(' + re_paste + ')/recount', page.pasties.recount.Recount),
     ('/(' + re_paste + ')/update', page.pasties.update.Update),
-
+    ('/users/(' + re_user + ')', page.users.user.User),
     ('/threads/(' + re_paste + ').atom', page.threads.thread_atom.ThreadAtom),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
     ('/sign-in', page.users.signin.SignIn),

@@ -1,0 +1,10 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}{{user_name|escape}}{% endblock %}
+{%block h1 %}{{user_name|escape}}{% endblock %}
+{%block page-content %}
+
+<p class="info"><strong>Hi, my name is {{user_name|escape}}.</strong> <i>Hello {{user_name|escape}} !</i></p>
+
+{%endblock%}
+

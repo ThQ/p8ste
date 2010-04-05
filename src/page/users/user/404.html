@@ -1,0 +1,10 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}{{user_name|escape}}{% endblock %}
+{%block h1 %}Unknown {{user_name|escape}}{% endblock %}
+{%block page-content %}
+
+<p class="error"><strong>We haven't been able to find someone being called {{user_name|escape}}.</strong> Did you mistype the URL ?</p>
+
+{%endblock%}
+

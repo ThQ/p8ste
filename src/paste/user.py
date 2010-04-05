@@ -22,6 +22,8 @@ class User:
     def __init__ (self):
         guser = users.get_current_user()
         self.db_user = None
+        self.is_logged_in = False
+
         if guser:
             self.google_id = guser.user_id()
             self.google_email = guser.email()
@@ -42,7 +44,3 @@ class User:
                 self.id = self.db_user.id
                 self.paste_count = self.db_user.paste_count
                 self.url = paste.url("users/%s", self.id)
-            else:
-                self.is_logged_in = False
-        else:
-            self.is_logged_in = False
