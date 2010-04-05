@@ -40,7 +40,6 @@ class Add(paste.web.RequestHandler):
         self.form_code = ""
         self.form_title = ""
         self.form_tags = ""
-        self.form_user_name = ""
         self.form_parent_slug = ""
         self.form_token = ""
         self.url_parent_slug = ""
@@ -145,7 +144,6 @@ class Add(paste.web.RequestHandler):
         self.form_code = self.request.get("pasty_code")
         self.form_title = self.request.get("pasty_title")
         self.form_tags = self.request.get("pasty_tags")
-        self.form_user_name = self.request.get("pasty_user_name")
         self.form_parent_slug = self.request.get("pasty_parent_slug")
         self.form_tags = self.request.get("pasty_tags")
         self.form_token = self.request.get("pasty_token")
@@ -230,14 +228,15 @@ class Add(paste.web.RequestHandler):
         self.paste.parent_paste = ""
         self.paste.posted_at = datetime.datetime.now()
         self.paste.posted_by_ip = self.request.remote_addr
-        self.paste.posted_by_user_name = paste.pasty.filter_user_name(self.form_user_name)
         self.paste.replies = 0
         self.paste.slug = slug
         self.paste.snippet = self.make_snippet(self.paste.code)
         self.paste.tags = self.prepare_tags(self.form_tags)
         self.paste.title = paste.pasty.filter_title(self.form_title, slug)
 
-        if not self.paste.posted_by_user_name:
+        if self.user.is_logged_in:
+            self.paste.posted_by_user_name = self.user.id
+        else:
             self.paste.posted_by_user_name = paste.config["default_user_name"]
 
         if is_reply:
@@ -367,12 +366,6 @@ class Add(paste.web.RequestHandler):
         if self.request.get("title") != "":
             self.content["pasty_title"] = cgi.escape(self.request.get("title"))
 
-        if self.request.get("username") != "":
-            self.content["pasty_user_name"] = cgi.escape(self.request.get("username"));
-        else:
-            if users.get_current_user():
-                self.content["pasty_user_name"] = users.get_current_user().nickname()
-
         if self.parent_paste != None:
             self.content["pasty_parent_slug"] = self.parent_paste.slug
 
@@ -403,7 +396,6 @@ class Add(paste.web.RequestHandler):
         self.content["pasty_title"] = self.form_title
         self.content["pasty_token"] = self.form_token
         self.content["pasty_slug"] = cgi.escape(slug)
-        self.content["pasty_user_name"] = self.form_user_name
         if self.parent_paste:
             self.content["u_diff"] = paste.url("%s/diff/%s", self.parent_paste.slug, slug)
 

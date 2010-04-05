@@ -45,14 +45,6 @@
                         <small>Ex: python, googleappengine</small>
                     </li>
                     <li>
-                        <label for="pasty_user_name">User name <small>(optional)</small></label>
-                        <p class="input">
-                            <input type="text" name="pasty_user_name" id="pasty_user_name" value="{{ pasty_user_name }}"/>
-                        </p>
-                        <small>Ex: John_Connor</small>
-                    </li>
-
-                    <li>
                         <label for="pasty_user_name">Are you human ?</label>
                         {% if pasty_captcha_error %}
                         <p class="warning">{{ pasty_captcha_error }}</p>
