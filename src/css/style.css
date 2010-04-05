@@ -303,7 +303,7 @@ ul ul
     text-decoration:none;
 }
 
-ol#logs
+div#logs
 {
     margin: 0 20px 20px 20px;
     list-style-type:none;

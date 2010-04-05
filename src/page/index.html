@@ -74,10 +74,23 @@
             {% endif %}
         </div>
 
-        <ol id="logs">
+        {% if datastore_logs %}
+        <div id="logs"><table>
+        <tr>
+            <th style="width:40px;"></th>
+            <th style="width:120px;">Time</th>
+            <th style="width:100px;">Operation</th>
+            <th>Query</th>
+        </tr>
         {% for log in datastore_logs %}
-        <li>{{log|escape}}</li>
+        <tr>
+        <td><small>#{{forloop.counter}}</small></td>
+        <td>{{log.time}}</td>
+        <td>{{log.operation}}</td>
+        <td>{{log.query|escape}}</td>
+        </tr>
         {% endfor %}
-        </ol>
+        </table></div>
+        {% endif %}
     </body>
 </html>
