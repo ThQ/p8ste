@@ -29,6 +29,7 @@ import page.pasties.sitemap
 import page.pasties.update
 import page.threads.thread_atom
 import page.users.signin
+import page.users.signup
 import page.users.signout
 
 template.register_template_library('common.url')
@@ -36,18 +37,22 @@ template.register_template_library('common.url')
 re_paste = "P[a-zA-Z0-9_-]+"
 pages = [
     ('/', page.pasties.add.Add),
-    ('/(P[a-zA-Z0-9_-]+)', page.pasties.pasty.Pasty),
-    ('/(P[a-zA-Z0-9_-]+)/fork', page.pasties.add.Add),
-    ('/(' + re_paste + ')/update', page.pasties.update.Update),
-    ('/(' + re_paste + ')/recount', page.pasties.recount.Recount),
-    ('/(P[a-zA-Z0-9_-]+).txt', page.pasties.pasty_txt.PastyTxt),
-    ('/(P[a-zA-Z0-9_-]+).atom', page.pasties.pasty_atom.PastyAtom),
-    ('/(' + re_paste + ')/diff/(' + re_paste + ')', page.pasties.diff.Diff),
+
+    # Pastes
+    ('/(' + re_paste + ')', page.pasties.pasty.Pasty),
     ('/pastes/', page.pasties.index.Index),
-    ('/threads/(P[a-zA-Z0-9_-]+).atom', page.threads.thread_atom.ThreadAtom),
+    ('/(' + re_paste + ')/fork', page.pasties.add.Add),
+    ('/(' + re_paste + ').txt', page.pasties.pasty_txt.PastyTxt),
+    ('/(' + re_paste + ').atom', page.pasties.pasty_atom.PastyAtom),
+    ('/(' + re_paste + ')/diff/(' + re_paste + ')', page.pasties.diff.Diff),
+    ('/(' + re_paste + ')/recount', page.pasties.recount.Recount),
+    ('/(' + re_paste + ')/update', page.pasties.update.Update),
+
+    ('/threads/(' + re_paste + ').atom', page.threads.thread_atom.ThreadAtom),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
-    ('/users/signin', page.users.signin.SignIn),
-    ('/users/signout', page.users.signout.SignOut),
+    ('/sign-in', page.users.signin.SignIn),
+    ('/sign-up', page.users.signup.SignUp),
+    ('/sign-out', page.users.signout.SignOut),
     ('/languages/auto-detected', page.languages.autodetected.AutoDetected),
     ('/.*', page.error.error404.Error404)
 ]
@@ -58,5 +63,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

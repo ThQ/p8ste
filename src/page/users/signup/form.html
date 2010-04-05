@@ -1,0 +1,26 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}Sign Up !{% endblock %}
+{%block h1 %}Sign Up{% endblock %}
+{%block page-content %}
+
+{% if user_logged_in_google %}
+<p class="info">You are logged in to Google using <strong>{{google_email|escape}}</strong> (<a href="{{u_user_logout}}">sign out</a>).</p>
+
+<div style="width:300px;">
+<form method="POST" action="{{u_signup}}">
+<label for="user_id">User ID</label>
+<p class="input"><input type="text" name="user_id" /></p>
+<p><small>Choose carefully your ID : it will be used everywhere as your name.</small></p>
+<p><small>Only letters, digits, hyphens and underscores.</small></p>
+<p><input type="submit" value="Sign Up !" /></p>
+</form>
+</div>
+
+{% else %}
+<p class="info">Before activating your account on paste-it, you must first <a href="{{u_google_login}}"><strong>log in to Google</strong></a>.</p>
+
+{% endif %}
+
+{%endblock%}
+

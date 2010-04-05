@@ -75,3 +75,11 @@ class Tag(db.Model):
     edited_at = db.DateTimeProperty(auto_now=True)
     edited_by_ip = db.StringProperty()
     pastes = db.IntegerProperty()
+
+class User (db.Model):
+    id = db.StringProperty()
+    google_id = db.StringProperty()
+    email = db.StringProperty()
+    gravatar_id = db.TextProperty()
+    paste_count = db.IntegerProperty()
+    registered_at = db.DateTimeProperty()
