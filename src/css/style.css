@@ -291,6 +291,12 @@ ul ul
     font-size:0.8em;
     margin:0 20px 0 20px;
 }
+#logo
+{
+    padding:0 0 15px 0;
+    margin: 0 0 15px 0;
+    border-bottom:3px solid #6B75B4;
+}
 
 #logo small
 {
