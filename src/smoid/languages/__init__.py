@@ -1,4 +1,18 @@
+# Copyright 2008 Thomas Quemard
+#
+# Paste-It is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published
+# by the Free Software Foundation; either version 3.0, or (at your option)
+# any later version.
+#
+# Paste-It is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+# License for more details.
+
+
 import re
+
 
 languages = {}
 
@@ -37,17 +51,19 @@ languages["xml"] = {
     "u_icon": "images/languages/xml.png"
 }
 
-
 class Check:
 
     def __init__(self):
         self.content = ""
         self.example = ""
-        self.name = ""
-        self.probability = 0
-        self.one_time_matches = []
+        self.languages = []
         self.multiple_matches = []
+        self.name = ""
+        self.one_time_matches = []
+        self.probability = 0
 
+    def add_language (self, name):
+        self.languages.append(name)
 
     def add_multiple_matches (self, regex, probability):
         self.multiple_matches.append((regex, probability))
@@ -70,9 +86,11 @@ class Check:
         self._test()
 
     def check_verbose (self, content):
-        print " * Checking [", self.name, "]... ",
+        print str(self.languages), "Checking <", self.name, ">, ",
+        if self.example:
+            print "ex: <" + self.example + ">",
         result = self.check(content)
-        print "+" + str(self.probability)
+        print "... +" + str(self.probability)
         return result
 
     def is_re_found (self, regex, start_at = 0):
@@ -83,6 +101,9 @@ class Check:
 
     def _test (self):
         pass
+
+class CheckCollection (list):
+    pass
 
 class LanguageCheck:
 
@@ -102,3 +123,4 @@ class LanguageCheck:
             checker.check_verbose(str)
             self.probability += checker.probability
         print "   [ Probably of this string to be", self.name, "= ", self.probability, "]\n"
+

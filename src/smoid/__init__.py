@@ -14,20 +14,20 @@ import sys
 
 import languages.perl
 import languages.php
-import languages.python
-import languages.ruby
-import languages.xml
+#import languages.python
+#import languages.ruby
+#import languages.xml
 
 
 class GrandChecker:
     def __init__ (self):
-        self.languages = []
+        self.languages = {}
         self.checkers = []
-        self.checkers.append(languages.perl.PerlCheck())
-        self.checkers.append(languages.php.PhpCheck())
-        self.checkers.append(languages.python.PythonCheck())
-        self.checkers.append(languages.ruby.RubyCheck())
-        self.checkers.append(languages.xml.XmlCheck())
+        self.checkers.extend(languages.perl.PerlCheckCollection())
+        self.checkers.extend(languages.php.PhpCheckCollection())
+        #self.checkers.append(languages.python.PythonCheck())
+        #self.checkers.append(languages.ruby.RubyCheck())
+        #self.checkers.append(languages.xml.XmlCheck())
         self.verbose = False
 
     def find_out_language_of_file (self, file_path):
@@ -40,20 +40,28 @@ class GrandChecker:
         return lang
 
     def find_out_language(self, str):
-        language = ""
         for checker in self.checkers:
+            probability = 0
             if self.verbose:
-                checker.check_verbose(str)
+               probability =  checker.check_verbose(str)
             else:
-                checker.check(str)
+               probability = checker.check(str)
+
+            if probability != 0:
+                for language in checker.languages:
+                    if not self.languages.has_key(language):
+                        self.languages[language] = probability
+                    else:
+                        self.languages[language] = probability
 
         self.checkers = sorted(self.checkers, GrandChecker.sort_language)
 
         if self.verbose:
-            print "Probabilities..."
-            for checker in self.checkers:
-                print "[", checker.name, "] =", checker.probability
+            print "\nProbabilities..."
+            for language_probability in self.languages:
+                print "[] =", language_probability
 
+        language = ""
         if len(self.checkers) > 1 and self.checkers[0].probability > 0:
             language = self.checkers[0].name
         return language

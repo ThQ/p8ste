@@ -1,7 +1,11 @@
 #!/usr/bin/python
-import smoid
+
+
 import sys
 
-checker = smoid.GrandChecker()
+import __init__
+
+
+checker = __init__.GrandChecker()
 checker.verbose = True
 checker.find_out_language_of_file(sys.argv[1])
