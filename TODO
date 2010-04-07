@@ -10,5 +10,3 @@
 src/smoid.py : Improve language detection
 src/smoid.py : Should also detect licenses
 Make users able to create accounts
-Create a logger for datastore queries (http://code.google.com/appengine/articles/hooks.html)
-
