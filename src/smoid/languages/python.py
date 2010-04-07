@@ -1,94 +1,48 @@
-# Copyright 2008 Thomas Quemard
-#
-# Paste-It is free software; you can redistribute it and/or modify it
-# under the terms of the GNU General Public License as published
-# by the Free Software Foundation; either version 3.0, or (at your option)
-# any later version.
-#
-# Paste-It  is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
-# License for more details.
-
 import re
 
-from smoid.languages import Check, LanguageCheck
+from languages import Check, CheckCollection
 
 
 class PythonClassDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Class declaration (class * (*):)"
-
-    def _test(self):
-        result = False
+        self.name = "PythonClassDeclaration"
+        self.example = "class CoolClass:"
+        self.add_language("python")
         re_class = "(?:[a-zA-Z_][a-zA-Z0-9_]*)"
         re_class_full = re_class + "(?:\." + re_class + ")*"
-        if self.is_re_found("\s*class\s+" + re_class + "\s*\(\s*" + re_class_full + "\s*\)\s*:\s*") :
-            self.probability = 50
-            result = True
-        return result
-
-
-class PythonSourceEncodingCheck(Check):
-    def __init__ (self):
-        Check.__init__(self)
-        self.name = "Source encoding (# -*- coding: * -*-)"
-
-    def _test(self):
-        result = False
-        if self.is_re_found("\s*# -\*- coding: [a-zA-Z0-9]+ -\*-") :
-            self.probability = 50
-            result = True
-        return result
+        self.add_multiple_matches("\s*class\s+" + re_class + "\s*(\(\s*" + re_class_full + "\s*\))?\s*:", 50)
 
 
 class PythonInitMethodCheck(Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "__init__ method"
-
-    def _test(self):
-        result = False
-        if self.is_re_found("\s+def\s+__init__\s*\(\s*self\s*,") :
-            self.probability = 50
-            result = True
-        return result
+        self.name = "PythonInitMethod"
+        self.add_language("python")
+        self.add_multiple_matches("\s+def\s+__init__\s*\(\s*self\s*,", 40)
 
 
 class PythonHeaderCheck(Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Header (#!.../pyton)"
-
-    def _test(self):
-        result = False
-        if self.is_re_matched("#!/(.+)python(\n|$)") :
-            self.probability = 60
-            result = True
-        return result
+        self.name = "PythonShebang"
+        self.example = "#!/usr/bin/python"
+        self.add_language("python")
+        self.add_one_time_match("#!/(.+)python(\n|$)", 80)
 
 
 class PythonImportCheck(Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Imports"
-
-    def _test(self):
-        result = False
-        # (^|\n)\s*(from\s+[a-zA-Z_.]\s+)?
-        if self.is_re_found("import(\s+[a-zA-Z_.]+)((\s*,\s*[a-zA-Z_.]+)+)?(\n|\r)") :
-            self.probability = 60
-            result = True
-        return result
+        self.name = "PythonImport"
+        self.add_language("python")
+        self.add_multiple_matches("import(\s+[a-zA-Z_.]+)((\s*,\s*[a-zA-Z_.]+)+)?(\n|\r)", 40)
 
 
-class PythonCheck (LanguageCheck):
+class PythonCheck (CheckCollection):
     def __init__(self):
-        LanguageCheck.__init__ (self)
         self.name = "python"
-        self.checkers.append(PythonClassDeclarationCheck())
-        self.checkers.append(PythonHeaderCheck())
-        self.checkers.append(PythonImportCheck())
-        self.checkers.append(PythonInitMethodCheck())
-        self.checkers.append(PythonSourceEncodingCheck())
+        self.append(PythonClassDeclarationCheck())
+        self.append(PythonHeaderCheck())
+        self.append(PythonImportCheck())
+        self.append(PythonInitMethodCheck())

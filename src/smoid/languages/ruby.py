@@ -1,109 +1,70 @@
-# Copyright 2008 Thomas Quemard
-#
-# Paste-It is free software; you can redistribute it and/or modify it
-# under the terms of the GNU General Public License as published
-# by the Free Software Foundation; either version 3.0, or (at your option)
-# any later version.
-#
-# Paste-It is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
-# License for more details.
-
-
-from smoid.languages import Check, LanguageCheck
+from languages import Check, CheckCollection
 
 
 class RubyClassDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Class declaration"
+        self.name = "RubyClassDeclaration"
+        self.example = "CoolClass < CoolClassDad"
 
-    def _test(self):
-        result = False
+        self.add_language("ruby")
         re_class = "[a-zA-Z_][a-zA-Z_0-9]+"
-        if self.is_re_found("(^|\r|\n)\s*class\s+" + re_class + "\s*<<?\s*" + re_class + "\s*(\r|\n|$)") :
-            self.probability = 40
-            result = True
-        return result
+        self.add_multiple_matches("(^|\r|\n)\s*class\s+" + re_class + "\s*<<?\s*" + re_class + "\s*(\r|\n|$)", 30)
 
 
 class RubyFunctionDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Function declaration"
-
-    def _test(self):
-        result = False
-        re_class = "[a-zA-Z_][a-zA-Z_0-9]+"
-        if self.is_re_found("(^|\r|\n)\s*def\s+(self\.)?[a-zA-Z_][a-zA-Z_0-9]*(!|\?)?"):
-            self.probability = 40
-            result = True
-        return result
+        self.name = "RubyFunctiondeclaration"
+        self.example = "def do_it!"
+        self.add_language("ruby")
+        self.add_multiple_matches("(^|\r|\n)\s*def\s+(self\.)?[a-zA-Z_][a-zA-Z_0-9]*(!|\?)?", 20)
 
 
 class RubyHeaderCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Headers"
-
-    def _test(self):
-        result = False
-        if self.is_re_matched("^#!/(.+)ruby(\n|$)") :
-            self.probability = 60
-            result = True
-        return result
+        self.name = "RubyShebang"
+        self.example = "#!/usr/bin/ruby"
+        self.add_language("ruby")
+        self.add_one_time_match("^#!/(.+)ruby(\n|$)", 80)
 
 
 class RubyModuleDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Module declaration"
-
-    def _test(self):
-        result = False
-        re_class = "[a-zA-Z_][a-zA-Z_0-9]+"
-        if self.is_re_found("(^|\r|\n)\s*module\s+[a-zA-Z_][a-zA-Z_0-9]*"):
-            self.probability = 40
-            result = True
-        return result
+        self.name = "RubyModuleDeclaration"
+        self.example = "module CoolModule"
+        self.add_language("ruby")
+        self.add_multiple_matches("(^|\r|\n)\s*module\s+[a-zA-Z_][a-zA-Z_0-9]*", 20)
 
 
 class RubyRequireCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Require"
-
-    def _test(self):
-        result = False
-        if self.is_re_found("(^|\n|\r)\s*require\s+'[^']+'\s*(\r|\n|$)") :
-            self.probability = 40
-            result = True
-        return result
+        self.name = "RubyRequire"
+        self.example = "require 'dude.rb'"
+        self.add_language("ruby")
+        self.add_multiple_matches("(^|\n|\r)\s*require\s+'[^']+'\s*(\r|\n|$)", 40)
 
 
 class RubyStrangeFunctionNamesCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Strange function names"
-
-    def _test(self):
-        result = False
-        if self.is_re_found("\.[a-zA-Z_][a-zA-Z_0-9](\?|!)") :
-            self.probability = 20
-            result = True
-        return result
+        self.name = "RubyStrangeFunctionNames"
+        self.example = ".do_it!"
+        self.add_language("ruby")
+        self.add_multiple_matches("\.[a-zA-Z_][a-zA-Z_0-9](\?|!)", 20)
 
 
-class RubyCheck (LanguageCheck):
+class RubyCheckCollection (CheckCollection):
     def __init__(self):
-        LanguageCheck.__init__(self)
 
         self.name = "ruby"
 
-        self.checkers.append(RubyClassDeclarationCheck())
-        self.checkers.append(RubyFunctionDeclarationCheck())
-        self.checkers.append(RubyHeaderCheck())
-        self.checkers.append(RubyModuleDeclarationCheck())
-        self.checkers.append(RubyRequireCheck())
-        self.checkers.append(RubyStrangeFunctionNamesCheck())
+        self.append(RubyClassDeclarationCheck())
+        self.append(RubyFunctionDeclarationCheck())
+        self.append(RubyHeaderCheck())
+        self.append(RubyModuleDeclarationCheck())
+        self.append(RubyRequireCheck())
+        self.append(RubyStrangeFunctionNamesCheck())

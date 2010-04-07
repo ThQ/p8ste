@@ -72,6 +72,7 @@ class Check:
         self.one_time_matches.append((regex, probability))
 
     def check (self, content):
+        self.probability = 0
         self.content = content
 
         for match in self.one_time_matches:
@@ -86,9 +87,9 @@ class Check:
         self._test()
 
     def check_verbose (self, content):
-        print str(self.languages), "Checking <", self.name, ">, ",
+        print str(self.languages), "Checking <", self.name, ">",
         if self.example:
-            print "ex: <" + self.example + ">",
+            print ", ex: <" + self.example + ">",
         result = self.check(content)
         print "... +" + str(self.probability)
         return result
@@ -104,23 +105,4 @@ class Check:
 
 class CheckCollection (list):
     pass
-
-class LanguageCheck:
-
-    def __init__ (self):
-        self.name = ""
-        self.probability = 0
-        self.checkers = []
-
-    def check (self, str):
-        for checker in self.checkers:
-            checker.check(str)
-            self.probability += checker.probability
-
-    def check_verbose (self, str):
-        print "Performing language check for ", self.name, "... (", len(self.checkers), " tests )"
-        for checker in self.checkers:
-            checker.check_verbose(str)
-            self.probability += checker.probability
-        print "   [ Probably of this string to be", self.name, "= ", self.probability, "]\n"
 
