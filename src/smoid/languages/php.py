@@ -11,96 +11,80 @@
 # License for more details.
 
 
-from smoid.languages import Check, LanguageCheck
+from languages import Check, LanguageCheck, CheckCollection
 
 
 class PhpChildClassDeclarationCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "Class declaration (class * implements *)"
+        self.name = "PhpClassDeclaration"
+        self.example = "class MyClassIsColl implements Dad {"
 
-    def _test(self):
-        result = False
-        if self.is_re_found("class\s+[a-zA-Z_][a-zA-Z0-9_]*\s+(implements)|(extends)\s+[a-zA-Z_][a-zA-Z0-9_]*\s*{"):
-            self.probability = 60
-            result = True
-        return result
+        self.add_language("php")
+        re_id = "[a-zA-Z_][a-zA-Z0-9_]*"
+        self.add_multiple_matches("class\s+" + re_id + "\s+(implements)|(extends)\s+" + re_id + "\s*{", 60)
 
 
 class PhpClosingTagCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "Closing tag (?>)"
+        self.name = "PhpClosingTag"
+        self.example = "?>"
 
-    def _test(self):
-        result = False
-        if self.is_re_matched("(^|\n|\r)\?>"):
-            result = True
-            self.probability = 50
-        return result
+        self.add_language("php")
+        self.add_one_time_match("(^|\n|\r)\?>", 80)
 
 
 class PhpHeaderCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "Header (#!.../php)"
+        self.name = "PhpShebang"
+        self.example = "#!/usr/bin/php"
 
-    def _test(self):
-        result = False
-        if self.is_re_matched("#!/(.+)php(\n|$)"):
-            self.probability = 100
-            result = True
-        return result
+        self.add_language("php")
+        self.add_one_time_match("#!/(.+)php(\n|$)", 80)
 
 
 class PhpInstanceMemberCheck (Check):
-    name = "PhpInstanceMember"
 
-    def _test(self):
-        result = False
-        if self.is_re_matched("\$[a-zA-Z_][a-zA-Z0-9]*->"):
-            result = True
-        return result
+    def __init__ (self):
+        Check.__init__ (self)
+        self.name = "PhpInstanceMember"
+        self.example = "$my_var->is_cool"
+
+        self.add_language("php")
+        self.add_multiple_matches("\$[a-zA-Z_][a-zA-Z0-9]*->[a-zA-Z_][a-zA-Z0-9]*", 20)
 
 
 class PhpGetPostVariablesCheck (Check):
+
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "$_GET / $_POST variables"
+        self.name = "PhpGetPostVariables"
+        self.example = "$_GET";
+        self.add_language("php")
 
-    def _test(self):
-        result = False
-        if self.is_re_found("\$_(GET)|(POST)"):
-            self.probability = 40
-            result = True
-        return result
+        self.add_multiple_matches("\$_(GET)|(POST)", 20)
 
 
 class PhpOpeningTagCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "Opening tag (<?php)"
-
-    def _test(self):
-        result = False
-        if self.is_re_matched("\<\?php\\s|\n|\r"):
-            result = True
-            self.probability = 50
-        return result
+        self.name = "PhpOpeningTag"
+        self.example = "<?php"
+        self.add_language("php")
+        self.add_one_time_match("\<\?php\\s|\n|\r", 80)
 
 
-class PhpCheck (LanguageCheck):
+class PhpCheckCollection (CheckCollection):
     def __init__ (self):
-        LanguageCheck.__init__(self)
 
-        self.name = "php"
-
-        self.checkers.append(PhpChildClassDeclarationCheck())
-        self.checkers.append(PhpClosingTagCheck())
-        self.checkers.append(PhpGetPostVariablesCheck())
-        self.checkers.append(PhpHeaderCheck())
-        self.checkers.append(PhpOpeningTagCheck())
+        self.append(PhpChildClassDeclarationCheck())
+        self.append(PhpClosingTagCheck())
+        self.append(PhpGetPostVariablesCheck())
+        self.append(PhpHeaderCheck())
+        self.append(PhpOpeningTagCheck())

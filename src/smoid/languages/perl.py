@@ -11,7 +11,7 @@
 # License for more details.
 
 
-from smoid.languages import Check, LanguageCheck
+from languages import Check, LanguageCheck, CheckCollection
 
 
 class PerlPackageCheck (Check):
@@ -20,11 +20,13 @@ class PerlPackageCheck (Check):
 
         self.name = "Package"
         self.example = "package com::my::dear;"
+        self.add_language("perl")
 
         re_ns = "[a-zA-Z_][a-zA-Z_0-9]*"
         re_full_ns = re_ns + "(?:\s*::\s*" + re_ns + ")*"
 
         self.add_multiple_matches("(?:^|\n|\r|;)\s*package\s*(" + re_full_ns + ")\s*(?:$|\n|\r|;)", 10)
+
 
 class PerlShebangCheck (Check):
     def __init__ (self):
@@ -32,8 +34,10 @@ class PerlShebangCheck (Check):
 
         self.name = "Shebang"
         self.example = "#!/usr/bin/env perl"
+        self.add_language("perl")
 
         self.add_one_time_match("^#!/(.+)perl( .*?)?(\n|$)", 60)
+
 
 class PerlSubroutineCheck (Check):
     def __init__ (self):
@@ -41,8 +45,10 @@ class PerlSubroutineCheck (Check):
 
         self.name = "Subroutine"
         self.example = "sub do_as_i_say {"
+        self.add_language("perl")
 
         self.add_multiple_matches("(?:^|\n|\r|;)\s*sub\s+([a-zA-Z_][a-zA-Z_0-8]*)\s*{", 10)
+
 
 class PerlUseCheck (Check):
     def __init__ (self):
@@ -50,6 +56,7 @@ class PerlUseCheck (Check):
 
         self.name = "Use"
         self.example = "use File::Spec;"
+        self.add_language("perl")
 
         re_ns = "[a-zA-Z_][a-zA-Z_0-9]*"
         re_full_ns = re_ns + "(?:\s*::\s*" + re_ns + ")*"
@@ -68,3 +75,11 @@ class PerlCheck (LanguageCheck):
         self.checkers.append(PerlSubroutineCheck())
         self.checkers.append(PerlUseCheck())
 
+
+class PerlCheckCollection (CheckCollection):
+
+    def __init__(self):
+        self.append(PerlPackageCheck())
+        self.append(PerlShebangCheck())
+        self.append(PerlSubroutineCheck())
+        self.append(PerlUseCheck())
