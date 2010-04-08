@@ -6,7 +6,7 @@ import os
 import os.path
 import sys
 
-import __init__
+import smoid
 
 short_options = "dhpv"
 long_options = []
@@ -59,7 +59,7 @@ for argument in arguments:
         smoptions.files.append(argument)
 
 if smoptions.run and smoptions.has_items() :
-    checker = __init__.GrandChecker()
+    checker = smoid.GrandChecker()
     checker.verbose = smoptions.verbose
 
     # A list of directory paths was submitted, list them and print the

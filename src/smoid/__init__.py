@@ -1,23 +1,23 @@
 import sys
 
-import languages.perl
-import languages.php
-import languages.python
-import languages.ruby
-import languages.shebang
-import languages.xml
+import smoid.languages.perl
+import smoid.languages.php
+import smoid.languages.python
+import smoid.languages.ruby
+import smoid.languages.shebang
+import smoid.languages.xml
 
 
 class GrandChecker:
     def __init__ (self):
         self.languages = {}
         self.checkers = []
-        self.checkers.extend(languages.perl.PerlCheckCollection())
-        self.checkers.extend(languages.php.PhpCheckCollection())
-        self.checkers.extend(languages.python.PythonCheck())
-        self.checkers.extend(languages.ruby.RubyCheckCollection())
-        self.checkers.append(languages.shebang.ShebangCheck())
-        self.checkers.extend(languages.xml.XmlCheck())
+        self.checkers.extend(smoid.languages.perl.PerlCheckCollection())
+        self.checkers.extend(smoid.languages.php.PhpCheckCollection())
+        self.checkers.extend(smoid.languages.python.PythonCheck())
+        self.checkers.extend(smoid.languages.ruby.RubyCheckCollection())
+        self.checkers.append(smoid.languages.shebang.ShebangCheck())
+        self.checkers.extend(smoid.languages.xml.XmlCheck())
         self.verbose = False
 
     def find_out_language_of_file (self, file_path):

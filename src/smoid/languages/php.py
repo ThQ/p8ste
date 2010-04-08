@@ -1,4 +1,4 @@
-from languages import Check, CheckCollection
+from smoid.languages import Check, CheckCollection
 
 
 class PhpChildClassDeclarationCheck (Check):

@@ -1,6 +1,6 @@
 import re
 
-from languages import Check, CheckCollection
+from smoid.languages import Check, CheckCollection
 
 
 class PythonClassDeclarationCheck (Check):
