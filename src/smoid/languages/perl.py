@@ -15,17 +15,6 @@ class PerlPackageCheck (Check):
         self.add_multiple_matches("(?:^|\n|\r|;)\s*package\s*(" + re_full_ns + ")\s*(?:$|\n|\r|;)", 10)
 
 
-class PerlShebangCheck (Check):
-    def __init__ (self):
-        Check.__init__(self)
-
-        self.name = "Shebang"
-        self.example = "#!/usr/bin/env perl"
-        self.add_language("perl")
-
-        self.add_one_time_match("^#!/(.+)perl( .*?)?(\n|$)", 60)
-
-
 class PerlSubroutineCheck (Check):
     def __init__ (self):
         Check.__init__(self)
@@ -55,6 +44,5 @@ class PerlCheckCollection (CheckCollection):
 
     def __init__(self):
         self.append(PerlPackageCheck())
-        self.append(PerlShebangCheck())
         self.append(PerlSubroutineCheck())
         self.append(PerlUseCheck())
