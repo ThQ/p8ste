@@ -13,7 +13,7 @@
 <ul>
     <li>
         <img class="user" src="{% if u_gravatar %}{{u_gravatar}}{%else%}{{"images/silk/user.png"|url}}{%endif%}" alt="{{user_name}}" width="16" height="16" />
-        <a href="{{u_user}}">{{ user_name }}</a>
+        {%if u_user %}<a href="{{u_user}}">{{ user_name }}</a>{%else%}{{user_name}}{%endif%}
     </li>
     <li><img src="{{"images/silk/date.png"|url}}" alt="" width="16" height="16" /> {{ posted_at }}</li>
     {% if pasty_tags %}
