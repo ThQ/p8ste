@@ -22,15 +22,6 @@ class PythonInitMethodCheck(Check):
         self.add_multiple_matches("\s+def\s+__init__\s*\(\s*self\s*,", 40)
 
 
-class PythonHeaderCheck(Check):
-    def __init__ (self):
-        Check.__init__(self)
-        self.name = "PythonShebang"
-        self.example = "#!/usr/bin/python"
-        self.add_language("python")
-        self.add_one_time_match("#!/(.+)python(\n|$)", 80)
-
-
 class PythonImportCheck(Check):
     def __init__ (self):
         Check.__init__(self)
@@ -43,6 +34,5 @@ class PythonCheck (CheckCollection):
     def __init__(self):
         self.name = "python"
         self.append(PythonClassDeclarationCheck())
-        self.append(PythonHeaderCheck())
         self.append(PythonImportCheck())
         self.append(PythonInitMethodCheck())
