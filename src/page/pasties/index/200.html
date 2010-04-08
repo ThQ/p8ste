@@ -48,7 +48,7 @@
     <tr>
         <td>{{ paste.posted_at }}</td>
         <td>{% if paste.u_gravatar %}<img class="user" src="{{paste.u_gravatar}}" width="16" height="16" alt="{{paste.user_name}}" />{%endif%}</td>
-        <td>{{ paste.user_name }}</td>
+        <td>{%if paste.u_user %}<a href="{{paste.u_user}}">{{ paste.user_name }}</a>{%else%}{{paste.user_name}}{%endif%}</td>
         <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon|url }}" alt="{{ paste.language }}" width="16" height="16" />{% endif %}</td>
         <td>
             <a href="{{ paste.u }}">{% if paste.is_moderated %}<strike>{% else %}<strong>{% endif %}{{ paste.title|escape }}{% if paste.is_moderated %}</strike>{% else %}</strong>{% endif %}</a>

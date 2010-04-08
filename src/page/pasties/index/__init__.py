@@ -81,6 +81,9 @@ class Index(paste.web.RequestHandler):
                 dpaste["u"] = paste.url("%s", opaste.slug)
                 dpaste["snippet"] = opaste.snippet
                 dpaste["is_moderated"] = opaste.is_moderated
+
+                if opaste.user:
+                    dpaste["u_user"] = paste.url("users/%s", opaste.user.id)
                 dpaste["user_name"] = cgi.escape(opaste.posted_by_user_name)
 
                 if opaste.user:
