@@ -33,6 +33,13 @@ class SmoidOptions:
         self.treat_arguments_as_directories = False
         self.show_file_paths = False
 
+    def has_items (self):
+        result = False
+        if self.treat_arguments_as_directories:
+            result = len(self.directories) > 0
+        else:
+            result = len(self.files) > 0
+        return result
 
 smoptions = SmoidOptions()
 for option, value in options:
@@ -51,7 +58,7 @@ for argument in arguments:
     else:
         smoptions.files.append(argument)
 
-if smoptions.run :
+if smoptions.run and smoptions.has_items() :
     checker = __init__.GrandChecker()
     checker.verbose = smoptions.verbose
 
