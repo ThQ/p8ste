@@ -6,7 +6,7 @@ class PhpChildClassDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__ (self)
         self.name = "PhpClassDeclaration"
-        self.example = "class MyClassIsColl implements Dad {"
+        self.example = "class MyClassIsColl extends Dad {"
 
         self.add_language("php")
         re_id = "[a-zA-Z_][a-zA-Z0-9_]*"
@@ -22,17 +22,6 @@ class PhpClosingTagCheck (Check):
 
         self.add_language("php")
         self.add_one_time_match("(^|\n|\r)\?>", 80)
-
-
-class PhpHeaderCheck (Check):
-
-    def __init__ (self):
-        Check.__init__ (self)
-        self.name = "PhpShebang"
-        self.example = "#!/usr/bin/php"
-
-        self.add_language("php")
-        self.add_one_time_match("#!/(.+)php(\n|$)", 80)
 
 
 class PhpInstanceMemberCheck (Check):
@@ -73,5 +62,4 @@ class PhpCheckCollection (CheckCollection):
         self.append(PhpChildClassDeclarationCheck())
         self.append(PhpClosingTagCheck())
         self.append(PhpGetPostVariablesCheck())
-        self.append(PhpHeaderCheck())
         self.append(PhpOpeningTagCheck())
