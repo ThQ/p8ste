@@ -4,8 +4,8 @@
 {%block h1 %}Sign Up{% endblock %}
 {%block page-content %}
 
-{% if user_logged_in_google %}
-<p class="info">You are logged in to Google using <strong>{{google_email|escape}}</strong> (<a href="{{u_user_logout}}">sign out</a>).</p>
+{% if user_logged_in_google__ %}
+<p class="info">You are logged in to Google using <strong>{{google_email|escape}}</strong> (<a href="{{u_user_logout__}}">sign out</a>).</p>
 
 <div style="width:300px;">
 <form method="POST" action="{{u_signup}}">
