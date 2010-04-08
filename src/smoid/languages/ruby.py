@@ -21,15 +21,6 @@ class RubyFunctionDeclarationCheck (Check):
         self.add_multiple_matches("(^|\r|\n)\s*def\s+(self\.)?[a-zA-Z_][a-zA-Z_0-9]*(!|\?)?", 20)
 
 
-class RubyHeaderCheck (Check):
-    def __init__ (self):
-        Check.__init__(self)
-        self.name = "RubyShebang"
-        self.example = "#!/usr/bin/ruby"
-        self.add_language("ruby")
-        self.add_one_time_match("^#!/(.+)ruby(\n|$)", 80)
-
-
 class RubyModuleDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
@@ -64,7 +55,6 @@ class RubyCheckCollection (CheckCollection):
 
         self.append(RubyClassDeclarationCheck())
         self.append(RubyFunctionDeclarationCheck())
-        self.append(RubyHeaderCheck())
         self.append(RubyModuleDeclarationCheck())
         self.append(RubyRequireCheck())
         self.append(RubyStrangeFunctionNamesCheck())
