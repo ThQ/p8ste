@@ -23,6 +23,7 @@ class User:
         guser = users.get_current_user()
         self.db_user = None
         self.is_logged_in = False
+        self.url = ""
 
         if guser:
             self.google_id = guser.user_id()
