@@ -4,6 +4,7 @@ import languages.perl
 import languages.php
 import languages.python
 import languages.ruby
+import languages.shebang
 import languages.xml
 
 
@@ -15,6 +16,7 @@ class GrandChecker:
         self.checkers.extend(languages.php.PhpCheckCollection())
         self.checkers.extend(languages.python.PythonCheck())
         self.checkers.extend(languages.ruby.RubyCheckCollection())
+        self.checkers.append(languages.shebang.ShebangCheck())
         self.checkers.extend(languages.xml.XmlCheck())
         self.verbose = False
 
