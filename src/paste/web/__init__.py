@@ -80,21 +80,21 @@ class RequestHandler (webapp.RequestHandler):
         self.content["u_blank_image"] = paste.url("images/blank.gif")
 
         if self.user.is_logged_in:
-            self.content['user_signed_in'] = True
-            self.content['user_id'] = self.user.id
-            self.content['user_paste_count'] = self.user.paste_count
-            self.content["u_user"] = self.user.url
-            self.content["u_user_gravatar"] = self.user.db_user.get_gravatar(16)
+            self.content['user_signed_in__'] = True
+            self.content['user_id__'] = self.user.id
+            self.content['user_paste_count__'] = self.user.paste_count
+            self.content["u_user__"] = self.user.url
+            self.content["u_user_gravatar__"] = self.user.db_user.get_gravatar(16)
         else:
-            self.content['user_signed_in'] = False
+            self.content['user_signed_in__'] = False
 
-        self.content["user_logged_in_google"] = self.user.is_logged_in_google
-        self.content["u_user_signup"] = paste.url("sign-up?url=%s", self.request.url)
+        self.content["user_logged_in_google__"] = self.user.is_logged_in_google
+        self.content["u_user_signup__"] = paste.url("sign-up?url=%s", self.request.url)
 
         if self.user.is_logged_in_google:
-            self.content['u_user_logout'] = paste.url("sign-out?url=%s", self.request.url)
+            self.content['u_user_logout__'] = paste.url("sign-out?url=%s", self.request.url)
         else:
-            self.content['u_user_login'] = paste.url("sign-in?url=%s", self.request.url)
+            self.content['u_user_login__'] = paste.url("sign-in?url=%s", self.request.url)
 
         if paste.config["env"] == "debug":
             self.content["datastore_logs"] = paste.appengine.hook.datastore_logs
