@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+ 
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+	<title>Latest pastes</title>
+	<link href="{{ u_self }}" rel="self" />
+	<link href="{{ u_pastes }}" />
+	<id>{{ u_paste }}</id>
+
+    {% for paste in pastes %}
+    <entry>
+        <id>{{paste.u}}</id>
+        <title>{{paste.title|escape}} ({{paste.size.0}} {{paste.size.1}})</title>
+        <updated>{{paste.posted_at}}</updated>
+        <link rel="alternate" href="{{paste.u}}" />
+        <summary type="text">{{paste.snippet|escape}}</summary>
+        <author><name>{{paste.user_name}}</name></author>
+    </entry>
+    {% endfor %}
+</feed>

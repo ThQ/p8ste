@@ -1,6 +1,5 @@
 == ACTIONS ==
 + src/page/threads/thread/__init__.py : A page that details a thread
-+ src/page/pasties/pasties_atom/__init__.py : An atom of the latest pastes
 + src/smoid/java.py : Support java
 + src/smoid/csharp.py : Support c#
 + src/smoid/c.py : Support C
