@@ -88,3 +88,27 @@ class Pasty (db.Model):
     title = db.TextProperty(default="")
     user = db.ReferenceProperty(User)
 
+    @staticmethod
+    def make_snippet (code, snippet_len):
+        snippet = ""
+        newline_block = False
+        char_count = 0
+        last_char = ""
+        whitespaces = ["\n", "\r", "\t", " "]
+
+        for c in code:
+            if c in whitespaces:
+                if last_char != " ":
+                    snippet += " "
+                    last_char = " "
+                    char_count += 1
+            else:
+                snippet += c
+                last_char = c
+                char_count += 1
+
+            if char_count > snippet_len:
+                snippet = snippet[0: char_count - 3] + "..."
+                break
+
+        return snippet

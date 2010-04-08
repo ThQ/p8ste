@@ -230,7 +230,7 @@ class Add(paste.web.RequestHandler):
         self.paste.posted_by_ip = self.request.remote_addr
         self.paste.replies = 0
         self.paste.slug = slug
-        self.paste.snippet = self.make_snippet(self.paste.code)
+        self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, paste.config["pasty_snippet_length"])
         self.paste.tags = self.prepare_tags(self.form_tags)
         self.paste.title = paste.pasty.filter_title(self.form_title, slug)
         self.paste.user = self.user.db_user
@@ -322,30 +322,6 @@ class Add(paste.web.RequestHandler):
                 dtag.edited_by_ip = self.request.remote_addr
                 dtag.pastes = 1
                 dtag.put()
-
-    def make_snippet (self, code):
-        snippet = ""
-        newline_block = False
-        char_count = 0
-        last_char = ""
-        whitespaces = ["\n", "\r", "\t", " "]
-
-        for c in code:
-            if c in whitespaces:
-                if last_char != " ":
-                    snippet += " "
-                    last_char = " "
-                    char_count += 1
-            else:
-                snippet += c
-                last_char = c
-                char_count += 1
-
-            if char_count > paste.config["pasty_snippet_length"]:
-                snippet = snippet[0: char_count - 3] + "..."
-                break
-
-        return snippet
 
     def on_form_not_sent(self):
         self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
