@@ -23,7 +23,7 @@
         <div id="user_bar">
             {%if user_signed_in %}
             <a href="http://en.gravatar.com/"><img class="user" src="{{u_user_gravatar}}" width="16" height="16" alt="{{user_id}}" /></a>
-            <strong>{{ user_id }}</strong>
+            <a href="{{u_user}}"><strong>{{ user_id }}</strong></a>
             <small>
             ({{user_paste_count}} paste{{user_paste_count|pluralize}})
              &mdash; <a href="{{ u_user_logout|escape }}">Sign Out</a>
