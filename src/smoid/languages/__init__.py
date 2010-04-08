@@ -105,4 +105,3 @@ class Check:
 
 class CheckCollection (list):
     pass
-
