@@ -1,5 +1,6 @@
 import sys
 
+import smoid.languages.namespace
 import smoid.languages.package
 import smoid.languages.perl
 import smoid.languages.php
@@ -13,6 +14,7 @@ class GrandChecker:
     def __init__ (self):
         self.languages = {}
         self.checkers = []
+        self.checkers.append(smoid.languages.namespace.NamespaceCheck())
         self.checkers.append(smoid.languages.package.PackageCheck())
         self.checkers.extend(smoid.languages.perl.PerlCheckCollection())
         self.checkers.extend(smoid.languages.php.PhpCheckCollection())
