@@ -100,6 +100,9 @@ class Check:
     def is_re_matched (self, regex, start_at = 0):
         return re.compile(regex).match(self.content, start_at)
 
+    def set_languages (self, languages):
+        self.languages = languages
+
     def _test (self):
         pass
 
