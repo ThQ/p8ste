@@ -60,7 +60,8 @@ class GrandChecker:
         if self.verbose:
             print "\nProbabilities..."
             for language in results:
-                print "[", language["name"], "] =", language["probability"]
+                if language["probability"] > 0:
+                    print "[", language["name"], "] =", language["probability"]
 
         language = ""
         if len(results) > 1 and results[0]["probability"] > 0:
