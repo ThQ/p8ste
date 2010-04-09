@@ -1,4 +1,4 @@
-from smoid.languages import Check, CheckCollection
+from smoid.languages import Check, CheckCollection, CheckLanguage
 
 
 class PerlSubroutineCheck (Check):

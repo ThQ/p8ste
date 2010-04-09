@@ -56,14 +56,14 @@ class Check:
     def __init__(self):
         self.content = ""
         self.example = ""
-        self.languages = []
+        self.languages = {}
         self.multiple_matches = []
         self.name = ""
         self.one_time_matches = []
         self.probability = 0
 
-    def add_language (self, name):
-        self.languages.append(name)
+    def add_language (self, language_name):
+        self.languages[language_name] = CheckLanguage(name=language_name)
 
     def add_multiple_matches (self, regex, probability):
         self.multiple_matches.append((regex, probability))
@@ -77,22 +77,48 @@ class Check:
 
         for match in self.one_time_matches:
             if self.is_re_matched(match[0]):
-                self.probability += match[1]
+                for lang in self.languages:
+                    self.languages[lang].probability += match[1]
 
         for match_info in self.multiple_matches:
             all_matched = re.findall(match_info[0], content)
             for matched in all_matched:
-                self.probability += match_info[1]
+                for lang in self.languages:
+                    self.languages[lang].probability += match[1]
 
         self._test()
 
     def check_verbose (self, content):
-        print str(self.languages), "Checking <", self.name, ">",
+        print "Checking <", self.name, ">",
         if self.example:
             print ", ex: <" + self.example + ">",
-        result = self.check(content)
-        print "... +" + str(self.probability)
-        return result
+
+        self.check(content)
+
+        print "... ",
+
+        did_languages_passed = False
+        languages = ""
+        if len(self.languages) > 0:
+            for language_name in self.languages:
+                prob = self.languages[language_name].probability
+                if prob > 0:
+                    languages += language_name + " += " + str(prob) + ", "
+                    did_languages_passed = True
+
+        if did_languages_passed:
+            print "[" + languages[:-2] + "]"
+        else:
+            print ""
+
+
+    def incr_language_probability (self, name, prob_diff):
+        if name in self.languages:
+            self.languages[name].probability += prob_diff
+
+    def incr_probability (self, prob_diff):
+        for language_name in self.languages:
+            self.languages[language_name].probability += prob_diff
 
     def is_re_found (self, regex, start_at = 0):
         return re.compile(regex).search(self.content, start_at)
@@ -105,6 +131,11 @@ class Check:
 
     def _test (self):
         pass
+
+class CheckLanguage:
+    def __init__ (self, name="", probability=0):
+        self.name = name
+        self.probability = probability
 
 class CheckCollection (list):
     pass

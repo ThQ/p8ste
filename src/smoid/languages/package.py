@@ -10,7 +10,8 @@ class PackageCheck (Check):
 
         self.name = "Package"
         self.example = "package com::my::dear"
-
+        self.add_language("java")
+        self.add_language("perl")
         res_package = "(?:^|\n|\r|;)\s*package\s*([a-zA-Z_][a-zA-Z_0-9:.]*)\s*(?:$|\n|\r|;)"
         self.re_package = re.compile(res_package)
 
@@ -19,8 +20,6 @@ class PackageCheck (Check):
         matches = self.re_package.findall(content)
         for match in matches:
             if match.find(".") != -1:
-                self.set_languages(["java"])
-                self.probability += 10
+                self.incr_language_probability("java", 10)
             elif match.find("::") != -1:
-                self.set_languages(["perl"])
-                self.probability += 10
+                self.incr_language_probability("perl", 10)

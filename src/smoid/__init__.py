@@ -38,24 +38,25 @@ class GrandChecker:
     def find_out_language(self, str):
         self.languages = {}
         check_no = 0
+
         for checker in self.checkers:
-            probability = 0
             if self.verbose:
                check_no += 1
                print "#" + repr(check_no) + ".",
                checker.check_verbose(str)
             else:
                checker.check(str)
-            probability = checker.probability
 
-            for language in checker.languages:
-                if not self.languages.has_key(language):
-                    self.languages[language] = {"name": language, "probability": probability}
+            for language_name in checker.languages:
+                language = checker.languages[language_name]
+                if not self.languages.has_key(language_name):
+                    self.languages[language_name] = {"name": language_name, "probability": language.probability}
                 else:
-                    self.languages[language]["probability"] += probability
+                    self.languages[language_name]["probability"] += language.probability
 
         results = self.languages.values()
         results = sorted(results, GrandChecker.sort_language)
+
         if self.verbose:
             print "\nProbabilities..."
             for language in results:
@@ -64,6 +65,7 @@ class GrandChecker:
         language = ""
         if len(results) > 1 and results[0]["probability"] > 0:
             language = results[0]["name"]
+
         return language
 
     @staticmethod
