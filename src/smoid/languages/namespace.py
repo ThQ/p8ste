@@ -10,17 +10,16 @@ class NamespaceCheck (Check):
 
         self.name = "Namespace"
         self.example = "namespace dude.this.rocks {"
-
+        self.add_language("c#")
+        self.add_language("c++")
         res_package = "(?:^|\n|\r|;)\s*namespace\s*([a-zA-Z_][a-zA-Z_0-9.]*)\s*(?:$|\n|\r|;)\s*{"
         self.re_package = re.compile(res_package)
 
     def check (self, content):
-        self.probability = 0
+        self.reset()
         matches = self.re_package.findall(content)
         for match in matches:
             if match.find(".") != -1:
-                self.set_languages(["c#"])
-                self.probability += 10
+                self.incr_language_probability("c#", 10)
             else:
-                self.set_languages(["c#", "c++"])
-                self.probability += 10
+                self.incr_language_probability("c++", 10)

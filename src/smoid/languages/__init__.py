@@ -60,7 +60,6 @@ class Check:
         self.multiple_matches = []
         self.name = ""
         self.one_time_matches = []
-        self.probability = 0
 
     def add_language (self, language_name):
         self.languages[language_name] = CheckLanguage(name=language_name)
@@ -72,9 +71,8 @@ class Check:
         self.one_time_matches.append((regex, probability))
 
     def check (self, content):
-        self.probability = 0
         self.content = content
-
+        self.reset()
         for match in self.one_time_matches:
             if self.is_re_matched(match[0]):
                 for lang in self.languages:
@@ -84,33 +82,9 @@ class Check:
             all_matched = re.findall(match_info[0], content)
             for matched in all_matched:
                 for lang in self.languages:
-                    self.languages[lang].probability += match[1]
+                    self.languages[lang].probability += match_info[1]
 
         self._test()
-
-    def check_verbose (self, content):
-        print "Checking <", self.name, ">",
-        if self.example:
-            print ", ex: <" + self.example + ">",
-
-        self.check(content)
-
-        print "... ",
-
-        did_languages_passed = False
-        languages = ""
-        if len(self.languages) > 0:
-            for language_name in self.languages:
-                prob = self.languages[language_name].probability
-                if prob > 0:
-                    languages += language_name + " +" + str(prob) + ", "
-                    did_languages_passed = True
-
-        if did_languages_passed:
-            print "[" + languages[:-2] + "]"
-        else:
-            print ""
-
 
     def incr_language_probability (self, name, prob_diff):
         if name in self.languages:
@@ -125,6 +99,10 @@ class Check:
 
     def is_re_matched (self, regex, start_at = 0):
         return re.compile(regex).match(self.content, start_at)
+
+    def reset (self):
+        for language_name in self.languages:
+            self.languages[language_name].probability = 0
 
     def set_languages (self, languages):
         self.languages = languages

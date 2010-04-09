@@ -7,12 +7,14 @@ class ShebangCheck (Check):
         Check.__init__ (self)
         self.name = "Shebang"
         self.example = "#!/usr/bin/python"
-        self.shebang_languages = ["php", "python", "perl", "ruby"]
+        self.add_language("perl")
+        self.add_language("php")
+        self.add_language("python")
+        self.add_language("ruby")
 
     def check (self, content):
+        self.reset()
         content_len = len(content)
-        self.probability = 0
-        self.langauges = []
 
         if content_len > 2 and content[0:2] == "#!":
             bin_path = ""
@@ -27,7 +29,5 @@ class ShebangCheck (Check):
             slash_pos = bin_path.rfind("/")
             bin = content[slash_pos + 3:i + 2]
 
-            if bin in self.shebang_languages:
-                self.languages = [bin]
-                self.probability = 100
-
+            if bin in self.languages.keys():
+                self.incr_language_probability(bin, 100)

@@ -16,7 +16,7 @@ class PackageCheck (Check):
         self.re_package = re.compile(res_package)
 
     def check (self, content):
-        self.probability = 0
+        self.reset()
         matches = self.re_package.findall(content)
         for match in matches:
             if match.find(".") != -1:

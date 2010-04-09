@@ -25,6 +25,44 @@ class GrandChecker:
         self.checkers.append(smoid.languages.shebang.ShebangCheck())
         self.checkers.extend(smoid.languages.xml.XmlCheck())
         self.verbose = False
+        self.max_checker_name_length = 30
+
+    def check (self, content):
+        check_no = 0
+
+        check_no_filled_width = len(str(len(self.checkers)))
+
+        for checker in self.checkers:
+
+            if self.verbose:
+               check_no += 1
+               display_name = ("<" + checker.name + ">...").ljust(self.max_checker_name_length)
+               print "#" + str(check_no).zfill(check_no_filled_width) + ".",
+               print "Checking " + display_name,
+
+            checker.check(content)
+
+            for language_name in checker.languages:
+                language = checker.languages[language_name]
+                if not self.languages.has_key(language_name):
+                    self.languages[language_name] = {"name": language_name, "probability": language.probability}
+                else:
+                    self.languages[language_name]["probability"] += language.probability
+
+            did_languages_passed = False
+            languages = ""
+            if len(checker.languages) > 0:
+                for language_name in checker.languages:
+                    prob = checker.languages[language_name].probability
+                    if prob > 0:
+                        languages += language_name + " +" + str(prob) + ", "
+                        did_languages_passed = True
+
+            if self.verbose:
+                if did_languages_passed:
+                    print "[" + languages[:-2] + "]"
+                else:
+                    print "-"
 
     def find_out_language_of_file (self, file_path):
         lang = ""
@@ -35,25 +73,9 @@ class GrandChecker:
             hfile.close()
         return lang
 
-    def find_out_language(self, str):
+    def find_out_language(self, content):
         self.languages = {}
-        check_no = 0
-
-        for checker in self.checkers:
-            if self.verbose:
-               check_no += 1
-               print "#" + repr(check_no) + ".",
-               checker.check_verbose(str)
-            else:
-               checker.check(str)
-
-            for language_name in checker.languages:
-                language = checker.languages[language_name]
-                if not self.languages.has_key(language_name):
-                    self.languages[language_name] = {"name": language_name, "probability": language.probability}
-                else:
-                    self.languages[language_name]["probability"] += language.probability
-
+        self.check(content)
         results = self.languages.values()
         results = sorted(results, GrandChecker.sort_language)
 
