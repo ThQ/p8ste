@@ -13,7 +13,7 @@ class ImportCheck (Check):
         self.add_language("java")
         self.add_language("python")
         self.add_language("scala")
-        res_package = "import\s+([a-zA-Z_.]+)\s*(\n|\r|;)"
+        res_package = "import\s+([a-zA-Z_.]+)\s*(?:\n|\r|;)"
         self.re_package = re.compile(res_package)
 
     def check (self, content):
@@ -22,3 +22,6 @@ class ImportCheck (Check):
 
         for match in matches:
             self.incr_probability(10)
+            if match[0:5] == "java.":
+                self.incr_language_probability("java", 20)
+                self.incr_language_probability("scala", 20)
