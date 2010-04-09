@@ -103,7 +103,7 @@ class Check:
             for language_name in self.languages:
                 prob = self.languages[language_name].probability
                 if prob > 0:
-                    languages += language_name + " += " + str(prob) + ", "
+                    languages += language_name + " +" + str(prob) + ", "
                     did_languages_passed = True
 
         if did_languages_passed:
