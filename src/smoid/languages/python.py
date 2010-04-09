@@ -26,8 +26,13 @@ class PythonImportCheck(Check):
     def __init__ (self):
         Check.__init__(self)
         self.name = "PythonImport"
+        self.example = "from subprocess import Popen, PIPE"
         self.add_language("python")
-        self.add_multiple_matches("import(\s+[a-zA-Z_.]+)((\s*,\s*[a-zA-Z_.]+)+)?(\n|\r)", 40)
+
+        res_class = "[a-zA-Z][a-zA-Z0-9_]*"
+        res_full_class = res_class + "(\." + res_class + ")*"
+        res_class_list = res_class + "(\s*,\s*" + res_class + ")*"
+        self.add_multiple_matches("from\s+" + res_full_class + "\s+import\s+" + res_class_list + "\s*(\n|\r|;)", 40)
 
 
 class PythonCheck (CheckCollection):
