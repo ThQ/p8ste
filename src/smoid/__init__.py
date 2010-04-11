@@ -86,9 +86,12 @@ class GrandChecker:
                     print "[", language["name"], "] =", language["probability"]
 
         language = ""
-        if len(results) > 1 and results[0]["probability"] > 0:
+        if len(results) > 0:
             language = results[0]["name"]
 
+        # Top 2 languages have the same probabilities, can't decide
+        if len(results) > 1 and results[0]["probability"] == results[1]["probability"]:
+            language = ""
         return language
 
     @staticmethod
