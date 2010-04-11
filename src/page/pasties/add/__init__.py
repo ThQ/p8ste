@@ -437,12 +437,12 @@ class Add(paste.web.RequestHandler):
             cap_challenge = self.request.get("recaptcha_challenge_field")
             cap_response = self.request.get("recaptcha_response_field")
 
-            recaptcha_response = recaptcha.client.captcha.submit(cap_challenge,
+            captcha_response = recaptcha.client.captcha.submit(cap_challenge,
                                                                  cap_response,
                                                                  paste.private.config["recaptcha::key::private"],
                                                                  self.request.remote_addr
                                                                 )
-            if not recaptcha_response.is_valid:
+            if not captcha_response.is_valid:
                 self.content["pasty_captcha_error"] = "Please try again."
                 result = False
 
