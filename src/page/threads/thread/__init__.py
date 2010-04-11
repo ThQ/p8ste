@@ -39,7 +39,18 @@ class Thread (paste.web.pastes.PasteListRequestHandler):
 
         tpl_pastes = self.templatize_pastes(self.pastes)
 
+        global_size = 0
+        global_loc = 0
+        for o_paste in self.pastes:
+            if o_paste.characters:
+                global_size += o_paste.characters
+            if o_paste.lines:
+                global_loc += o_paste.lines
+
+        self.content["thread_size"] = paste.util.make_filesize_readable(global_size)
+        self.content["thread_loc"] = global_loc
         self.content["pastes"] = tpl_pastes
+        self.content["paste_count"] = len(self.pastes)
         self.write_out("page/threads/thread/200.html")
 
     def get_404(self):
