@@ -44,6 +44,7 @@
                         <small>A coma separated list of tags.</small><br />
                         <small>Ex: python, googleappengine</small>
                     </li>
+                    {% if recaptcha %}
                     <li>
                         <label for="pasty_user_name">Are you human ?</label>
                         {% if pasty_captcha_error %}
@@ -52,6 +53,7 @@
                         {{ recaptcha }}
                         <small>We are using this kind of test so as to ensure you are human, it's a way to avoid <a href="http://en.wikipedia.org/wiki/Spam_%28electronic%29">spam</a>.</small>
                     </li>
+                    {% endif %}
                 </ul>
             </td>
         </tr>

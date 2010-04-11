@@ -324,7 +324,8 @@ class Add(paste.web.RequestHandler):
                 dtag.put()
 
     def on_form_not_sent(self):
-        self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
+        if not self.user.is_logged_in_google:
+            self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
 
         self.content["pasty_token"] = paste.form.put_form_token(self.request.remote_addr)
 
@@ -431,28 +432,29 @@ class Add(paste.web.RequestHandler):
         code = self.form_code
         token = self.form_token
 
+        if not self.user.is_logged_in_google:
 
-        cap_challenge = self.request.get("recaptcha_challenge_field")
-        cap_response = self.request.get("recaptcha_response_field")
+            cap_challenge = self.request.get("recaptcha_challenge_field")
+            cap_response = self.request.get("recaptcha_response_field")
 
-        recaptcha_response = recaptcha.client.captcha.submit(cap_challenge,
-                                                             cap_response,
-                                                             paste.private.config["recaptcha::key::private"],
-                                                             self.request.remote_addr
-                                                            )
+            recaptcha_response = recaptcha.client.captcha.submit(cap_challenge,
+                                                                 cap_response,
+                                                                 paste.private.config["recaptcha::key::private"],
+                                                                 self.request.remote_addr
+                                                                )
+            if not recaptcha_response.is_valid:
+                self.content["pasty_captcha_error"] = "Please try again."
+                result = False
 
-        if not paste.form.has_valid_token(self.request.remote_addr, token):
+        if result == True and not paste.form.has_valid_token(self.request.remote_addr, token):
             if token != "":
                 self.content["pasty_error"] = "<strong>Your form has expired</strong>, you probably took too much time to fill it. <a href=\"" + paste.url("") + "\"><strong>Refresh this page</strong></a>."
             result = False
 
-        elif result == True and len(code) == 0:
+        if result == True and len(code) == 0:
             self.content["pasty_code_error"] = "You must paste some code."
             result = False
 
-        elif not recaptcha_response.is_valid:
-            self.content["pasty_captcha_error"] = "Please try again."
-            result = False
 
         return result
 
