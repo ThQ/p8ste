@@ -41,11 +41,6 @@ import page.users.user
 
 
 template.register_template_library('common.url')
-if paste.config["env"] == "debug":
-    import paste.appengine.hook
-    paste.appengine.hook.datastore_logs = []
-    apiproxy_stub_map.apiproxy.GetPreCallHooks().Append('db_log', paste.appengine.hook.hook_datastore, 'datastore_v3')
-
 
 re_paste = "P[a-zA-Z0-9_-]+"
 re_user = "[a-zA-Z0-9_-]+"
