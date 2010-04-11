@@ -18,6 +18,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import paste
+import page.about.thanks
 import page.error.error404
 import page.languages.autodetected
 import page.pasties.add
@@ -66,6 +67,7 @@ pages = [
     ('/sign-in', page.users.signin.SignIn),
     ('/sign-up', page.users.signup.SignUp),
     ('/sign-out', page.users.signout.SignOut),
+    ('/about/thanks', page.about.thanks.Thanks),
     ('/languages/auto-detected', page.languages.autodetected.AutoDetected),
     ('/.*', page.error.error404.Error404)
 ]
