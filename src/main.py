@@ -32,6 +32,7 @@ import page.pasties.pasty_atom
 import page.pasties.recount
 import page.pasties.sitemap
 import page.pasties.update
+import page.threads.thread
 import page.threads.thread_atom
 import page.users.signin
 import page.users.signup
@@ -63,6 +64,7 @@ pages = [
     ('/(' + re_paste + ')/recount', page.pasties.recount.Recount),
     ('/(' + re_paste + ')/update', page.pasties.update.Update),
     ('/users/(' + re_user + ')', page.users.user.User),
+    ('/threads/(' + re_paste + ')', page.threads.thread.Thread),
     ('/threads/(' + re_paste + ').atom', page.threads.thread_atom.ThreadAtom),
     ('/sitemap.xml', page.pasties.sitemap.Sitemap),
     ('/sign-in', page.users.signin.SignIn),

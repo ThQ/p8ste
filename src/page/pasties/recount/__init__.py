@@ -19,9 +19,9 @@ import paste
 import paste.lang
 import paste.model
 import paste.util
-import paste.web
+import paste.web.pastes
 
-class Recount (paste.web.PasteRequestHandler):
+class Recount (paste.web.pastes.PasteRequestHandler):
 
     def __init__ (self):
         paste.web.PasteRequestHandler.__init__(self)
