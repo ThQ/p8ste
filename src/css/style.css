@@ -216,9 +216,19 @@ ul ul
 {
     color:#444444;
 }
+
 #footers a:visited
 {
     color:#444444;
+}
+
+#footers table
+{
+    width:auto;
+}
+#footers td
+{
+    width:200px;
 }
 
 #h1-headers
