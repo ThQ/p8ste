@@ -77,6 +77,7 @@ class RequestHandler (webapp.RequestHandler):
         self.content["u_pastes"] = paste.url("pastes/")
         self.content["u_module"] = self.module_url
         self.content["u_about_thanks"] = paste.url("about/thanks")
+        self.content["u_about_features"] = paste.url("about/features")
         self.content["u_module_history"] = self.module_history_url
         self.content["u_blank_image"] = paste.url("images/blank.gif")
 
