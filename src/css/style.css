@@ -186,27 +186,25 @@ ul ul
 
 #footers
 {
-    width:100%;
-    margin:40px 0 0 0;
-    padding:30px 0px 10px 0px;
+    margin:40px 20px 0 20px;
+    padding:30px 0 10px 0;
     border-top:2px solid #d0d0d0;
     font-size:0.9em;
     color:#444444;
+    font-size:0.8em;
 }
 
 #footers ul
 {
     list-style-type:none;
-    display:inline;
     margin:2px 0 2px 0;
     padding:0;
 }
 
 #footers li
 {
-    display:table-cell;
     margin:0;
-    padding:0 15px 0 0;
+    padding:3px 0 3px 0;
 }
 
 #footers p
