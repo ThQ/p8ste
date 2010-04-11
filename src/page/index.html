@@ -22,19 +22,17 @@
     <body>
         <div id="user_bar">
             {%if user_signed_in__ %}
-            <a href="http://en.gravatar.com/"><img class="user" src="{{u_user_gravatar__}}" width="16" height="16" alt="{{user_id__}}" /></a>
+            <a href="http://en.gravatar.com/"><img src="{{u_user_gravatar__}}" width="16" height="16" alt="{{user_id__}}" /></a>
             <a href="{{u_user__}}"><strong>{{user_id__}}</strong></a>
-            <small>
             ({{user_paste_count__}} paste{{user_paste_count__|pluralize}})
              &mdash; <a href="{{u_user_logout__|escape }}">Sign Out</a>
-            </small>
             {% else %}
             {% if user_logged_in_google__ %}
             <a href="{{u_user_signup__}}"><strong>Sign Up</strong></a>
 
             {% else %}
-            <small><a href="{{u_user_login__|escape}}"><strong>Sign In</strong></a> &mdash; or <a href="{{u_user_signup__}}">Sign Up</a>
-            </small>
+            <a href="{{u_user_login__|escape}}"><strong>Sign In</strong></a> &mdash; or <a href="{{u_user_signup__}}">Sign Up</a>
+            
             {% endif %}
             {% endif %}
         </div>
@@ -53,7 +51,7 @@
         </div>
 
         <div id="footers">
-            <img src="{{"images/copyleft.png"|url}}" alt="copyleft" title="Copyleft" style="float:left;margin:0 10px 10px 0;padding:0;" />
+            <a href="http://www.gnu.org/copyleft/"><img src="{{"images/copyleft.png"|url}}" alt="copyleft" title="Copyleft" style="float:left;margin:0 10px 10px 0;padding:0;" /></a>
 
             <ul style="float:right">
                 <li><a href="http://validator.w3.org/check?uri=referer"><img src="{{"images/silk/xhtml_valid.png"|url}}" height="16" width="16" alt="XHTML valid" /></a></li>

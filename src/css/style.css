@@ -138,7 +138,7 @@ th
     border-bottom:1px solid #d4d4d4;
     margin:0 10px 0 10px;
     padding:3px;
-    font-size:0.85em;
+    font-size:0.9em;
 }
 
 td
@@ -186,9 +186,10 @@ ul ul
 
 #footers
 {
-    margin:30px 20px 10px 20px;
-    padding:10px 0 0 0;
-    border-top:1px solid #d0d0d0;
+    width:100%;
+    margin:40px 0 0 0;
+    padding:30px 0px 10px 0px;
+    border-top:2px solid #d0d0d0;
     font-size:0.9em;
     color:#444444;
 }
@@ -261,11 +262,31 @@ ul ul
 {
     font-size:0.8em;
     margin:0 0 10px 0;
-    border-bottom:1px solid #dfdfdf;
+    border-bottom:1px solid #3c488f;
     text-align:right;
     padding:3px 20px 3px 20px;
+    background:url(/images/userbar_bg.png) repeat-x;
+    color:#ffffff;
 }
 
+#user_bar a:link, #user_bar a:visited
+{
+    color:#ffffff;
+    text-decoration:underline;
+}
+
+#user_bar a:hover
+{
+    color:#ffffff;
+    text-decoration:none;
+}
+
+#user_bar img
+{
+    border:1px solid #394485;
+    background-color:#aab1d7;
+    padding:1px;
+}
 #content
 {
     font-size:0.8em;
