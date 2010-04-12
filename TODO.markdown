@@ -3,7 +3,6 @@
 * src/page/pasties/remote_diff : Diff with a remote file
 * src/page/users/recount : Recount user pastes
 * src/paste/appengine/hook.py : Determine value of fields
-* src/paste/appengine/hook.py : Put the entity kind in the dict
 
 ## Smoid
 

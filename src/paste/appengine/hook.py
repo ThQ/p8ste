@@ -10,17 +10,15 @@ def hook_datastore (service, call, request, response):
     qry = ""
     log["operation"] = call
     if call == "Put":
-        qry = "into "
         for entity in request.entity_list():
-            qry += entity.key().path().element_list()[0].type()
-            qry += " ["
+            log["entity"] = entity.key().path().element_list()[0].type()
             for prop in entity.property_list():
                 qry += prop.name() + ", "
-            qry = qry[:-2] + "]"
+            qry = qry[:-2]
 
     elif call == "RunQuery":
-        qry = "from " + request.kind() + ""
-        qry += " where "
+        log["entity"] = request.kind()
+        qry = " where "
         for filter in request.filter_list():
             qry += filter.property_list()[0].name() + "=?,"
         qry = qry[:-1]
