@@ -7,12 +7,9 @@
 {% if u_parent %}
 <p class="info"><strong>You are forking <a href="{{ u_parent }}">{{parent_slug|escape}}</a></strong> : it's a <i>copy</i>, you're not editing the original paste, just making changes on a copy of your own.</p>
 {% else %}
-<div class="info">
-    <strong>Paste-It</strong> is a python pastebin running on Google App Engine. Paste whatever code you want and share it with the world. Let us worry about the rest.
-    <ul>
-        <li><a href="{{u_about_features}}">What makes us great ?</a></li>
-    </ul>
-</div>
+<p class="info">
+    <strong>Paste-It</strong> is a python pastebin running on Google App Engine. Paste whatever code you want and share it with the world. Let us worry about the rest. <a href="{{u_about_features}}"><strong>What makes us great ?</strong></a>
+</p>
 
 
 
