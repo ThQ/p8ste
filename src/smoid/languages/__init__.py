@@ -16,6 +16,13 @@ import re
 
 languages = {}
 
+languages["java"] = {
+    "lexer": "java",
+    "name": "Java",
+    "home_url": "http://www.java.com",
+    "u_icon": "images/languages/java.png"
+}
+
 languages["php"] = {
     "lexer": "php",
     "name": "PHP",
@@ -37,11 +44,25 @@ languages["python"] = {
     "u_icon": "images/languages/python.png"
 }
 
+languages["python_console"] = {
+    "lexer": "pycon",
+    "name": "Python Console",
+    "home_url": "http://python.org",
+    "u_icon": "images/languages/python.png"
+}
+
 languages["ruby"] = {
     "lexer": "ruby",
     "name": "Ruby",
     "home_url": "http://www.ruby-lang.org",
     "u_icon": "images/languages/ruby.png"
+}
+
+languages["scala"] = {
+    "lexer": "scala",
+    "name": "Scala",
+    "home_url": "http://www.scala-lang.org",
+    "u_icon": "images/languages/scala.png"
 }
 
 languages["xml"] = {
