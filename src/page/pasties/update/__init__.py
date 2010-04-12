@@ -62,7 +62,8 @@ class Update (paste.web.RequestHandler):
 
         if language != "":
             if "lexer" in smoid.languages.languages[language]:
-                lexer = pygments.lexers.get_lexer_by_name(language)
+                lexer_name = smoid.languages.languages[language]["lexer"]
+                lexer = pygments.lexers.get_lexer_by_name(lexer_name)
                 formatter = paste.syhili.HtmlFormatter(linenos=True, cssclass="code")
                 if lexer and formatter:
                     result = pygments.highlight(code, lexer, formatter)
