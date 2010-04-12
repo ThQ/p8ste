@@ -6,6 +6,7 @@ import smoid.languages.package
 import smoid.languages.perl
 import smoid.languages.php
 import smoid.languages.python
+import smoid.languages.python_console
 import smoid.languages.ruby
 import smoid.languages.shebang
 import smoid.languages.xml
@@ -21,6 +22,7 @@ class GrandChecker:
         self.checkers.extend(smoid.languages.perl.PerlCheckCollection())
         self.checkers.extend(smoid.languages.php.PhpCheckCollection())
         self.checkers.extend(smoid.languages.python.PythonCheck())
+        self.checkers.extend(smoid.languages.python_console.PythonConsoleCheck())
         self.checkers.extend(smoid.languages.ruby.RubyCheckCollection())
         self.checkers.append(smoid.languages.shebang.ShebangCheck())
         self.checkers.extend(smoid.languages.xml.XmlCheck())
