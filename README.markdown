@@ -27,12 +27,12 @@ More infos:
     `http://github.com/thomas-quemard/p8ste/tarball/master`
   and extract it to a local directory.
 
-* Install [pygments][pygments] system wide or extract it to `/path/to/paste-it/`
+* Install [pygments][pygments] system wide or extract it to `/path/to/paste-it/src/`
 
-* Install [recaptcha-client][recaptcha-client] system wide or extract it to `/path/to/paste-it/`
+* Install [recaptcha-client][recaptcha-client] system wide or extract it to `/path/to/paste-it/src/`
 
 *  Run
-   `cd /path/to/pate-it && make check-install`
+   `cd /path/to/paste-it && make check-install`
 
 * Don't forget to check `src/paste/__init__.py` and `src/paste/private.py`
   for configuration options.
