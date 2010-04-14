@@ -170,7 +170,10 @@ class Pasty(paste.web.RequestHandler):
 
         tc = paste.tag.TagCollection()
         tc.import_string(self.pasty.tags)
-        thread_pastes = self.get_thread_pastes()
+        if self.pasty.parent_paste or self.pasty.forks > 0:
+            thread_pastes = self.get_thread_pastes()
+        else:
+            thread_pastes = []
 
         self.content["is_thread"] = len(thread_pastes) > 1
         self.content["u_thread_atom"] = paste.url("threads/%s.atom", self.pasty.thread)
