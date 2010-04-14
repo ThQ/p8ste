@@ -24,7 +24,7 @@ import paste.web.pastes
 class Recount (paste.web.pastes.PasteRequestHandler):
 
     def __init__ (self):
-        paste.web.PasteRequestHandler.__init__(self)
+        paste.web.pastes.PasteRequestHandler.__init__(self)
 
         self.paste = None
 

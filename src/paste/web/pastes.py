@@ -7,7 +7,7 @@ import smoid.languages
 class PasteRequestHandler (paste.web.RequestHandler):
 
     def get_paste (self, pasty_slug):
-        qry_pastes = o_paste.model.Pasty.all()
+        qry_pastes = paste.model.Pasty.all()
         qry_pastes.filter("slug =", pasty_slug)
         return qry_pastes.get()
 
