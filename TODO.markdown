@@ -1,10 +1,12 @@
-# Actions
+# TO-DO
+
+## Actions
 
 * src/page/pasties/remote_diff : Diff with a remote file
 * src/page/users/recount : Recount user pastes
 * src/paste/appengine/hook.py : Determine value of fields
 
-## Smoid
+### Smoid
 
 * src/smoid/java.py : Support java
 * src/smoid/csharp.py : Support c#
@@ -12,9 +14,9 @@
 * src/smoid/cpp.py : Support C++
 
 
-# Projects
+## Projects
 
-## Smoid
+### Smoid
 
 * Improve language detection
 * Should also detect licenses
