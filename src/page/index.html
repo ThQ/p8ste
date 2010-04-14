@@ -90,7 +90,7 @@
             <th style="width:120px;">Time</th>
             <th style="width:100px;">Operation</th>
             <th style="width:120px;">Entity</th>
-            <th>Query</th>
+            <th>Fields</th>
         </tr>
         {% for log in datastore_logs %}
         <tr>
@@ -98,7 +98,13 @@
         <td>{{log.time}}</td>
         <td>{{log.operation}}</td>
         <td><a href="{{"_ah/admin/datastore?kind="|url}}{{log.entity|escape}}">{{log.entity|escape}}</a></td>
-        <td>{{log.query|escape}}</td>
+        <td>{% if log.fields %}
+        <ul>
+            {% for field in log.fields %}
+            <li>{{field.name|escape}}={{field.value|escape}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}</td>
         </tr>
         {% endfor %}
         </table></div>
