@@ -341,6 +341,17 @@ div#logs
     padding:10px 0 0 0;
 }
 
+#logs ul
+{
+    margin:0;
+    padding:0;
+}
+
+#logs li
+{
+    margin:0;
+    padding:0;
+}
 
 img.user
 {
