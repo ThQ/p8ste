@@ -1,0 +1,37 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}
+    Paste list: {% for paste in pastes %}{% if not forloop.first%}, {%endif%}{{paste.slug|escape}}{%endfor%}
+    &mdash; {{global_size.0}} {{global_size.1}}, {{global_line_count}} line{{global_line_count|pluralize}}
+{% endblock %}
+
+{%block h1 %}
+    List: {% for paste in pastes %}{% if not forloop.first%}, {%endif%}<a href="{{paste.u}}">{{paste.slug|escape}}</a>{%endfor%}
+
+{% endblock %}
+
+{%block page-content %}
+
+{% for paste in pastes %}
+<h2>
+    <a href="{{paste.u}}"><strong>{{paste.title|escape}}</strong></a>
+    {% if paste.language %} ({{paste.language}}){%endif%}
+    {% if paste.size %} &mdash; {{paste.size.0}} {{paste.size.1}}{% if paste.lines %}, {{paste.lines}} line{{paste.lines|pluralize}}{%endif%}{%endif%}
+    <ul>
+        <li>
+            <img src="{{"images/silk/page_white_edit.png"|url}}" alt="Fork" width="16" height="16" />
+            <small><a href="{{ paste.u_fork }}"><strong>Fork</strong></a></small>
+        </li>
+    </ul>
+</h2>
+
+<table class="snippet">
+    <tr>
+        <td class="lines"><pre>{{paste.line_nos}}</pre></td>
+        <td class="code"><pre>{{paste.code_lines }}</pre></td>
+    </tr>
+</table>
+
+{% endfor %}
+
+{% endblock %}
