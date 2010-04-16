@@ -42,6 +42,9 @@ class Index(paste.web.RequestHandler):
 
         if paging.page_count > 1:
             self.content["pages"] = paging.pages
+
+        self.content["paste_start"] = ((self.page - 1) * self.pastes_per_page) + 1
+        self.content["paste_end"] = self.content["paste_start"] - 1 + self.pastes_per_page
         self.content["paste_count"] = self.paste_count
         self.content["pastes"] = pastes
         self.use_template("page/pasties/index/200.html")
