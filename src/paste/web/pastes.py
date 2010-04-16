@@ -22,7 +22,7 @@ class PasteListRequestHandler (PasteRequestHandler):
                 tpl_paste["title"] = o_paste.title
             else:
                 tpl_paste["title"] = o_paste.slug
-            tpl_paste["slug"] = o_paste.slug)
+            tpl_paste["slug"] = o_paste.slug
             tpl_paste["u"] = paste.url("%s", o_paste.slug)
             tpl_paste["snippet"] = o_paste.snippet
             tpl_paste["is_moderated"] = o_paste.is_moderated
