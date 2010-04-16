@@ -51,6 +51,7 @@ class Diff(paste.web.RequestHandler):
         Shows the diff if all the pastes submitted are found.
         """
 
+        self.content["u_list"] = paste.url(self.paste_slugs[0] + "+" + self.paste_slugs[1])
         self.content["u_reverse"] = paste.url(self.paste_slugs[1] + "/diff/" + self.paste_slugs[0])
         tpl_pastes = [self.get_template_info_for_paste(0), self.get_template_info_for_paste(1)]
         self.content["pastes"] = tpl_pastes
