@@ -26,6 +26,7 @@ import page.pasties.add
 import page.pasties.diff
 import page.pasties.index
 import page.pasties.index_atom
+import page.pasties.list
 import page.pasties.pasty
 import page.pasties.pasty_txt
 import page.pasties.pasty_atom
@@ -56,6 +57,7 @@ pages = [
 
     # Pastes
     ('/(' + re_paste + ')', page.pasties.pasty.Pasty),
+    ('/(' + re_paste + '(?:%2B' + re_paste + ')+)', page.pasties.list.List),
     ('/pastes/', page.pasties.index.Index),
     ('/pastes.atom', page.pasties.index_atom.IndexAtom),
     ('/(' + re_paste + ')/fork', page.pasties.add.Add),
