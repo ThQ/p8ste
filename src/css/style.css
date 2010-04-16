@@ -151,7 +151,27 @@ td
 tfoot
 {
     text-align:right;
-    background-color:#f2f2f2;
+    background-color:#f1f1f1;
+}
+
+tfoot td
+{
+    border:0;
+}
+
+tfoot td a:link, tfoot td a:visited
+{
+    border:1px solid #5252D2;
+    background-color:#ffffff;
+    text-decoration:none;
+    padding:0 5px 0 5px;
+}
+
+tfoot td a:hover
+{
+    border:1px solid #5252D2;
+    background-color:#ffffff;
+    text-decoration:none;
 }
 
 table.invisible
@@ -450,7 +470,7 @@ ul.paging
 {
     font-weight:bold;
     text-decoration:none;
-    margin:0 5px 0 5px;
+    margin:0;
 }
 
 .navigation ul

@@ -32,9 +32,7 @@
                             ...
                         {% endifequal %}
 
-                        {% ifnotequal page.0 -1 %}
-                        <a href="{{ page.1 }}">{% if page.2 %}<span>{% endif %}{{page.0}}{% if page.2 %}</span>{% endif %}</a>
-                        {% endifnotequal %}
+                        {% ifnotequal page.0 -1 %}<a href="{{ page.1 }}">{% if page.2 %}<span>{% endif %}{{page.0}}{% if page.2 %}</span>{% endif %}</a>{% endifnotequal %}
                     </li>
                     {% endfor %}
                 </ul>
