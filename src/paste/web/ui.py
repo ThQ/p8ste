@@ -63,3 +63,40 @@ class CursorPaging (Paging):
             pass
 
         self.prepared = True
+
+
+class Code:
+
+    def __init__ (self):
+        self.content = ""
+        self.lines = []
+        self.line_count = 0
+
+    def format_code (self, code):
+        self.lines = code.split("\n")
+        line_nos = ""
+        code_lines = ""
+        i = 1
+        for line in self.lines:
+            line_nos += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a>\n"
+            if line == "":
+                code_lines += "\n"
+            else:
+                code_lines += self.format_line_start(line) + "\n"
+            i += 1
+        return (line_nos, code_lines)
+
+    def format_line_start(self, line):
+        result = ""
+        i = 0
+        for c in line:
+            if c == " ":
+                result += "&nbsp;"
+            elif c == "\t":
+                result += "&nbsp;&nbsp;&nbsp;"
+            else:
+                result += line[i:]
+                break;
+            i += 1
+        return result
+
