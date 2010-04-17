@@ -94,12 +94,19 @@ class Diff(paste.web.RequestHandler):
         lineno2 = 0
 
         for line in differ.compare(self.pastes[0].code.splitlines(), self.pastes[1].code.splitlines()):
-            if line.startswith("- "):
+            line_start = line[0:2]
+
+            if line_start == "- ":
                 lineno1 += 1
                 diff.append([lineno1, "", line])
-            elif line.startswith("+ "):
+
+            elif line_start == "+ ":
                 lineno2 += 1
-                diff.append(["", lineno2, line])
+                diff.append( ["", lineno2, line] )
+
+            elif line_start == "? ":
+                pass
+
             else:
                 lineno1 += 1
                 lineno2 += 1
