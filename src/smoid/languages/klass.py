@@ -17,13 +17,17 @@ class KlassCheck (Check):
 
         # http://www.javacamp.org/javaI/Modifier.html
         self.java_modifiers = ["abstract", "final", "public", "private", "static", "strictfp"]
+        self.java_tokens = ["extends"]
 
         # http://msdn.microsoft.com/en-us/library/0b0thckt%28VS.71%29.aspx
         self.csharp_modifiers = ["abstract", "new", "public", "private", "protected", "internal", "sealed"]
+        self.csharp_tokens = ["where"]
 
         self.php_modifiers = ["abstract"]
+        self.php_tokens = ["implements", "extends"]
 
         self.scala_modifiers = ["private", "protected"]
+        self.scala_tokens = []
 
         prefix_modifiers = []
         prefix_modifiers.extend(self.csharp_modifiers)
@@ -38,21 +42,28 @@ class KlassCheck (Check):
         res_modifiers = "((?:" + res_modifiers + ")*)"
 
         res_class_name = "[a-zA-Z0-9_][a-zA-Z0-9_-]*"
-        res_class = "(?:\n|\r|;|^)\s*" + res_modifiers + "class " + res_class_name + ""
+        res_class = "((?:\n|\r|;|^)\s*" + res_modifiers + "class " + res_class_name + ")"
 
         self.re_class = re.compile(res_class)
 
     def check (self, content):
         self.reset()
-        matches = self.re_class.findall(content)
+        #matches = self.re_class.findall(content)
 
-        for match in matches:
+        cur_pos = 0
+        while True:
+            match = self.re_class.search(content, cur_pos)
+            if not match:
+                break
+
+            match_str = match.group(0)
+
             self.incr_language_probability("java", 20)
             self.incr_language_probability("csharp", 20)
             self.incr_language_probability("php", 20)
 
-            if match != "":
-                modifiers = match.split(" ")
+            if match_str != "":
+                modifiers = match_str.split(" ")
                 for modifier in modifiers:
                     modifier = modifier.strip()
                     if modifier in self.java_modifiers:
@@ -66,3 +77,6 @@ class KlassCheck (Check):
 
             else:
                 self.incr_language_probability("scala", 20)
+
+
+            cur_pos = match.endpos
