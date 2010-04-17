@@ -1,0 +1,14 @@
+{% extends "../../index.html" %}
+ 
+{%block page-title %}Remote source not retrieved{% endblock %}
+{%block h1 %}Remote source not retrieved{% endblock %}
+{%block page-content %}
+
+<p class="error">
+    <strong>We haven't been able to retrieve source at <a href="{{remote_url|escape}}"><em>{{remote_url|escape}}</em></a>.</strong>
+</p>
+
+<ul>
+    <li><a href="{{u_paste}}"><strong>View base paste</strong></a></li>
+</ul>
+{% endblock %}

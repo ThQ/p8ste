@@ -1,0 +1,16 @@
+{% extends "../../index.html" %}
+ 
+{%block page-title %}Paste [{{ paste_slug }}] not found{% endblock %}
+{%block h1 %}Paste not found{% endblock %}
+{%block page-content %}
+
+<p class="error">
+    <strong>We haven't been able to find a paste named <em>{{ paste_slug }}</em>.</strong>
+    Either it has been deleted from our database or you mistyped this URL.
+</p>
+
+<ul>
+    <li><a href="{{ u_paste }}"><strong>Paste some code</strong></a></li>
+    <li><a href="{{ u_pastes }}">All pastes</a></li>
+</ul>
+{% endblock %}

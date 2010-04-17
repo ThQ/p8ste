@@ -1,0 +1,48 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}
+    Diff between [{{paste_slug|escape}}] and [{{remote_url|escape}}]
+{% endblock %}
+
+{%block h1 %}
+    Diff between [{{paste_slug|escape}}] and [{{remote_url|escape}}]
+{% endblock %}
+
+{%block page-content %}
+
+<h2><strong>The sources</strong> (2)</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Source</th>
+            <th>Size</th>
+            <th>LOC</th>
+        </tr>
+    </thead>
+    <tr>
+        <td><a href="{{u_paste}}"><strong>{{paste_title|escape}}</strong></a></td>
+        <td>{{paste_size.0}} {{paste_size.1}}</td>
+        <td>{{paste_loc}} line{{paste_loc|pluralize}}</td>
+    </tr>
+    <tr>
+        <td><a href="{{remote_url|escape}}"><strong>{{remote_url|escape}}</strong></a></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+{% if diff %}
+<h2><strong>Diff</strong></h2>
+
+<table class="snippet">
+    <tr>
+        <td class="lines"><pre>{% for line in diff %}<a href="#LL{{line.0}}" name="LL{{line.0}}">{{ line.0 }}</a>
+{% endfor %}</pre></td>
+        <td class="lines"><pre>{% for line in diff %}<a href="#LR{{line.1}}" name="LR{{line.1}}">{{ line.1 }}</a>
+{% endfor %}</pre></td>
+        <td class="code"><pre>{% for line in diff %}{{line.2}}
+{% endfor %}</pre></td>
+    </tr>
+</table>
+{% endif %}
+{% endblock %}
