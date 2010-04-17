@@ -2,7 +2,6 @@
 
 ## Actions
 
-* src/page/pasties/remote_diff : Diff with a remote file
 * src/page/users/recount : Recount user pastes
 
 ### Smoid
