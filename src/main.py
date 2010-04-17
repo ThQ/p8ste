@@ -31,6 +31,7 @@ import page.pasties.pasty
 import page.pasties.pasty_txt
 import page.pasties.pasty_atom
 import page.pasties.recount
+import page.pasties.remote_diff
 import page.pasties.sitemap
 import page.pasties.update
 import page.threads.thread
@@ -63,6 +64,7 @@ pages = [
     ('/(' + re_paste + ')/fork', page.pasties.add.Add),
     ('/(' + re_paste + ').txt', page.pasties.pasty_txt.PastyTxt),
     ('/(' + re_paste + ').atom', page.pasties.pasty_atom.PastyAtom),
+    ('/(' + re_paste + ')/diff', page.pasties.remote_diff.RemoteDiff),
     ('/(' + re_paste + ')/diff/(' + re_paste + ')', page.pasties.diff.Diff),
     ('/(' + re_paste + ')/recount', page.pasties.recount.Recount),
     ('/(' + re_paste + ')/update', page.pasties.update.Update),
