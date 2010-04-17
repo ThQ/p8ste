@@ -27,37 +27,46 @@
 
 {%block page-content %}
 
-<p id="paste_info" />
+<h2>
+    {% if language %}
+        <strong>{{ language }} code</strong>
+    {% else %}
+        <strong>Code</strong>
+    {% endif %}
+    <ul>
+        <li>
+            <img src="{{"images/silk/page_white_edit.png"|url}}" alt="" width="16" height="16" />
+            <small><a href="{{ u_fork }}"><strong>Fork</strong></a></small>
+        </li>
+        <li>
+            <img src="{{"images/silk/page_white_text.png"|url}}" alt="" width="16" height="16" />
+            <small><a href="{{ u_raw_text }}">Export as text</a> or <a href="{{ u_atom }}">atom</a></small>
+        </li>
+    </ul>
+</h2>
 
-            <h2>
-            {% if language %}
-            <strong>{{ language }} code</strong>
-            {% else %}
-            <strong>Code</strong>
-            {% endif %}
-            <ul>
-                <li>
-                    <img src="{{"images/silk/page_white_edit.png"|url}}" alt="" width="16" height="16" />
-                    <small><a href="{{ u_fork }}"><strong>Fork</strong></a></small>
-                </li>
-                <li>
-                    <img src="{{"images/silk/page_white_text.png"|url}}" alt="" width="16" height="16" />
-                    <small><a href="{{ u_raw_text }}">Export as text</a> or <a href="{{ u_atom }}">atom</a></small>
-                </li>
-            </ul>
-            </h2>
-
-            {% if pasty_is_moderated %}
-            <p class="error">This paste has been <strong>moderated</strong>.</p>
-            {% else %}
-
-            <table class="snippet">
-            <tr>
+{% if pasty_is_moderated %}
+    <p class="error">This paste has been <strong>moderated</strong>.</p>
+{% else %}
+    <table class="snippet">
+        <tr>
             <td class="lines"><pre>{{ pasty_lines}}</pre></td>
             <td class="code"><pre>{{ pasty_code }}</pre></td>
-            </tr>
-            </table>
-            {% endif %}
+        </tr>
+    </table>
+{% endif %}
+
+
+<h2><strong>Remote diff</strong></h2>
+<form action="{{u_remote_diff}}" method="GET">
+    <table class="invisible" style="width:500px;">
+        <tr>
+            <td><input name="url" type="text" /></td>
+            <td><input type="submit" value="Diff !" /></td>
+        </tr>
+    </table>
+    <p><small>Compute a diff with any remote HTTP file. Ex: http://github.com/thomas-quemard/p8ste/raw/master/README.markdown</small></p>
+</form>
 
             <h2>
                 <a href="{{u_thread}}"><strong>Thread</strong></a>

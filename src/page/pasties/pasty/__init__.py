@@ -1,4 +1,4 @@
-#_slug Copyright 2008 Thomas Quemard
+# Copyright 2008 Thomas Quemard
 #
 # Paste-It is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published
@@ -10,6 +10,7 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import cgi
 import datetime
 import logging
@@ -20,6 +21,7 @@ import paste.lang
 import paste.model
 import paste.util
 import paste.web
+
 
 class Pasty(paste.web.RequestHandler):
 
@@ -178,6 +180,7 @@ class Pasty(paste.web.RequestHandler):
         self.content["is_thread"] = len(thread_pastes) > 1
         self.content["u_thread_atom"] = paste.url("threads/%s.atom", self.pasty.thread)
         self.content["u_thread"] = paste.url("threads/%s", self.pasty.thread)
+        self.content["u_remote_diff"] = paste.url("%s/diff", self.pasty.slug)
         if self.content["is_thread"] == True:
             self.content["thread_pastes"] = thread_pastes
         self.content["h1"] = "p" + self.pasty_slug
@@ -286,4 +289,3 @@ class Pasty(paste.web.RequestHandler):
         if self.pasty != None:
             self.pasty.expired_at = datetime.datetime.now() + paste.config["pasty_expiration_delta"]
             self.put()
-
