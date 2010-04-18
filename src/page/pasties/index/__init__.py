@@ -32,6 +32,8 @@ class Index(paste.web.RequestHandler):
         self.paste_count = 0
 
     def get(self):
+        self.path.add("Pastes", paste.url("pastes/"))
+
         if self.request.get("page").isdigit() and int(self.request.get("page")) > 1:
             self.page = int(self.request.get("page"))
 
