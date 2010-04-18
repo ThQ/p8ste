@@ -99,7 +99,7 @@ class RemoteDiff (paste.web.pastes.PasteRequestHandler):
 
             elif line_start == "+ ":
                 lineno2 += 1
-                diff.append(["", lineno2, '<span class="cmt">+</span> ' + line[2:]])
+                diff.append(["", lineno2, '<span class="cmt">+</span> ' + cgi.escape(line[2:])])
 
             else:
                 lineno1 += 1
