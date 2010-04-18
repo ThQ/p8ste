@@ -10,6 +10,7 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import datetime
 import cgi
 
@@ -19,6 +20,9 @@ import paste.web.pastes
 
 
 class Thread (paste.web.pastes.PasteListRequestHandler):
+    """
+    Show a table of all the pastes in the thread.
+    """
 
     def get(self, paste_slug):
         self.set_module("page.threads.thread.__init__")
@@ -29,12 +33,16 @@ class Thread (paste.web.pastes.PasteListRequestHandler):
 
         self.content["paste_slug"] = paste_slug
 
+
+        self.path.add("Pastes", paste.url("pastes/"))
         if len(self.pastes) > 0:
             self.get_200()
         else:
             self.get_404()
 
     def get_200(self):
+        self.path.add(self.paste_slug, paste.url("%s", self.paste_slug))
+        self.path.add("Thread", paste.url("threads/%s", self.paste_slug))
         self.add_atom_feed(paste.url("threads/%s.atom", self.paste_slug), "Thread feed", "alternate")
 
         tpl_pastes = self.templatize_pastes(self.pastes)
