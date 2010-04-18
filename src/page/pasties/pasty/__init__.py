@@ -36,6 +36,7 @@ class Pasty(paste.web.RequestHandler):
         self.lines = []
         self.line_count = 0
         self.parent = None
+        self.path.add("Pastes", paste.url("pastes/"))
 
     def update_highlights(self, hl_string):
         line_max = self.line_count + 1
