@@ -19,11 +19,11 @@ def stringify_datastore_prop_value (prop):
     if prop.has_doublevalue_:
         res=prop.DebugFormat(prop.doublevalue_)
     if prop.has_pointvalue_:
-      res=prop.pointvalue_.__str__(prefix + "  ", printElemNumber)
+      res=prop.pointvalue_.__str__()
     if prop.has_uservalue_:
-      res=prop.uservalue_.__str__(prefix + "  ", printElemNumber)
+      res=prop.uservalue_.__str__()
     if prop.has_referencevalue_:
-      res=prop.referencevalue_.__str__(prefix + "  ", printElemNumber)
+      res=prop.referencevalue_.__str__()
     return res
 
 def arrayze_datastore_properties (prop_list):
