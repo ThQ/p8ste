@@ -287,6 +287,10 @@ class Add(paste.web.RequestHandler):
             self.content["is_fork"] = True
             self.content["u_parent_paste"] = paste.url("%s", self.parent_paste.slug)
 
+            self.path.add("Pastes", paste.url("pastes/"))
+            self.path.add(self.parent_paste.title, paste.url("%s", self.parent_paste.slug))
+            self.path.add("Fork", paste.url("%s/fork", self.parent_paste_slug))
+
         if self.form_token == "":
             self.on_form_not_sent()
         else:
