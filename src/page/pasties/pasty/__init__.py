@@ -197,7 +197,7 @@ class Pasty(paste.web.RequestHandler):
         self.content["user_name"] = self.pasty.posted_by_user_name
         if self.pasty.user:
             self.content["u_user"] = paste.url("users/%s", self.pasty.user.id)
-            self.content["u_gravatar"] = self.pasty.user.get_gravatar(16)
+            self.content["u_gravatar"] = self.pasty.user.get_gravatar(48)
 
         self.content["posted_at"] = self.pasty.posted_at.strftime("%b, %d %Y at %H:%M")
         if self.pasty.language:
