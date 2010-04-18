@@ -326,6 +326,31 @@ ul.invisible
     font-size:0.8em;
     margin:0 20px 0 20px;
 }
+
+#browser-warn
+{
+    padding:5px 20px 5px 20px;
+    border-bottom:1px solid #333333;
+    margin: 0;
+    background-color:#CC0000;
+    color:#ffffff;
+    font-family:Verdana;
+    font-weight:bold;
+    font-size:0.9em;
+}
+
+#browser-warn a:link, #browser-warn a:visited
+{
+    color:#ffffff;
+    text-decoration:underline;
+}
+
+#browser-warn a:hover
+{
+    color:#ffffff;
+    text-decoration:none;
+}
+
 #logo
 {
     padding:15px 20px 15px 20px;

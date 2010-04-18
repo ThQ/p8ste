@@ -89,6 +89,8 @@ class RequestHandler (webapp.RequestHandler):
         self.content["u_module_history"] = self.module_history_url
         self.content["u_blank_image"] = paste.url("images/blank.gif")
         self.content["path__"] = self.path.path
+        if "user-agent" in self.request.headers:
+            self.content["bad_browser__"] = self.request.headers["user-agent"].find("MSIE") != -1
 
         if self.user.is_logged_in:
             self.content['user_signed_in__'] = True

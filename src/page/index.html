@@ -20,6 +20,9 @@
     </head>
 
     <body>
+            {% if bad_browser__ %}
+            <div id="browser-warn">C'mon it's {% now "Y" %}, get a <a href="http://browsehappy.com/">decent browser</a> !</div>
+            {% endif %}
             <div id="logo">
                 <a href="{{u_home}}"><img src="{{"images/tango/22x22/actions/edit-paste.png"|url}}" width="22" height="22" alt="Paste code" title="Paste code" /></a>
                 <a href="{{u_home}}">Paste code</a>
