@@ -323,9 +323,13 @@ ul ul
 }
 #logo
 {
-    padding:15px 0 15px 0;
+    padding:15px 20px 15px 20px;
     margin: 0 0 15px 0;
     border-bottom:3px solid #6B75B4;
+    background:url(/images/user_bg.png) repeat-x;
+    color:#ffffff;
+    font-size:0.80em;
+    font-family:Tahoma, Verdana;
 }
 
 #logo small
@@ -333,6 +337,43 @@ ul ul
     font-size:0.9em;
 }
 
+#logo a:link, #logo a:visited
+{
+    color:#ffffff;
+    text-decoration:underline;
+}
+
+#logo a:hover
+{
+    color:#ffffff;
+    text-decoration:none;
+}
+
+ul#path
+{
+    list-style-type:none;
+    color:#555555;
+    font-size:0.85em;
+    font-family:Tahoma, Arial;
+    margin:0 0 20px 0;
+}
+
+ul#path li
+{
+    display:inline;
+    margin: 0 0 0 0;
+}
+
+ul#path a:link, ul#path a:visited
+{
+    color:#555555;
+    text-decoration:underline;
+}
+
+ul#path a:hover
+{
+    text-decoration:none;
+}
 #user
 {
     margin:0 0 0 20px;
@@ -482,6 +523,7 @@ ul.paging
 
 .navigation li
 {
+
     padding:0;
     margin:4px 0 4px 5px;
     font-size:0.9em;
