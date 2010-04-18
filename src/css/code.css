@@ -1,9 +1,29 @@
+.snippet td.head
+{
+    border:0;
+    border-bottom:1px solid #cfcfcf;
+    background-color:#eaeaea;
+    padding:8px;
+    margin:0;
+}
+
+.snippet td.head ul
+{
+    float:right;
+    display:inline;
+    margin:0;
+    padding:0;
+}
+
+.snippet td.head li
+{
+    display:inline;
+    padding:0 0 0 10px;
+}
 .snippet
 {
     border:1px solid #d0d0d0;
     border-collapse:collapse;
-    font-family: "Trebuchet MS", verdana;
-    font-size:1.2em;
     border-spacing:0;
     width:100%;
     padding:0;
@@ -32,6 +52,8 @@ td.lines
     padding:0 15px 0 15px;
     margin:0;
     text-align:right;
+    font-family: "Trebuchet MS", verdana;
+    font-size:1.2em;
 }
 
 .lines a:link, .lines a:visited
@@ -50,6 +72,8 @@ td.code
     border:0;
     padding:0 15px 0 10px;
     margin:0;
+    font-family: "Trebuchet MS", verdana;
+    font-size:1.2em;
 }
 
 .code .cmt

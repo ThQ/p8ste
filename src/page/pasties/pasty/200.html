@@ -1,39 +1,33 @@
 {% extends "../../index.html" %}
 
 {%block page-title %}
-   {{ pasty_title }}{% if pasty_language_name %} ({{ pasty_language_name }} paste){% endif %} - {{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC
+    {{user_name|escape}}
+    /
+    {{ pasty_title }} ({{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC)
 {% endblock %}
 
 {%block h1 %}
-    {{ pasty_title }}
+    {% if u_user %}
+    <a href="{{u_user}}"><img class="user" src="{{u_gravatar}}" alt="{{user_name|escape}}" width="48" height="48" /></a>
+    {% endif%}
+    {%if u_user %}<a href="{{u_user}}">{{user_name|escape}}</a>{%else%}{{user_name|escape}}{%endif%}
+    /
+    <a href="{{u_pasty}}">{{ pasty_title }}</a>
     {% if pasty_language_name %} <small>(<a href="{{ pasty_language_url }}">{{ pasty_language_name }}</a>)</small>{% endif %}
 {% endblock %}
 
-{% block h1-headers %}
-<ul>
-    <li>
-        <img class="user" src="{% if u_gravatar %}{{u_gravatar}}{%else%}{{"images/silk/user.png"|url}}{%endif%}" alt="{{user_name}}" width="16" height="16" />
-        {%if u_user %}<a href="{{u_user}}">{{ user_name }}</a>{%else%}{{user_name}}{%endif%}
-    </li>
-    <li><img src="{{"images/silk/date.png"|url}}" alt="" width="16" height="16" /> {{ posted_at }}</li>
-    {% if pasty_tags %}
-    <li>
-        <img src="{{"images/silk/tag_blue.png"|url}}" alt="" width="16" height="16" />
-        {{ pasty_tags }}
-    </li>
-    {% endif %}
-</ul>
-{% endblock %}
+{% block h1-headers %}{% endblock %}
 
 {%block page-content %}
 
-<h2>
-    {% if language %}
-        <strong>{{ language }} code</strong>
-    {% else %}
-        <strong>Code</strong>
-    {% endif %}
-    <ul>
+{% if pasty_is_moderated %}
+    <p class="error">This paste has been <strong>moderated</strong>.</p>
+{% else %}
+    <table class="snippet">
+        <tr>
+            <td colspan=2 class="head">
+                {% if language %}<strong>{{ language }} code</strong>{% else %}<strong>Code</strong>{% endif %}
+<ul>
         <li>
             <img src="{{"images/silk/page_white_edit.png"|url}}" alt="" width="16" height="16" />
             <small><a href="{{ u_fork }}"><strong>Fork</strong></a></small>
@@ -43,12 +37,8 @@
             <small><a href="{{ u_raw_text }}">Export as text</a> or <a href="{{ u_atom }}">atom</a></small>
         </li>
     </ul>
-</h2>
-
-{% if pasty_is_moderated %}
-    <p class="error">This paste has been <strong>moderated</strong>.</p>
-{% else %}
-    <table class="snippet">
+            </td>
+        </tr>
         <tr>
             <td class="lines"><pre>{{ pasty_lines}}</pre></td>
             <td class="code"><pre>{{ pasty_code }}</pre></td>
