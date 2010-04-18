@@ -142,6 +142,7 @@ class Pasty(paste.web.RequestHandler):
             self.get_200()
 
     def get_200(self):
+        self.path.add(self.pasty.title, paste.url("%s", self.pasty_slug))
 
         self.lines = self.pasty.code_colored.splitlines()
         self.line_count = len(self.lines)
@@ -216,6 +217,7 @@ class Pasty(paste.web.RequestHandler):
         #self.update_expiration_time()
 
     def get_404(self):
+        self.path.add("Paste not found")
         self.error(404)
         self.content["pasty_slug"] = cgi.escape(self.pasty_slug)
         self.content["u_paste"] = paste.url("")
