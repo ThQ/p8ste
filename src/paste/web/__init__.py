@@ -21,12 +21,20 @@ import paste.appengine.hook
 import paste.user
 
 
+class Path:
+    def __init__ (self):
+        self.path = []
+
+    def add (self, text, link=""):
+        self.path.append({"text": text, "link":link})
+
 class RequestHandler (webapp.RequestHandler):
     def __init__(self):
         import paste.appengine.hook
         paste.appengine.hook.datastore_logs = []
 
         webapp.RequestHandler.__init__(self)
+        self.path = Path()
         self.module = ""
         self.module_url = ""
         self.content = {}
@@ -80,6 +88,7 @@ class RequestHandler (webapp.RequestHandler):
         self.content["u_about_features"] = paste.url("about/features")
         self.content["u_module_history"] = self.module_history_url
         self.content["u_blank_image"] = paste.url("images/blank.gif")
+        self.content["path__"] = self.path.path
 
         if self.user.is_logged_in:
             self.content['user_signed_in__'] = True
