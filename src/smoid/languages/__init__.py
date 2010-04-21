@@ -16,6 +16,13 @@ import re
 
 languages = {}
 
+languages["html"] = {
+    "lexer": "html",
+    "name": "HTML",
+    "home_url": "http://en.wikipedia.org/wiki/HTML",
+    "u_icon": "images/languages/html.png"
+}
+
 languages["java"] = {
     "lexer": "java",
     "name": "Java",
