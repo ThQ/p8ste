@@ -19,6 +19,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 import paste
 import page.about.features
+import page.about.index
 import page.about.thanks
 import page.error.error404
 import page.languages.autodetected
@@ -75,6 +76,7 @@ pages = [
     ('/sign-in', page.users.signin.SignIn),
     ('/sign-up', page.users.signup.SignUp),
     ('/sign-out', page.users.signout.SignOut),
+    ('/about', page.about.index.Index),
     ('/about/thanks', page.about.thanks.Thanks),
     ('/about/features', page.about.features.Features),
     ('/languages/auto-detected', page.languages.autodetected.AutoDetected),
