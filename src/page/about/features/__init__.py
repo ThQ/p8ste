@@ -17,5 +17,8 @@ import paste.web
 class Features(paste.web.RequestHandler):
 
     def get(self):
+        self.path.add("About", paste.url("about"))
+        self.path.add("Features", paste.url("about/features"))
+
         self.set_module("page.about.features.__init__")
         self.write_out("page/about/features/200.html")
