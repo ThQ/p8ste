@@ -10,6 +10,7 @@ import smoid.languages.php
 import smoid.languages.python
 import smoid.languages.python_console
 import smoid.languages.ruby
+import smoid.languages.sh
 import smoid.languages.shebang
 import smoid.languages.xml
 
@@ -27,6 +28,7 @@ class GrandChecker:
         self.checkers.extend(smoid.languages.python.PythonCheck())
         self.checkers.extend(smoid.languages.python_console.PythonConsoleCheck())
         self.checkers.extend(smoid.languages.ruby.RubyCheckCollection())
+        self.checkers.extend(smoid.languages.sh.ShCollection())
         self.checkers.append(smoid.languages.shebang.ShebangCheck())
         self.checkers.extend(smoid.languages.xml.XmlCheck())
         self.verbose = False
