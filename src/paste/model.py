@@ -112,3 +112,11 @@ class Pasty (db.Model):
                 break
 
         return snippet
+
+class Log (db.Model):
+   type = db.StringProperty(choices=["paste_add", "paste_fork", "user_register"])
+   user = db.ReferenceProperty(User)
+   item1_slug = db.StringProperty()
+   item1_name = db.StringProperty()
+   item2_slug = db.StringProperty()
+   item2_name = db.StringProperty()
