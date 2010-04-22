@@ -13,7 +13,6 @@
     {%if u_user %}<a href="{{u_user}}">{{user_name|escape}}</a>{%else%}{{user_name|escape}}{%endif%}
     /
     <a href="{{u_pasty}}">{{ pasty_title }}</a>
-    {% if pasty_language_name %} <small>(<a href="{{ pasty_language_url }}">{{ pasty_language_name }}</a>)</small>{% endif %}
 {% endblock %}
 
 {% block h1-headers %}{% endblock %}
@@ -26,17 +25,18 @@
     <table class="snippet">
         <tr>
             <td colspan=2 class="head">
-                {% if language %}<strong>{{ language }} code</strong>{% else %}<strong>Code</strong>{% endif %}
-<ul>
-        <li>
-            <img src="{{"images/silk/page_white_edit.png"|url}}" alt="" width="16" height="16" />
-            <small><a href="{{ u_fork }}"><strong>Fork</strong></a></small>
-        </li>
-        <li>
-            <img src="{{"images/silk/page_white_text.png"|url}}" alt="" width="16" height="16" />
-            <small><a href="{{ u_raw_text }}">Export as text</a> or <a href="{{ u_atom }}">atom</a></small>
-        </li>
-    </ul>
+                <strong>{% if pasty_language_name %}<a href="{{ pasty_language_url }}">{{ pasty_language_name }}</a> code{%else%}Code{% endif %}</strong>
+                <small>| {{pasty_size.0}} {{pasty_size.1}}, {{pasty_loc}} LOC</small>
+                <ul>
+                    <li>
+                        <img src="{{"images/silk/page_white_edit.png"|url}}" alt="Fork paste" width="16" height="16" />
+                        <small><a href="{{ u_fork }}"><strong>Fork</strong></a></small>
+                    </li>
+                    <li>
+                        <img src="{{"images/silk/page_white_text.png"|url}}" alt="Export paste" width="16" height="16" />
+                        <small><a href="{{ u_raw_text }}">Export as text</a> or <a href="{{ u_atom }}">atom</a></small>
+                    </li>
+                </ul>
             </td>
         </tr>
         <tr>
