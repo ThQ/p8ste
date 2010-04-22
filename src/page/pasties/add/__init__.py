@@ -32,9 +32,9 @@ import smoid
 
 paste.form.make_token()
 
-class Add(paste.web.RequestHandler):
+class Add (paste.web.RequestHandler):
 
-    def __init__(self):
+    def __init__ (self):
         paste.web.RequestHandler.__init__(self)
         self.set_module("page.pasties.add.__init__")
         self.form_code = ""
@@ -47,100 +47,21 @@ class Add(paste.web.RequestHandler):
         self.parent_paste = None
         self.parent_paste_slug = ""
 
-    def decrement_paste_counter(self, count):
-        stats = paste.model.PasteStats.all()
-        stats.id = 1
-        stat = stats.get()
-        if stat != None:
-            dbnew = paste.model.PasteStats(key_name=stat.key().name())
-            dbnew.paste_count = stat.paste_count - count
-            dbnew.put()
-
-    def delete_empty_tags(self):
-        qtags = paste.model.Tag.all()
-        qtags.filter("pastes <", 1)
-        tags = qtags.fetch(5)
-        for tag in tags:
-            tag.delete()
-
-    def delete_old_forms(self):
+    def delete_old_forms (self):
         qforms = paste.model.Form.all()
         qforms.filter("expired_at <", datetime.datetime.now())
         forms = qforms.fetch(10)
         for form in forms:
             form.delete()
 
-    def delete_old_pastes(self):
-        pastes = paste.model.Pasty.all()
-        pastes.filter("expired_at <", datetime.datetime.now())
-        dbpastes = pastes.fetch(5)
-
-
-        if len(dbpastes) > 0:
-            delete_count = 0
-            #Deleting each old paste
-            for dbpaste in dbpastes:
-
-                # Deleting relations with children
-                qreplies = paste.model.PasteReply.all()
-                qreplies.filter("parent_slug", dbpaste.slug)
-                replies = qreplies.fetch(1000)
-                for reply in replies:
-                    reply.delete()
-
-                # Deleting relation with parent
-                # (One delete: only one parent per paste)
-                qreplies = paste.model.PasteReply.all()
-                qreplies.filter("reply_slug", dbpaste.slug)
-                reply = qreplies.get()
-                if reply != None:
-                    reply.delete()
-
-                # Deleting paste <-> tags relations
-                tc = paste.tag.TagCollection()
-                tc.import_string(dbpaste.tags)
-                for tagstr in tc.tags:
-                    tagrel = paste.model.PasteTag()
-                    tagrel.paste_slug = dbpaste.slug
-                    tagrel.tag_slug = tagstr
-                    try:
-                        tagrel.delete()
-                    except:
-                        pass
-
-                    #Decreasing tag paste counter
-                    qtag = paste.model.Tag.all()
-                    qtag.slug = tagstr
-                    tag = qtag.get()
-                    if tag != None:
-                        tag.pastes -= 1
-                        tag.put()
-
-                dbpaste.delete()
-                delete_count += 1
-
-                # Decreasing reply count for parent paste
-                qparent = paste.model.PasteReply.all()
-                qparent.filter("slug=", dbpaste.parent_paste)
-                parent = qparent.get()
-                if parent != None:
-                    if parent.replies != None:
-                        parent.replies -= 1
-                    else:
-                        parent.replies = 0
-                    parent.put()
-
-            # Syncing global paste count
-            self.decrement_paste_counter(delete_count)
-
-    def display_form(self):
+    def display_form (self):
         self.write_out("page/pasties/add/add.html")
 
     def get(self, parent_paste_slug=""):
         self.parent_paste_slug = parent_paste_slug
         self.on_load()
 
-    def get_form_data(self):
+    def get_form_data (self):
         self.form_code = self.request.get("pasty_code")
         self.form_title = self.request.get("pasty_title")
         self.form_tags = self.request.get("pasty_tags")
@@ -150,7 +71,7 @@ class Add(paste.web.RequestHandler):
         #self.url_parent_slug = self.request.get("fork")
         self.parent_slug = ""
 
-    def get_parent_paste(self):
+    def get_parent_paste (self):
         parent = None
         self.parent_slug = ""
         if self.parent_paste_slug != "":
@@ -167,7 +88,7 @@ class Add(paste.web.RequestHandler):
 
         return parent
 
-    def increment_paste_counter(self):
+    def increment_paste_counter (self):
         stats = paste.model.PasteStats.all()
         stats.id = 1
         stat = stats.get()
@@ -180,7 +101,7 @@ class Add(paste.web.RequestHandler):
             dbnew.paste_count = 1
             dbnew.put()
 
-    def increment_fork_count(self):
+    def increment_fork_count (self):
         if self.parent_paste != None:
             # Increment direct fork count :
             # children of a paste
@@ -205,81 +126,7 @@ class Add(paste.web.RequestHandler):
                 else:
                     break
 
-
-    def insert_paste(self, slug):
-        """
-        Inserts the paste into the datastore.
-        """
-
-        is_reply = self.form_parent_slug != ""
-
-        self.paste = paste.model.Pasty()
-
-        self.paste.characters = len(self.form_code)
-        self.paste.code = self.form_code
-        self.paste.edited_at = datetime.datetime.now()
-        self.paste.edited_by_ip = self.request.remote_addr
-        self.paste.expired_at = datetime.datetime.now() + paste.config["pasty_expiration_delta"]
-        self.paste.forks = 0
-        self.paste.indirect_forks = 0
-        self.paste.language = smoid.GrandChecker().find_out_language(self.paste.code)
-        self.paste.code_colored = self.prepare_code(self.form_code, self.paste.language)
-        self.paste.lines = self.form_code.count("\n") + 1
-        self.paste.parent_paste = ""
-        self.paste.posted_at = datetime.datetime.now()
-        self.paste.posted_by_ip = self.request.remote_addr
-        self.paste.replies = 0
-        self.paste.slug = slug
-        self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, paste.config["pasty_snippet_length"])
-        self.paste.tags = self.prepare_tags(self.form_tags)
-        self.paste.title = paste.pasty.filter_title(self.form_title, slug)
-        self.paste.user = self.user.db_user
-
-        if self.user.is_logged_in:
-            self.paste.posted_by_user_name = self.user.id
-        else:
-            self.paste.posted_by_user_name = paste.config["default_user_name"]
-
-        if is_reply:
-            is_first_of_thread = False
-            self.paste.parent_paste = self.form_parent_slug
-            self.paste.thread_level = self.parent_paste.thread_level + 1
-            self.paste.thread_position = self.parent_paste.thread_position \
-                                         + self.parent_paste.indirect_forks + 1
-
-            if self.parent_paste.thread == None:
-                self.paste.thread = slug
-            else:
-                self.paste.thread = self.parent_paste.thread
-        else:
-            self.paste.thread_level = 0
-            self.paste.thread_position = 0
-
-
-        pasty_key = self.paste.put()
-
-        result = pasty_key != None
-
-        if result == True:
-            task = Task(name = self.paste.slug, method="GET", url = "/" + self.paste.slug + "/recount")
-            task.add(queue_name="paste-recount")
-
-            if not is_reply:
-                dbPaste = paste.model.Pasty.get(pasty_key)
-                if dbPaste != None:
-                    dbPaste.thread = slug
-                    dbPaste.put()
-
-        return result
-
-    def insert_paste_reply(self, slug, parent_slug, title):
-        rep = paste.model.PasteReply()
-        rep.parent_paste = parent_slug
-        rep.reply = slug
-        rep.title = title
-        return rep.put() != None
-
-    def on_load(self):
+    def on_load (self):
         self.get_form_data()
         self.parent_paste = self.get_parent_paste()
 
@@ -296,38 +143,7 @@ class Add(paste.web.RequestHandler):
         else:
             self.on_form_sent()
 
-    def insert_tags(self, slug):
-        tc = paste.tag.TagCollection()
-        tc.import_string(self.form_tags)
-
-        for tag in tc.tags:
-            tagrel = paste.model.PasteTag()
-            tagrel.pasty_slug = slug
-            tagrel.tag_slug = tag
-            tagrel.created_at = datetime.datetime.now()
-            tagrel.created_by_ip = self.request.remote_addr
-            tagrel.edited_at = datetime.datetime.now()
-            tagrel.edited_by_ip = self.request.remote_addr
-            tagrel.put()
-
-            qtag = paste.model.Tag.all()
-            qtag.filter("slug =", tag)
-            dtag = qtag.get()
-
-            if dtag != None:
-                dtag.pastes += 1
-                dtag.put()
-            else:
-                dtag = paste.model.Tag()
-                dtag.slug = tag
-                dtag.created_at = datetime.datetime.now()
-                dtag.created_by_ip = self.request.remote_addr
-                dtag.edited_at = datetime.datetime.now()
-                dtag.edited_by_ip = self.request.remote_addr
-                dtag.pastes = 1
-                dtag.put()
-
-    def on_form_not_sent(self):
+    def on_form_not_sent (self):
         if not self.user.is_logged_in_google:
             self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
 
@@ -359,10 +175,7 @@ class Add(paste.web.RequestHandler):
 
         self.display_form()
 
-        # Some maintenance
         self.delete_old_forms()
-        #self.delete_old_pastes()
-        self.delete_empty_tags()
 
     def move_all_same_level_forks_down (self):
         qry = paste.model.Pasty.all()
@@ -375,8 +188,7 @@ class Add(paste.web.RequestHandler):
                 fork.thread_position = fork.thread_position + 1
                 fork.put()
 
-    def on_form_sent(self):
-        prepared_tags = self.prepare_tags(self.request.get("pasty_tags"))
+    def on_form_sent (self):
         slug = paste.pasty.make_unique_slug(8)
 
         self.content["pasty_code"] = self.form_code
@@ -388,11 +200,10 @@ class Add(paste.web.RequestHandler):
             self.content["u_diff"] = paste.url("%s/diff/%s", self.parent_paste.slug, slug)
 
         if self.validate_form():
-            self.insert_paste(slug)
+            self.put_paste(slug)
             self.increment_fork_count()
             if self.parent_paste:
                 self.move_all_same_level_forks_down()
-            self.insert_tags(slug)
             self.increment_paste_counter()
 
             self.content["u_pasty"] = paste.url("%s", slug)
@@ -406,7 +217,7 @@ class Add(paste.web.RequestHandler):
             self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
             self.display_form()
 
-    def prepare_code(self, code, language):
+    def prepare_code (self, code, language):
         result = ""
 
         if language != "":
@@ -422,16 +233,95 @@ class Add(paste.web.RequestHandler):
 
         return result
 
-    def prepare_tags(self, tags):
-        tc = paste.tag.TagCollection()
-        tc.import_string(tags)
-        return tc.export_to_datastore()
-
-    def post(self, parent_paste_slug=""):
+    def post (self, parent_paste_slug=""):
         self.parent_paste_slug = parent_paste_slug
         self.on_load()
 
-    def validate_form(self):
+    def put_log (self, db_paste):
+        """
+        Puts a log entry to the datastore.
+        """
+        log = paste.model.Log()
+        log.user = db_paste.user
+
+        if db_paste.slug == db_paste.thread:
+            log.type = "paste_add"
+        else:
+            log.type = "paste_fork"
+            log.item2_slug = db_paste.thread
+            log.item2_name = db_paste.thread
+
+        log.item1_slug = db_paste.slug
+        log.item1_name = db_paste.title
+
+        return log.put()
+
+    def put_paste (self, slug):
+        """
+        Puts the paste to the datastore.
+        """
+
+        is_reply = self.form_parent_slug != ""
+
+        self.paste = paste.model.Pasty()
+
+        self.paste.characters = len(self.form_code)
+        self.paste.code = self.form_code
+        self.paste.edited_at = datetime.datetime.now()
+        self.paste.edited_by_ip = self.request.remote_addr
+        self.paste.expired_at = datetime.datetime.now() + paste.config["pasty_expiration_delta"]
+        self.paste.forks = 0
+        self.paste.indirect_forks = 0
+        self.paste.language = smoid.GrandChecker().find_out_language(self.paste.code)
+        self.paste.code_colored = self.prepare_code(self.form_code, self.paste.language)
+        self.paste.lines = self.form_code.count("\n") + 1
+        self.paste.parent_paste = ""
+        self.paste.posted_at = datetime.datetime.now()
+        self.paste.posted_by_ip = self.request.remote_addr
+        self.paste.replies = 0
+        self.paste.slug = slug
+        self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, paste.config["pasty_snippet_length"])
+        self.paste.title = paste.pasty.filter_title(self.form_title, slug)
+        self.paste.user = self.user.db_user
+
+        if self.user.is_logged_in:
+            self.paste.posted_by_user_name = self.user.id
+        else:
+            self.paste.posted_by_user_name = paste.config["default_user_name"]
+
+        if is_reply:
+            is_first_of_thread = False
+            self.paste.parent_paste = self.form_parent_slug
+            self.paste.thread_level = self.parent_paste.thread_level + 1
+            self.paste.thread_position = self.parent_paste.thread_position \
+                                         + self.parent_paste.indirect_forks + 1
+
+            if self.parent_paste.thread == None:
+                self.paste.thread = slug
+            else:
+                self.paste.thread = self.parent_paste.thread
+        else:
+            self.paste.thread_level = 0
+            self.paste.thread_position = 0
+
+        pasty_key = self.paste.put()
+
+        result = pasty_key != None
+
+        if result == True:
+            dbPaste = paste.model.Pasty.get(pasty_key)
+            if not is_reply:
+                if dbPaste != None:
+                    dbPaste.thread = slug
+                    dbPaste.put()
+
+            task = Task(name = self.paste.slug, method="GET", url = "/" + self.paste.slug + "/recount")
+            task.add(queue_name="paste-recount")
+            self.put_log(dbPaste)
+
+        return result
+
+    def validate_form (self):
         result = True
 
         code = self.form_code
@@ -460,6 +350,4 @@ class Add(paste.web.RequestHandler):
             self.content["pasty_code_error"] = "You must paste some code."
             result = False
 
-
         return result
-
