@@ -250,6 +250,9 @@ class Pasty(paste.web.RequestHandler):
         dbpastes = dbqry.fetch(1000)
 
         cur_level = 0
+        paste_count = len(dbpastes)
+        i = 1
+        lists_opened = 0
         for dbpaste in dbpastes:
             lpaste = {}
             lpaste["title"] = dbpaste.title
@@ -282,10 +285,13 @@ class Pasty(paste.web.RequestHandler):
             if dbpaste.thread_level > cur_level:
                 cur_level = dbpaste.thread_level
                 lpaste["open_list"] = 1
+                lists_opened += 1
             elif dbpaste.thread_level < cur_level:
                 cur_level = dbpaste.thread_level
                 lpaste["close_list"] = 1
+                list_opened -= 1
             pastes.append(lpaste)
+        self.content["lists_unclosed"] = xrange(0, lists_opened)
         return pastes
 
     def update_expiration_time(self):
