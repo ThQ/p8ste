@@ -149,9 +149,6 @@ class Add (paste.web.RequestHandler):
 
         self.content["pasty_token"] = paste.form.put_form_token(self.request.remote_addr)
 
-        if self.request.get("tags") != "":
-            self.content["pasty_tags"] = cgi.escape(self.request.get("tags"))
-
         if self.parent_paste != None:
             self.content["pasty_code"] = cgi.escape(self.parent_paste.code)
             self.content["pasty_title"] = "Fork"
