@@ -14,7 +14,7 @@
         <th style="width:16px;"></th>
         <th style="width:10%;">User</th>
         <th style="width:16px;"></th>
-        <th>Title</th>
+        <th style="width:20%;">Title</th>
         <th></th>
         <th style="width:10%;">Size</th>
         <th style="width:10%;">Lines</th>
@@ -53,8 +53,8 @@
             {% if paste.forks %}<small>({{paste.forks}})</small>{%endif%}
         </td>
         <td>{% if paste.snippet %}<small>{{ paste.snippet|escape }}</small>{% endif %}</td>
-        <td>{{ paste.size.0 }} <small>{{ paste.size.1 }}</small></td>
-        <td>{% if paste.lines %}{{ paste.lines }} <small>LOC</small>{% endif %}</td>
+        <td class="left">{{ paste.size.0 }} <small>{{ paste.size.1 }}</small></td>
+        <td class="left">{% if paste.lines %}{{ paste.lines }} <small>LOC</small>{% endif %}</td>
     </tr>
     {% endfor %}
     </tbody>
