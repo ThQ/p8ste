@@ -13,6 +13,9 @@
 
 from google.appengine.ext import db
 
+import paste
+import smoid.languages
+
 
 kPASTE_STATUS_PUBLIC = 0
 kPASTE_STATUS_PRIVATE = 1
@@ -102,11 +105,46 @@ class Pasty (db.Model):
 
         return snippet
 
+    def get_icon_url (self):
+        url = ""
+
+        if self.language:
+            if self.status == kPASTE_STATUS_PUBLIC:
+                if smoid.languages.languages.has_key(self.language) and smoid.languages.languages[self.language].has_key("u_icon"):
+                    url = paste.url(smoid.languages.languages[self.language]["u_icon"])
+            elif self.status == kPASTE_STATUS_PRIVATE:
+                url = paste.url("images/silk/lock.png")
+        return url
+
+    def get_language_name (self):
+        lang = self.language
+
+        if smoid.languages.languages.has_key(lang) and smoid.languages.languages[lang].has_key("name"):
+            lang = smoid.languages.languages[lang]["name"]
+
+        return lang
+
     def get_title (self):
-        title = str(self.slug)
-        if self.status == kPASTE_STATUS_PUBLIC:
-            title = str(self.title)
+        """
+        Gets the title if there is one and the status allows it.
+        """
+
+        title = self.slug
+        if self.status == kPASTE_STATUS_PUBLIC and self.title:
+            title = self.title
         return title
+
+    def get_snippet (self):
+        """
+        Gets the snippet if there is one and the status allows it.
+        """
+        snippet = ""
+        if self.status == kPASTE_STATUS_PUBLIC and self.snippet:
+            snippet = self.snippet
+        return snippet
+
+    def get_url (self):
+        return paste.url("%s", self.slug)
 
 
 class Log (db.Model):
