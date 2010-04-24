@@ -10,6 +10,7 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import datetime
 import cgi
 
@@ -18,6 +19,9 @@ import paste.web
 
 
 class PastyAtom(paste.web.RequestHandler):
+    """
+    Displays an atom feed representing the current paste.
+    """
 
     def get(self, pasty_slug):
         self.set_module("page.pasties.pasty_txt.py")
@@ -33,11 +37,8 @@ class PastyAtom(paste.web.RequestHandler):
             self.get_200()
 
     def get_200(self):
-        if not self.pasty.is_moderated:
-            self.content["paste_title"] = self.pasty.title
-            self.content["paste_code"] = self.pasty.code
-        else:
-            self.content["paste_title"] = "Paste has been moderated"
+        self.content["paste_title"] = self.pasty.get_title()
+        self.content["paste_code"] = self.pasty.get_code()
 
         self.content["u_paste"] = paste.url("%s", self.pasty.slug)
         self.content["u_paste_self"] = paste.url("%s.atom", self.pasty.slug)
@@ -54,4 +55,3 @@ class PastyAtom(paste.web.RequestHandler):
         self.set_header("Content-Type", "application/atom+xml")
         self.error(404)
         self.write_out("page/pasties/pasty_atom/404.html")
-
