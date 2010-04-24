@@ -530,6 +530,13 @@ small a:hover
     background:#f0f0f0 url(/images/silk/information.png) 5px 10px no-repeat;
     padding:10px 10px 10px 30px;
 }
+.lock
+{
+    border:1px solid #d0d0d0;
+    background-color:#f0f0f0;
+    background:#f0f0f0 url(/images/silk/lock.png) 5px 10px no-repeat;
+    padding:10px 10px 10px 30px;
+}
 .warning
 {
     border:1px solid #b39d52;
