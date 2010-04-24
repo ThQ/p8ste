@@ -129,12 +129,11 @@ class Pasty (db.Model):
     def get_icon_url (self):
         url = ""
 
-        if self.language:
-            if self.status == kPASTE_STATUS_PUBLIC:
-                if smoid.languages.languages.has_key(self.language) and smoid.languages.languages[self.language].has_key("u_icon"):
-                    url = paste.url(smoid.languages.languages[self.language]["u_icon"])
-            elif self.status == kPASTE_STATUS_PRIVATE:
-                url = paste.url("images/silk/lock.png")
+        if self.status == kPASTE_STATUS_PRIVATE:
+            url = paste.url("images/silk/lock.png")
+        elif self.language and self.status == kPASTE_STATUS_PUBLIC:
+            if smoid.languages.languages.has_key(self.language) and smoid.languages.languages[self.language].has_key("u_icon"):
+                url = paste.url(smoid.languages.languages[self.language]["u_icon"])
         return url
 
     def get_language_name (self):

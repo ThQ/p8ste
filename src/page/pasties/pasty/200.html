@@ -19,11 +19,11 @@
 
 {%block page-content %}
 
-{% if not is_code_viewable %}
-    {% if is_private %}
-    <p class="lock">This paste is <strong>private</strong>, you can't view it unless you know the <em>secret key</em>.</p>
-    {% endif %}
-{% else %}
+{% if is_private %}
+<p class="lock">This paste is <strong>private</strong>.</p>
+{% endif %}
+
+{% if is_code_viewable %}
     <table class="snippet">
         <tr>
             <td colspan=2 class="head">

@@ -23,9 +23,9 @@ import paste.util
 import paste.web
 
 
-class Pasty(paste.web.RequestHandler):
+class Pasty (paste.web.RequestHandler):
 
-    def __init__(self):
+    def __init__ (self):
         paste.web.RequestHandler.__init__(self)
         self.set_module("page.pasties.pasty.__init__")
         self.use_style(paste.url("style/code.css"))
@@ -38,7 +38,7 @@ class Pasty(paste.web.RequestHandler):
         self.parent = None
         self.path.add("Pastes", paste.url("pastes/"))
 
-    def update_highlights(self, hl_string):
+    def update_highlights (self, hl_string):
         line_max = self.line_count + 1
         if hl_string != "":
             hl_items = hl_string.split(",")
@@ -142,7 +142,17 @@ class Pasty(paste.web.RequestHandler):
             self.get_200()
 
     def get_200(self):
-        self.path.add(self.pasty.title, paste.url("%s", self.pasty_slug))
+        self.secret_key = self.request.get("key")
+        user_is_poster = (self.pasty.user and self.user.db_user and self.pasty.user.id == self.user.db_user.id)
+
+        if self.pasty.is_private() and (self.secret_key == self.pasty.secret_key or user_is_poster):
+            self.paste_title = self.pasty.title
+            self.code_is_viewable = True
+        else:
+            self.paste_title = self.pasty.get_title()
+            self.code_is_viewable = self.pasty.is_code_viewable()
+
+        self.path.add(self.paste_title, self.pasty.get_url())
 
         self.lines = self.pasty.code_colored.splitlines()
         self.line_count = len(self.lines)
@@ -187,11 +197,11 @@ class Pasty(paste.web.RequestHandler):
         if self.content["is_thread"] == True:
             self.content["thread_pastes"] = thread_pastes
         self.content["h1"] = "p" + self.pasty_slug
-        self.content["page-title"] =  self.pasty.get_title()
-        self.content["pasty_title"] =  self.pasty.get_title()
+        self.content["page-title"] =  self.paste_title
+        self.content["pasty_title"] =  self.paste_title
         self.content["pasty_slug"] = self.pasty.slug
         self.content["pasty_is_moderated"] = self.pasty.is_moderated
-        self.content["is_code_viewable"] = self.pasty.is_code_viewable()
+        self.content["is_code_viewable"] = self.code_is_viewable
         self.content["is_private"] = self.pasty.is_private()
         self.content["is_public"] = self.pasty.is_public()
         self.content["is_diffable"] = self.pasty.is_diffable()

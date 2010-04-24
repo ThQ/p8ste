@@ -278,7 +278,7 @@ class Add (paste.web.RequestHandler):
         self.paste.replies = 0
         self.paste.slug = slug
         self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, paste.config["pasty_snippet_length"])
-        print self.request.get("submit")
+
         if self.request.get("submit") == "privately":
             self.paste.status = paste.model.kPASTE_STATUS_PRIVATE
             self.paste.secret_key = paste.model.Pasty.make_secret_key()
