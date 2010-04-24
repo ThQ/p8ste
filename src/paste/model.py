@@ -10,27 +10,20 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 from google.appengine.ext import db
 
+
+kPASTE_STATUS_PUBLIC = 0
+kPASTE_STATUS_PRIVATE = 1
+kPASTE_STATUS_MODERATED = 1
+
+
 class Form (db.Model):
-    token = db.StringProperty()
-    created_at = db.DateTimeProperty()
-    created_by_ip = db.StringProperty()
-    expired_at = db.DateTimeProperty()
-
-
-class PasteReply (db.Model):
-    parent_paste = db.StringProperty()
-    reply = db.StringProperty()
-    title = db.TextProperty()
-
-class PasteTag (db.Model):
-    pasty_slug = db.StringProperty()
-    tag_slug = db.StringProperty()
-    created_at = db.DateTimeProperty(auto_now=True)
-    created_by_ip = db.StringProperty()
-    edited_at = db.DateTimeProperty(auto_now=True)
-    edited_by_ip = db.StringProperty()
+    token           = db.StringProperty()
+    created_at      = db.DateTimeProperty()
+    created_by_ip   = db.StringProperty()
+    expired_at      = db.DateTimeProperty()
 
 
 class PasteCount (db.Model):
@@ -38,18 +31,12 @@ class PasteCount (db.Model):
     last_checked = db.DateTimeProperty()
     path = db.StringProperty()
 
+
 class PasteStats(db.Model):
     paste_count = db.IntegerProperty()
     last_posted_at = db.DateTimeProperty(auto_now=True)
     last_edited_at = db.DateTimeProperty(auto_now=True)
 
-class Tag(db.Model):
-    slug = db.StringProperty()
-    created_at = db.DateTimeProperty(auto_now=True)
-    created_by_ip = db.StringProperty()
-    edited_at = db.DateTimeProperty(auto_now=True)
-    edited_by_ip = db.StringProperty()
-    pastes = db.IntegerProperty()
 
 class User (db.Model):
     id = db.StringProperty()
@@ -61,6 +48,7 @@ class User (db.Model):
 
     def get_gravatar (self, size):
         return "http://www.gravatar.com/avatar/" + self.gravatar_id + ".jpg?s=" + str(size)
+
 
 class Pasty (db.Model):
     characters = db.IntegerProperty(default=0)
@@ -86,6 +74,7 @@ class Pasty (db.Model):
     thread_level = db.IntegerProperty(default=0)
     thread_position = db.IntegerProperty(default=0)
     title = db.TextProperty(default="")
+    status = db.IntegerProperty(default=0, choices=[kPASTE_STATUS_PUBLIC, kPASTE_STATUS_PRIVATE, kPASTE_STATUS_MODERATED])
     user = db.ReferenceProperty(User)
 
     @staticmethod
@@ -112,6 +101,13 @@ class Pasty (db.Model):
                 break
 
         return snippet
+
+    def get_title (self):
+        title = str(self.slug)
+        if self.status == kPASTE_STATUS_PUBLIC:
+            title = str(self.title)
+        return title
+
 
 class Log (db.Model):
    type = db.StringProperty(choices=["paste_add", "paste_fork", "user_register"])
