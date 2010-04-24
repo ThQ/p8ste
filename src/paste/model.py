@@ -105,6 +105,9 @@ class Pasty (db.Model):
 
         return snippet
 
+    def get_fork_url (self):
+        return paste.url("%s/fork", self.slug)
+
     def get_icon_url (self):
         url = ""
 
