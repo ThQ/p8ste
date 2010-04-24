@@ -79,23 +79,18 @@ class Index(paste.web.RequestHandler):
         if dbpastes != None:
             for opaste in dbpastes:
                 dpaste = {}
-                if opaste.title != None:
-                    dpaste["title"] = cgi.escape(opaste.title)
-                else:
-                    dpaste["title"] = cgi.escape(opaste.slug)
-                dpaste["u"] = paste.url("%s", opaste.slug)
-                dpaste["snippet"] = opaste.snippet
-                dpaste["is_moderated"] = opaste.is_moderated
+                dpaste["title"] = opaste.get_title()
+                dpaste["u"] = opaste.get_url()
+                dpaste["snippet"] = opaste.get_snippet()
 
                 if opaste.user:
                     dpaste["u_user"] = paste.url("users/%s", opaste.user.id)
-                dpaste["user_name"] = cgi.escape(opaste.posted_by_user_name)
+                dpaste["user_name"] = opaste.posted_by_user_name
 
                 if opaste.user:
                     dpaste["u_gravatar"] = opaste.user.get_gravatar(16)
 
-                if opaste.language and opaste.language in smoid.languages.languages:
-                    dpaste["u_language_icon"] = smoid.languages.languages[opaste.language]['u_icon']
+                dpaste["u_language_icon"] = opaste.get_icon_url()
 
                 if opaste.forks > 0:
                     dpaste["forks"] = opaste.forks
@@ -109,7 +104,7 @@ class Index(paste.web.RequestHandler):
                     dpaste["size"] = paste.util.make_filesize_readable(opaste.characters)
                 dpaste["lines"] = opaste.lines
                 if opaste.language:
-                    dpaste["language"] = opaste.language
+                    dpaste["language"] = opaste.get_language_name()
                 else:
                     dpaste["language"] = ""
 
