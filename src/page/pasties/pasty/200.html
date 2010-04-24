@@ -19,8 +19,10 @@
 
 {%block page-content %}
 
-{% if pasty_is_moderated %}
-    <p class="error">This paste has been <strong>moderated</strong>.</p>
+{% if not is_code_viewable %}
+    {% if is_private %}
+    <p class="lock">This paste is <strong>private</strong>, you can't view it unless you know the <em>secret key</em>.</p>
+    {% endif %}
 {% else %}
     <table class="snippet">
         <tr>
@@ -46,6 +48,7 @@
     </table>
 {% endif %}
 
+            {% if is_thread or is_public %}
 
             <h2>
                 <a href="{{u_thread}}"><strong>Thread</strong></a>
@@ -53,7 +56,6 @@
                     <a href="{{ u_thread_atom }}"><img src="{{"images/silk/feed.png"|url}}" alt="Thread atom feed" width="16" height="16" /></a>
                 </small>
             </h2>
-
             {% if is_thread %}
             <ul class="invisible">
                 {% for thread_paste in thread_pastes %}
@@ -90,7 +92,9 @@
             {% else %}
             <p class="info"><strong>Did you know ?</strong> You can <a href="{{u_fork}}"><strong>fork</strong></a> this paste : it creates a copy of it so as to let you make whatever change you want on that copy.</p>
             {% endif %}
+            {% endif %}
 
+{% if is_diffable %}
 <h2><strong>Remote diff</strong></h2>
 <form action="{{u_remote_diff}}" method="GET">
     <table class="invisible" style="width:500px;">
@@ -101,5 +105,6 @@
     </table>
     <p><small>Compute a diff with any remote HTTP file. Ex: http://github.com/thomas-quemard/p8ste/raw/master/README.markdown</small></p>
 </form>
+{% endif %}
 
 {% endblock %}

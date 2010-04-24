@@ -180,16 +180,21 @@ class Pasty(paste.web.RequestHandler):
             thread_pastes = []
 
         self.content["is_thread"] = len(thread_pastes) > 1
+        self.content["thread_paste_count"] = len(thread_pastes)
         self.content["u_thread_atom"] = paste.url("threads/%s.atom", self.pasty.thread)
         self.content["u_thread"] = paste.url("threads/%s", self.pasty.thread)
         self.content["u_remote_diff"] = paste.url("%s/diff", self.pasty.slug)
         if self.content["is_thread"] == True:
             self.content["thread_pastes"] = thread_pastes
         self.content["h1"] = "p" + self.pasty_slug
-        self.content["page-title"] =  cgi.escape(self.pasty.title)
-        self.content["pasty_title"] =  cgi.escape(self.pasty.title)
+        self.content["page-title"] =  self.pasty.get_title()
+        self.content["pasty_title"] =  self.pasty.get_title()
         self.content["pasty_slug"] = self.pasty.slug
         self.content["pasty_is_moderated"] = self.pasty.is_moderated
+        self.content["is_code_viewable"] = self.pasty.is_code_viewable()
+        self.content["is_private"] = self.pasty.is_private()
+        self.content["is_public"] = self.pasty.is_public()
+        self.content["is_diffable"] = self.pasty.is_diffable()
         if self.pasty.characters:
             self.content["pasty_size"] = paste.util.make_filesize_readable(self.pasty.characters)
         self.content["pasty_loc"] = self.pasty.lines
@@ -202,12 +207,12 @@ class Pasty(paste.web.RequestHandler):
             self.content["u_gravatar"] = self.pasty.user.get_gravatar(48)
 
         self.content["posted_at"] = self.pasty.posted_at.strftime("%b, %d %Y at %H:%M")
+        self.content["pasty_language_name"] = self.pasty.get_language_name()
         if self.pasty.language:
             lang = smoid.languages.languages[self.pasty.language]
-            self.content["pasty_language_name"] = lang["name"]
             self.content["pasty_language_url"] = lang["home_url"]
-        self.content["u"] = paste.url("%s", self.pasty_slug)
-        self.content["u_fork"] = paste.url("%s/fork", self.pasty_slug)
+        self.content["u"] = self.pasty.get_url()
+        self.content["u_fork"] = self.pasty.get_fork_url()
         self.content["u_raw_text"] = paste.url("%s.txt", self.pasty_slug)
         self.content["u_atom"] = paste.url("%s.atom", self.pasty_slug)
 
