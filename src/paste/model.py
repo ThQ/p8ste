@@ -149,6 +149,17 @@ class Pasty (db.Model):
     def get_url (self):
         return paste.url("%s", self.slug)
 
+    def is_code_viewable (self):
+        return self.status == kPASTE_STATUS_PUBLIC
+
+    def is_diffable (self):
+        return self.status == kPASTE_STATUS_PUBLIC
+
+    def is_private (self):
+        return self.status == kPASTE_STATUS_PRIVATE
+
+    def is_public (self):
+        return self.status == kPASTE_STATUS_PUBLIC
 
 class Log (db.Model):
    type = db.StringProperty(choices=["paste_add", "paste_fork", "user_register"])
