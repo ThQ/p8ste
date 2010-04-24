@@ -10,7 +10,9 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import cgi
+
 import paste
 import paste.model
 import paste.util
@@ -67,13 +69,9 @@ class IndexAtom(paste.web.RequestHandler):
         if dbpastes != None:
             for opaste in dbpastes:
                 dpaste = {}
-                if opaste.title != None or opaste.is_moderated:
-                    dpaste["title"] = opaste.title
-                else:
-                    dpaste["title"] = opaste.slug
-                dpaste["u"] = paste.url("%s", opaste.slug)
-                dpaste["snippet"] = opaste.snippet
-                dpaste["is_moderated"] = opaste.is_moderated
+                dpaste["title"] = opaste.get_title()
+                dpaste["u"] = opaste.get_url()
+                dpaste["snippet"] = opaste.get_snippet()
 
                 if opaste.user:
                     dpaste["user_name"] = opaste.user.id
@@ -83,8 +81,7 @@ class IndexAtom(paste.web.RequestHandler):
                 if opaste.user:
                     dpaste["u_gravatar"] = opaste.user.get_gravatar(16)
 
-                if opaste.language and opaste.language in smoid.languages.languages:
-                    dpaste["u_language_icon"] = smoid.languages.languages[opaste.language]['u_icon']
+                dpaste["u_language_icon"] = opaste.get_icon_url()
 
                 if opaste.forks > 0:
                     dpaste["forks"] = opaste.forks
@@ -97,10 +94,7 @@ class IndexAtom(paste.web.RequestHandler):
                 if opaste.characters:
                     dpaste["size"] = paste.util.make_filesize_readable(opaste.characters)
                 dpaste["lines"] = opaste.lines
-                if opaste.language:
-                    dpaste["language"] = opaste.language
-                else:
-                    dpaste["language"] = ""
+                dpaste["language"] = opaste.get_language_name()
 
                 pastes.append(dpaste)
         return pastes

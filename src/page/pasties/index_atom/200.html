@@ -14,7 +14,7 @@
         <updated>{{paste.posted_at}}</updated>
         <link rel="alternate" href="{{paste.u}}" />
         <summary type="text">{{paste.snippet|escape}}</summary>
-        <author><name>{{paste.user_name}}</name></author>
+        <author><name>{{paste.user_name|escape}}</name></author>
     </entry>
     {% endfor %}
 </feed>
