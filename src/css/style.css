@@ -89,6 +89,13 @@ input[type="text"]
 input[type="submit"]
 {
     font-weight:bold;
+    border-top:1px solid #d9d9d9;
+    border-left:1px solid #d9d9d9;
+    border-bottom:1px solid #b0b0b0;
+    border-right:1px solid #b0b0b0;
+    background:#dddddd url(/images/button_bg.png) repeat-x;
+    color:#222222;
+    padding:3px 6px 3px 6px;
 }
 
 input[type="text"]:focus, textarea:focus
