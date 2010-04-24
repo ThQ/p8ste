@@ -12,6 +12,7 @@
 
 
 from google.appengine.ext import db
+import random
 
 import paste
 import smoid.languages
@@ -70,6 +71,7 @@ class Pasty (db.Model):
     edited_by_user_name = db.StringProperty(default="")
     expired_at = db.DateTimeProperty()
     parent_paste = db.StringProperty(default="")
+    secret_key = db.TextProperty(default="")
     slug = db.StringProperty(default="")
     snippet = db.TextProperty(default="")
     tags = db.TextProperty(default="")
@@ -79,6 +81,16 @@ class Pasty (db.Model):
     title = db.TextProperty(default="")
     status = db.IntegerProperty(default=0, choices=[kPASTE_STATUS_PUBLIC, kPASTE_STATUS_PRIVATE, kPASTE_STATUS_MODERATED])
     user = db.ReferenceProperty(User)
+
+    @staticmethod
+    def make_secret_key (length = 16):
+        chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        char_count = len(chars)
+        key = ""
+        for i in xrange(0, length):
+            pos = random.randint(0, char_count)
+            key += chars[pos]
+        return key
 
     @staticmethod
     def make_snippet (code, snippet_len):
