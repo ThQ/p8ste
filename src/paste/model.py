@@ -105,6 +105,12 @@ class Pasty (db.Model):
 
         return snippet
 
+    def get_code (self):
+        code = ""
+        if self.status == kPASTE_STATUS_PUBLIC:
+            code = self.code
+        return code
+
     def get_fork_url (self):
         return paste.url("%s/fork", self.slug)
 
