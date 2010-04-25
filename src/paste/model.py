@@ -20,7 +20,8 @@ import smoid.languages
 
 kPASTE_STATUS_PUBLIC = 0
 kPASTE_STATUS_PRIVATE = 1
-kPASTE_STATUS_MODERATED = 1
+kPASTE_STATUS_MODERATED = 2
+kPASTE_STATUS_WAITING_FOR_APPROVAL = 3
 
 
 class Form (db.Model):
@@ -79,7 +80,7 @@ class Pasty (db.Model):
     thread_level = db.IntegerProperty(default=0)
     thread_position = db.IntegerProperty(default=0)
     title = db.TextProperty(default="")
-    status = db.IntegerProperty(default=0, choices=[kPASTE_STATUS_PUBLIC, kPASTE_STATUS_PRIVATE, kPASTE_STATUS_MODERATED])
+    status = db.IntegerProperty(default=0, choices=[kPASTE_STATUS_PUBLIC, kPASTE_STATUS_PRIVATE, kPASTE_STATUS_MODERATED, kPASTE_STATUS_WAITING_FOR_APPROVAL])
     user = db.ReferenceProperty(User)
 
     @staticmethod
@@ -131,6 +132,10 @@ class Pasty (db.Model):
 
         if self.status == kPASTE_STATUS_PRIVATE:
             url = paste.url("images/silk/lock.png")
+        elif self.status == kPASTE_STATUS_MODERATED:
+            url = paste.url("images/silk/flag_red.png")
+        elif self.status == kPASTE_STATUS_WAITING_FOR_APPROVAL:
+            url = paste.url("images/silk/hourglass.png")
         elif self.language and self.status == kPASTE_STATUS_PUBLIC:
             if smoid.languages.languages.has_key(self.language) and smoid.languages.languages[self.language].has_key("u_icon"):
                 url = paste.url(smoid.languages.languages[self.language]["u_icon"])
@@ -185,6 +190,12 @@ class Pasty (db.Model):
 
     def is_public (self):
         return self.status == kPASTE_STATUS_PUBLIC
+
+    def is_moderated (self):
+        return self.status == kPASTE_STATUS_MODERATED
+
+    def is_waiting_for_approval (self):
+        return self.status == kPASTE_STATUS_WAITING_FOR_APPROVAL
 
 class Log (db.Model):
    type = db.StringProperty(choices=["paste_add", "paste_fork", "user_register"])
