@@ -27,8 +27,13 @@
     <table class="snippet">
         <tr>
             <td colspan=2 class="head">
-                <strong>{% if pasty_language_name %}<a href="{{ pasty_language_url }}">{{ pasty_language_name }}</a> code{%else%}Code{% endif %}</strong>
-                <small>| {{pasty_size.0}} {{pasty_size.1}}, {{pasty_loc}} LOC</small>
+                {% if paste.language %}
+                    <img src="{{paste.language.u_icon}}" alt="{{paste.language.name}}" title="{{paste.language.name}}" width="16" height="16" />
+                    <strong><a href="{{ paste.language.u }}">{{paste.language.name}}</a> paste</strong>
+                {% else %}
+                    <strong>Paste</strong>
+                {% endif %}
+                <small><a name="{{paste.slug}}" href="#{{paste.slug}}">#</a> {{pasty_size.0}} {{pasty_size.1}}, {{pasty_loc}} LOC</small>
                 <ul>
                     <li>
                         <img src="{{"images/silk/page_white_edit.png"|url}}" alt="Fork paste" width="16" height="16" />

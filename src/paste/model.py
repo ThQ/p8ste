@@ -144,6 +144,14 @@ class Pasty (db.Model):
 
         return lang
 
+    def get_language_url (self):
+        lang = self.language
+        url = ""
+        if smoid.languages.languages.has_key(lang) and smoid.languages.languages[lang].has_key("home_url"):
+            url = smoid.languages.languages[lang]["home_url"]
+
+        return url
+
     def get_title (self):
         """
         Gets the title if there is one and the status allows it.

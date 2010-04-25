@@ -189,6 +189,18 @@ class Pasty (paste.web.RequestHandler):
         else:
             thread_pastes = []
 
+        tpl_paste = {}
+        tpl_paste["u"] = self.pasty.get_url()
+        tpl_paste["u_fork"] = self.pasty.get_fork_url()
+        tpl_paste["u_raw_text"] = paste.url("%s.txt", self.pasty_slug)
+        tpl_paste["u_atom"] = paste.url("%s.atom", self.pasty_slug)
+        tpl_paste["slug"] = self.pasty.slug
+        tpl_paste["language"] = {}
+        tpl_paste["language"]["u"] = self.pasty.get_language_url()
+        tpl_paste["language"]["u_icon"] = self.pasty.get_icon_url()
+        tpl_paste["language"]["name"] = self.pasty.get_language_name()
+
+        self.content["paste"] = tpl_paste
         self.content["is_thread"] = len(thread_pastes) > 1
         self.content["thread_paste_count"] = len(thread_pastes)
         self.content["u_thread_atom"] = paste.url("threads/%s.atom", self.pasty.thread)
@@ -217,15 +229,10 @@ class Pasty (paste.web.RequestHandler):
             self.content["u_gravatar"] = self.pasty.user.get_gravatar(48)
 
         self.content["posted_at"] = self.pasty.posted_at.strftime("%b, %d %Y at %H:%M")
-        self.content["pasty_language_name"] = self.pasty.get_language_name()
         if self.pasty.language:
             lang = smoid.languages.languages[self.pasty.language]
             self.content["pasty_language_url"] = lang["home_url"]
-        self.content["u"] = self.pasty.get_url()
-        self.content["u_fork"] = self.pasty.get_fork_url()
-        self.content["u_raw_text"] = paste.url("%s.txt", self.pasty_slug)
-        self.content["u_atom"] = paste.url("%s.atom", self.pasty_slug)
-
+        
         self.add_atom_feed(paste.url("%s.atom", self.pasty_slug), self.pasty_slug + " (Atom feed)", "alternate")
         self.write_out("page/pasties/pasty/200.html")
 
