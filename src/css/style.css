@@ -183,7 +183,7 @@ tfoot td
     border:0;
 }
 
-tfoot td a:link, tfoot td a:visited
+.paging td a:link, .paging td a:visited
 {
     border:1px solid #5252D2;
     background-color:#ffffff;
@@ -191,7 +191,7 @@ tfoot td a:link, tfoot td a:visited
     padding:0 5px 0 5px;
 }
 
-tfoot td a:hover
+.paging td a:hover
 {
     border:1px solid #5252D2;
     background-color:#ffffff;
