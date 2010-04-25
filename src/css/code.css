@@ -1,4 +1,4 @@
-.snippet td.head
+.snippet th.head
 {
     border:0;
     border-bottom:1px solid #cfcfcf;
@@ -7,7 +7,16 @@
     margin:0;
 }
 
-.snippet td.head ul
+.snippet tfoot td
+{
+    border:0;
+    border-top:1px solid #cfcfcf;
+    background:#f0f0f0;
+    padding:8px;
+    margin:0;
+}
+
+.snippet th.head ul, .snippet tfoot ul
 {
     float:right;
     display:inline;
@@ -15,7 +24,7 @@
     padding:0;
 }
 
-.snippet td.head li
+.snippet th.head li, .snippet tfoot li
 {
     display:inline;
     padding:0 0 0 10px;
@@ -26,8 +35,8 @@
     border-collapse:collapse;
     border-spacing:0;
     width:100%;
+    margin:0 0 10px 0;
     padding:0;
-    margin:0;
 }
 
 .snippet tr
