@@ -3,7 +3,7 @@
 {%block page-title %}
     {{user_name|escape}}
     /
-    {{ pasty_title }} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC)
+    {{ pasty_title }} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ paste.size.0 }} {{ paste.size.1 }}, {{ paste.loc }} LOC)
 {% endblock %}
 
 {%block h1 %}
@@ -19,8 +19,16 @@
 
 {%block page-content %}
 
-{% if is_private %}
-<p class="lock">This paste is <strong>private</strong>.</p>
+{% if paste.is_private %}
+<p class="lock"><strong>This paste is private</strong>. You need to know the secret key to view it.</p>
+{% endif %}
+
+{% if paste.is_waiting_for_approval %}
+<p class="lock"><strong>This paste is awaiting approval.</strong> It may take seconds or weeks before it turns public, it all depends on <a href="{{u_user}}">{{user_name|escape}}</a>.</p>
+{% endif %}
+
+{% if paste.is_moderated %}
+<p class="warning"><strong>This paste was moderated.</strong> Someone didn't read our guidelines... Wait, we don't have some !</p>
 {% endif %}
 
 {% if is_code_viewable %}

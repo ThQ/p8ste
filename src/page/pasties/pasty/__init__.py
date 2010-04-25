@@ -195,6 +195,13 @@ class Pasty (paste.web.RequestHandler):
         tpl_paste["u_raw_text"] = paste.url("%s.txt", self.pasty_slug)
         tpl_paste["u_atom"] = paste.url("%s.atom", self.pasty_slug)
         tpl_paste["slug"] = self.pasty.slug
+        tpl_paste["loc"] = self.pasty.lines
+        tpl_paste["lines"] = lines
+        tpl_paste["code"] = code
+        tpl_paste["size"] = paste.util.make_filesize_readable(self.pasty.characters)
+        tpl_paste["is_moderated"] = self.pasty.is_moderated()
+        tpl_paste["is_private"] = self.pasty.is_private()
+        tpl_paste["is_waiting_for_approval"] = self.pasty.is_waiting_for_approval()
 
         tpl_paste["language"] = {}
         tpl_paste["language"]["u"] = self.pasty.get_language_url()
@@ -221,12 +228,6 @@ class Pasty (paste.web.RequestHandler):
         self.content["is_private"] = self.pasty.is_private()
         self.content["is_public"] = self.pasty.is_public()
         self.content["is_diffable"] = self.pasty.is_diffable()
-        if self.pasty.characters:
-            self.content["pasty_size"] = paste.util.make_filesize_readable(self.pasty.characters)
-        self.content["pasty_loc"] = self.pasty.lines
-        self.content["pasty_lines"] = lines
-        self.content["pasty_code"] = code
-        self.content["pasty_tags"] = ", ".join(tc.tags)
         self.content["user_name"] = self.pasty.posted_by_user_name
         if self.pasty.user:
             self.content["u_user"] = paste.url("users/%s", self.pasty.user.id)
