@@ -4,7 +4,7 @@
 {%block h1 %}Paste added{% endblock %}
 {%block page-content %}
 
-<p class="success"><strong>Your <a href="{{u_pasty}}">paste</a> has been added</strong> and is now visible by anyone.</p>
+<p class="success"><strong>Your <a href="{{u_pasty}}">paste</a> has been added</strong>{%if not is_private %} and is now visible by anyone{%endif%}.</p>
 
 <ul>
     <li>Share your paste : <a href="{{u_pasty}}"><strong>{{u_pasty_encoded}}</strong></a></li>

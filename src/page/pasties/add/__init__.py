@@ -203,7 +203,11 @@ class Add (paste.web.RequestHandler):
                 self.move_all_same_level_forks_down()
             self.increment_paste_counter()
 
-            self.content["u_pasty"] = paste.url("%s", slug)
+            if self.paste.is_private():
+                self.content["u_pasty"] = paste.url("%s?key=%s", slug, self.paste.secret_key)
+            else:
+                self.content["u_pasty"] = paste.url("%s", slug)
+            self.content["is_private"] = self.paste.is_private()
             self.content["u_pasty_encoded"] = cgi.escape(self.content["u_pasty"])
             self.content["u_fork"] = paste.url("%s/fork", slug)
             self.content["u_add"] = paste.url("")
@@ -261,6 +265,7 @@ class Add (paste.web.RequestHandler):
         is_reply = self.form_parent_slug != ""
 
         self.paste = paste.model.Pasty()
+        paste_is_private = self.request.get("submit") == "privately"
 
         self.paste.characters = len(self.form_code)
         self.paste.code = self.form_code
@@ -279,7 +284,7 @@ class Add (paste.web.RequestHandler):
         self.paste.slug = slug
         self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, paste.config["pasty_snippet_length"])
 
-        if self.request.get("submit") == "privately":
+        if paste_is_private:
             self.paste.status = paste.model.kPASTE_STATUS_PRIVATE
             self.paste.secret_key = paste.model.Pasty.make_secret_key()
         else:
