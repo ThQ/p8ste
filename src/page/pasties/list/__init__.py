@@ -66,8 +66,8 @@ class List (paste.web.pastes.PasteListRequestHandler):
         i = 0
         for p in self.pastes:
             line_nos, code_lines = ui_code.format_code(p.code_colored)
-            self.tpl_pastes[i]["line_nos"] = line_nos
-            self.tpl_pastes[i]["code_lines"] = code_lines
+            self.tpl_pastes[i]["lines"] = line_nos
+            self.tpl_pastes[i]["code"] = code_lines
             global_size += p.characters
             global_line_count += p.lines
             i += 1

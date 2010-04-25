@@ -18,13 +18,12 @@ class PasteListRequestHandler (PasteRequestHandler):
         tpl_pastes = []
         for o_paste in pastes:
             tpl_paste = {}
-            if o_paste.title != None:
-                tpl_paste["title"] = o_paste.title
-            else:
-                tpl_paste["title"] = o_paste.slug
+            tpl_paste["title"] = o_paste.get_title()
             tpl_paste["slug"] = o_paste.slug
-            tpl_paste["u"] = paste.url("%s", o_paste.slug)
-            tpl_paste["u_fork"] = paste.url("%s/fork", o_paste.slug)
+            tpl_paste["u"] = o_paste.get_url()
+            tpl_paste["u_fork"] = o_paste.get_fork_url()
+            tpl_paste["u_atom"] = paste.url("%s.atom", o_paste.slug)
+            tpl_paste["u_raw_text"] = paste.url("%s.txt", o_paste.slug)
             tpl_paste["snippet"] = o_paste.snippet
             tpl_paste["is_moderated"] = o_paste.is_moderated
 
@@ -48,11 +47,12 @@ class PasteListRequestHandler (PasteRequestHandler):
 
             if o_paste.characters:
                 tpl_paste["size"] = paste.util.make_filesize_readable(o_paste.characters)
-            tpl_paste["lines"] = o_paste.lines
-            if o_paste.language:
-                tpl_paste["language"] = o_paste.language
-            else:
-                tpl_paste["language"] = ""
+            tpl_paste["loc"] = o_paste.lines
+
+            tpl_paste["language"] = {}
+            tpl_paste["language"]["name"] = o_paste.get_language_name()
+            tpl_paste["language"]["u_icon"] = o_paste.get_icon_url()
+            tpl_paste["language"]["u"] = o_paste.get_language_url()
 
             tpl_pastes.append(tpl_paste)
 

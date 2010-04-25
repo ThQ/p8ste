@@ -7,7 +7,7 @@
             {% else %}
                 <strong>Paste</strong>
             {% endif %}
-            <small><a name="{{paste.slug}}" href="#{{paste.slug}}">#</a> {{pasty_size.0}} {{pasty_size.1}}, {{pasty_loc}} LOC</small>
+            <small><a name="{{paste.slug}}" href="#{{paste.slug}}">#</a> {{paste.size.0}} {{paste.size.1}}, {{paste.loc}} LOC</small>
             <ul>
                 <li>
                     <img src="{{"images/silk/page_white_edit.png"|url}}" alt="Fork paste" width="16" height="16" />
@@ -21,7 +21,7 @@
         </td>
     </tr>
     <tr>
-        <td class="lines"><pre>{{ pasty_lines}}</pre></td>
-        <td class="code"><pre>{{ pasty_code }}</pre></td>
+        <td class="lines"><pre>{{ paste.lines}}</pre></td>
+        <td class="code"><pre>{{ paste.code }}</pre></td>
     </tr>
 </table>
