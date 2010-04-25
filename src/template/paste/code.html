@@ -22,13 +22,17 @@
             </th>
         </tr>
     </thead>
+
+    {% if paste.slug %}
     <tfoot>
         <tr>
             <td colspan="2">
-                <a href="#{{paste.slug}}">Top</a>
+                &circ; <a href="#{{paste.slug}}">Top</a>
             </td>
         </tr>
     </tfoot>
+    {% endif %}
+
     <tbody>
         <tr>
             <td class="lines"><pre>{{ paste.lines}}</pre></td>
