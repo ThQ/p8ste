@@ -1,0 +1,27 @@
+<table class="snippet">
+    <tr>
+        <td colspan="2" class="head">
+            {% if paste.language.name %}
+                <img src="{{paste.language.u_icon}}" alt="{{paste.language.name}}" title="{{paste.language.name}}" width="16" height="16" />
+                <strong><a href="{{ paste.language.u }}">{{paste.language.name}}</a> paste</strong>
+            {% else %}
+                <strong>Paste</strong>
+            {% endif %}
+            <small><a name="{{paste.slug}}" href="#{{paste.slug}}">#</a> {{pasty_size.0}} {{pasty_size.1}}, {{pasty_loc}} LOC</small>
+            <ul>
+                <li>
+                    <img src="{{"images/silk/page_white_edit.png"|url}}" alt="Fork paste" width="16" height="16" />
+                    <small><a href="{{paste.u_fork}}"><strong>Fork</strong></a></small>
+                </li>
+                <li>
+                    <img src="{{"images/silk/page_white_text.png"|url}}" alt="Export paste" width="16" height="16" />
+                    <small><a href="{{paste.u_raw_text}}">Export as text</a> or <a href="{{paste.u_atom}}">atom</a></small>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td class="lines"><pre>{{ pasty_lines}}</pre></td>
+        <td class="code"><pre>{{ pasty_code }}</pre></td>
+    </tr>
+</table>

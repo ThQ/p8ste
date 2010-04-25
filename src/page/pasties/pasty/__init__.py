@@ -195,10 +195,14 @@ class Pasty (paste.web.RequestHandler):
         tpl_paste["u_raw_text"] = paste.url("%s.txt", self.pasty_slug)
         tpl_paste["u_atom"] = paste.url("%s.atom", self.pasty_slug)
         tpl_paste["slug"] = self.pasty.slug
+
         tpl_paste["language"] = {}
         tpl_paste["language"]["u"] = self.pasty.get_language_url()
         tpl_paste["language"]["u_icon"] = self.pasty.get_icon_url()
         tpl_paste["language"]["name"] = self.pasty.get_language_name()
+
+        tpl_paste["thread"] = {}
+        tpl_paste["thread"]["length"] = len(thread_pastes)
 
         self.content["paste"] = tpl_paste
         self.content["is_thread"] = len(thread_pastes) > 1

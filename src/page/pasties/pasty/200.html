@@ -3,7 +3,7 @@
 {%block page-title %}
     {{user_name|escape}}
     /
-    {{ pasty_title }} ({{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC)
+    {{ pasty_title }} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ pasty_size.0 }} {{ pasty_size.1 }}, {{ pasty_loc }} LOC)
 {% endblock %}
 
 {%block h1 %}
@@ -24,83 +24,61 @@
 {% endif %}
 
 {% if is_code_viewable %}
-    <table class="snippet">
-        <tr>
-            <td colspan=2 class="head">
-                {% if paste.language %}
-                    <img src="{{paste.language.u_icon}}" alt="{{paste.language.name}}" title="{{paste.language.name}}" width="16" height="16" />
-                    <strong><a href="{{ paste.language.u }}">{{paste.language.name}}</a> paste</strong>
-                {% else %}
-                    <strong>Paste</strong>
-                {% endif %}
-                <small><a name="{{paste.slug}}" href="#{{paste.slug}}">#</a> {{pasty_size.0}} {{pasty_size.1}}, {{pasty_loc}} LOC</small>
-                <ul>
-                    <li>
-                        <img src="{{"images/silk/page_white_edit.png"|url}}" alt="Fork paste" width="16" height="16" />
-                        <small><a href="{{ u_fork }}"><strong>Fork</strong></a></small>
-                    </li>
-                    <li>
-                        <img src="{{"images/silk/page_white_text.png"|url}}" alt="Export paste" width="16" height="16" />
-                        <small><a href="{{ u_raw_text }}">Export as text</a> or <a href="{{ u_atom }}">atom</a></small>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td class="lines"><pre>{{ pasty_lines}}</pre></td>
-            <td class="code"><pre>{{ pasty_code }}</pre></td>
-        </tr>
-    </table>
+{% include "../../../template/paste/code.html" %}
 {% endif %}
 
-            {% if is_thread or is_public %}
+{% if is_thread or is_public %}
 
-            <h2>
-                <a href="{{u_thread}}"><strong>Thread</strong></a>
-                <small style="float:right;">
-                    <a href="{{ u_thread_atom }}"><img src="{{"images/silk/feed.png"|url}}" alt="Thread atom feed" width="16" height="16" /></a>
-                </small>
-            </h2>
-            {% if is_thread %}
-            <ul class="invisible">
-                {% for thread_paste in thread_pastes %}
-                {% if thread_paste.open_list %}
-                <li><ul class="invisible">
-                {% endif %}
-                        <li>
-                        {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image|url }}" alt="{{ thread_paste.language_name }}" title="{{ thread_paste.language_name }}" width="16" height="16" /> {% endif %}
+<h2>
+    <a href="{{u_thread}}" name="thread"><strong>Thread</strong></a>
+    {% if paste.thread.length %}
+    <small>({{paste.thread.length}})</small>
+    {% endif %}
+    <small style="float:right;">
+        <a href="{{ u_thread_atom }}"><img src="{{"images/silk/feed.png"|url}}" alt="Thread atom feed" width="16" height="16" /></a>
+    </small>
+</h2>
+{% if is_thread %}
+<ul class="invisible">
+    {% for thread_paste in thread_pastes %}
+    {% if thread_paste.open_list %}
+    <li><ul class="invisible">
+    {% endif %}
+            <li>
+            {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image|url }}" alt="{{ thread_paste.language_name }}" title="{{ thread_paste.language_name }}" width="16" height="16" /> {% endif %}
 
-                        {% ifequal pasty_slug thread_paste.slug %}<strong>{% endifequal %}
-                        {% if thread_paste.is_moderated %}<strike>{% endif %}<a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>{% if thread_paste.is_moderated %}</strike>{% endif %}
+            {% ifequal pasty_slug thread_paste.slug %}<strong>{% endifequal %}
+            {% if thread_paste.is_moderated %}<strike>{% endif %}<a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>{% if thread_paste.is_moderated %}</strike>{% endif %}
 
-                        <small>
-                            &mdash; {{thread_paste.user_name}}
-                            {% ifnotequal thread_paste.slug pasty_slug %}
-                            [ {% ifequal thread_paste.diff_size.0 0 %}
-                                =B
-                            {%else%}
-                                {{ thread_paste.diff_size.2 }}{{ thread_paste.diff_size.0 }}{{ thread_paste.diff_size.1 }}
-                            {% endifequal %}
-                            &middot; <a href="{{thread_paste.u_diff}}">Diff</a> ]
-                            {% endifnotequal %}
-                        </small>
-                        {% ifequal pasty_slug thread_paste.slug %}</strong>{% endifequal %}
-                        </li>
-                {% if thread_paste.close_list %}
-                </ul></li>
-                {% endif %}
-                {% endfor %}
-                {% for list in lists_unclosed %}
-                </ul></li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <p class="info"><strong>Did you know ?</strong> You can <a href="{{u_fork}}"><strong>fork</strong></a> this paste : it creates a copy of it so as to let you make whatever change you want on that copy.</p>
-            {% endif %}
-            {% endif %}
+            <small>
+                {% ifnotequal thread_paste.slug pasty_slug %}
+                [ {% ifequal thread_paste.diff_size.0 0 %}
+                    =B
+                {%else%}
+                    {{ thread_paste.diff_size.2 }}{{ thread_paste.diff_size.0 }} {{ thread_paste.diff_size.1 }}
+                {% endifequal %}
+                ]
+                {% endifnotequal %}
+                &mdash; {{thread_paste.user_name}}
+                {% ifnotequal pasty_slug thread_paste.slug %}| <a href="{{thread_paste.u_diff}}">Diff</a>{% endifnotequal %}
+            </small>
+            {% ifequal pasty_slug thread_paste.slug %}</strong>{% endifequal %}
+            </li>
+    {% if thread_paste.close_list %}
+    </ul></li>
+    {% endif %}
+    {% endfor %}
+    {% for list in lists_unclosed %}
+    </ul></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="info"><strong>Did you know ?</strong> You can <a href="{{paste.u_fork}}"><strong>fork</strong></a> this paste : it creates a copy of it so as to let you make whatever change you want on that copy.</p>
+{% endif %}
+{% endif %}
 
 {% if is_diffable %}
-<h2><strong>Remote diff</strong></h2>
+<h2><a name="remote_diff"><strong>Remote diff</strong></a></h2>
 <form action="{{u_remote_diff}}" method="GET">
     <table class="invisible" style="width:500px;">
         <tr>
