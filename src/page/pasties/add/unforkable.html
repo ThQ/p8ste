@@ -1,0 +1,19 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}Fork {{pasty_parent_slug}}{% endblock %}
+{%block h1 %}Impossible fork{% endblock %}
+{%block page-content %}
+
+{% if is_private %}
+    <p class="warning">You cannot fork a private paste.</p>
+{% endif %}
+
+{% if is_moderated %}
+    <p class="warning">You cannot fork a moderated paste.</p>
+{% endif %}
+
+{% if is_awaiting_approval %}
+    <p class="warning">You cannot fork a paste waiting for approval.</p>
+{% endif %}
+
+{% endblock %}

@@ -83,8 +83,6 @@ class Add (paste.web.RequestHandler):
             pasties = paste.model.Pasty.all()
             pasties.filter("slug =", self.parent_slug)
             parent = pasties.get()
-            if parent.is_moderated:
-                parent = None
 
         return parent
 
@@ -129,19 +127,25 @@ class Add (paste.web.RequestHandler):
     def on_load (self):
         self.get_form_data()
         self.parent_paste = self.get_parent_paste()
-
         if self.parent_paste:
             self.content["is_fork"] = True
             self.content["u_parent_paste"] = paste.url("%s", self.parent_paste.slug)
+            self.content["pasty_parent_slug"] = self.parent_paste.slug
 
             self.path.add("Pastes", paste.url("pastes/"))
             self.path.add(self.parent_paste.title, paste.url("%s", self.parent_paste.slug))
             self.path.add("Fork", paste.url("%s/fork", self.parent_paste_slug))
 
-        if self.form_token == "":
-            self.on_form_not_sent()
-        else:
-            self.on_form_sent()
+        if not self.parent_paste or self.parent_paste.is_forkable():
+            if self.form_token == "":
+                self.on_form_not_sent()
+            else:
+                self.on_form_sent()
+        elif self.parent_paste:
+            self.content["is_private"] = self.parent_paste.is_private()
+            self.content["is_moderated"] = self.parent_paste.is_moderated()
+            self.content["is_awaiting_approval"] = self.parent_paste.is_waiting_for_approval()
+            self.write_out("page/pasties/add/unforkable.html")
 
     def on_form_not_sent (self):
         if not self.user.is_logged_in_google:
@@ -166,9 +170,6 @@ class Add (paste.web.RequestHandler):
 
         if self.request.get("title") != "":
             self.content["pasty_title"] = cgi.escape(self.request.get("title"))
-
-        if self.parent_paste != None:
-            self.content["pasty_parent_slug"] = self.parent_paste.slug
 
         self.display_form()
 
@@ -284,7 +285,7 @@ class Add (paste.web.RequestHandler):
         self.paste.slug = slug
         self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, paste.config["pasty_snippet_length"])
 
-        if paste_is_private:
+        if not is_reply and paste_is_private:
             self.paste.status = paste.model.kPASTE_STATUS_PRIVATE
             self.paste.secret_key = paste.model.Pasty.make_secret_key()
         else:

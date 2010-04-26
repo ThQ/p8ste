@@ -185,6 +185,9 @@ class Pasty (db.Model):
     def is_diffable (self):
         return self.status == kPASTE_STATUS_PUBLIC
 
+    def is_forkable (self):
+        return self.status == kPASTE_STATUS_PUBLIC
+
     def is_private (self):
         return self.status == kPASTE_STATUS_PRIVATE
 
