@@ -149,6 +149,11 @@ th
     font-size:0.9em;
 }
 
+th small
+{
+    font-weight:none;
+}
+
 td
 {
     vertical-align:top;
