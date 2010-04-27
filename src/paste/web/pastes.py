@@ -25,8 +25,11 @@ class PasteListRequestHandler (PasteRequestHandler):
             tpl_paste["u_atom"] = paste.url("%s.atom", o_paste.slug)
             tpl_paste["u_raw_text"] = paste.url("%s.txt", o_paste.slug)
             tpl_paste["snippet"] = o_paste.snippet
-            tpl_paste["is_moderated"] = o_paste.is_moderated
-
+            tpl_paste["is_moderated"] = o_paste.is_moderated()
+            tpl_paste["is_private"] = o_paste.is_private()
+            tpl_paste["is_public"] = o_paste.is_public()
+            tpl_paste["is_awaiting_approval"] = o_paste.is_waiting_for_approval()
+            tpl_paste["is_code_viewable"] = o_paste.is_code_viewable()
             if o_paste.user:
                 tpl_paste["u_user"] = paste.url("users/%s", o_paste.user.id)
             tpl_paste["user_name"] = o_paste.posted_by_user_name
