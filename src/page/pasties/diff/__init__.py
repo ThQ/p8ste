@@ -44,7 +44,22 @@ class Diff(paste.web.RequestHandler):
         if None in self.pastes:
             self.get_404()
         else:
-            self.get_200()
+            unpublic_paste = None
+            for paste in self.pastes:
+                if not paste.is_public():
+                    unpublic_paste = paste
+                    break
+
+            if unpublic_paste:
+                self.content["paste_slug"] = unpublic_paste.slug
+                self.content["u_paste"] = unpublic_paste.get_url()
+                self.content["paste_is_private"] = unpublic_paste.is_private()
+                self.content["paste_is_moderated"] = unpublic_paste.is_moderated()
+                self.content["paste_is_awaiting_approval"] = unpublic_paste.is_waiting_for_approval()
+                self.error(401)
+                self.write_out("template/paste/not_public.html")
+            else:
+                self.get_200()
 
     def get_200 (self):
         """

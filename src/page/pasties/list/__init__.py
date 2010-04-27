@@ -35,7 +35,7 @@ class List (paste.web.pastes.PasteListRequestHandler):
         self.paste_sep = "%2B"
 
     def get (self, slugs):
-        self.paste_slugs = slugs.split(self.paste_sep)
+        self.paste_slugs = set(slugs.split(self.paste_sep))
 
         # Retrieve the pastes from the datastore
         for slug in self.paste_slugs:
