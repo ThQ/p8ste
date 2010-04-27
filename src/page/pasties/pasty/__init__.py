@@ -202,6 +202,7 @@ class Pasty (paste.web.RequestHandler):
         tpl_paste["is_moderated"] = self.pasty.is_moderated()
         tpl_paste["is_private"] = self.pasty.is_private()
         tpl_paste["is_waiting_for_approval"] = self.pasty.is_waiting_for_approval()
+        tpl_paste["is_code_viewable"] = self.code_is_viewable
 
         tpl_paste["language"] = {}
         tpl_paste["language"]["u"] = self.pasty.get_language_url()
