@@ -32,8 +32,7 @@ class PastyTxt(paste.web.RequestHandler):
             self.get_200()
 
     def get_200(self):
-        if not self.pasty.is_moderated:
-            self.content["content"] = self.pasty.get_code()
+        self.content["content"] = self.pasty.get_code()
         self.set_header("Content-Type", "text/plain")
         self.write_out("page/pasties/pasty_txt/200.tpl")
 
