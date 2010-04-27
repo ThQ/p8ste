@@ -36,6 +36,10 @@ class Sitemap(paste.web.RequestHandler):
             p["priority"] = "0.5"
             pastes.append(p)
 
+        if len(dbpastes) > 0:
+            self.content["u_index"] = paste.url("pastes/")
+            self.content["index_edited_at"] = dbpastes[0].edited_at.strftime("%Y-%m-%d")
+
         self.content["pastes"] = pastes
         self.use_template("page/pasties/sitemap/200.xml")
         self.write_out()
