@@ -1,0 +1,25 @@
+{% extends "../../page/index.html" %}
+
+{%block page-title %}
+    Paste [{{paste_slug|escape}}] is not public
+{% endblock %}
+
+{%block h1 %}
+    Paste [{{paste_slug|escape}}] is not public
+{% endblock %}
+
+{%block page-content %}
+
+{% if paste_is_private %}
+<p class="warning"><strong>Paste <a href="{{u_paste}}">{{paste_slug|escape}}</a> is private.</strong></p>
+{% endif %}
+
+{% if paste_is_moderated %}
+<p class="warning"><strong>Paste <a href="{{u_paste}}">{{paste_slug|escape}}</a> was moderated.</strong></p>
+{% endif %}
+
+{% if paste_is_awaiting_approval %}
+<p class="warning"><strong>Paste <a href="{{u_paste}}">{{paste_slug|escape}}</a> is awaiting approval.</strong></p>
+{% endif %}
+
+{% endblock %}

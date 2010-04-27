@@ -49,17 +49,24 @@ class RemoteDiff (paste.web.pastes.PasteRequestHandler):
         self.content["paste_slug"] = self.paste_slug
         self.content["u_paste"] = paste.url("%s", slug)
         if self.paste:
-            self.remote_url = self.request.get("url")
-            if self.remote_url[0:7] != "http://":
-                self.remote_url = "http://" + self.remote_url
+            if self.paste.is_public():
+                self.remote_url = self.request.get("url")
+                if self.remote_url[0:7] != "http://":
+                    self.remote_url = "http://" + self.remote_url
 
-            self.remote_content = self.fetch_url()
-            self.content["remote_url"] = self.remote_url
+                self.remote_content = self.fetch_url()
+                self.content["remote_url"] = self.remote_url
 
-            if self.remote_content:
-                self.get_200()
+                if self.remote_content:
+                    self.get_200()
+                else:
+                    self.get_404_remote()
             else:
-                self.get_404_remote()
+                self.content["paste_is_private"] = self.paste.is_private()
+                self.content["paste_is_moderated"] = self.paste.is_moderated()
+                self.content["paste_is_awaiting_approval"] = self.paste.is_waiting_for_approval()
+                self.error(401)
+                self.write_out("template/paste/not_public.html")
         else:
             self.get_404_paste()
 
