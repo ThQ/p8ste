@@ -16,5 +16,8 @@ check-recaptcha:
 check-paste-private:
 	@if [ ! -f "${fPASTE_PRIVATE}" ] ; then echo "${fPASTE_PRIVATE} cannot be found. Rename ${fPASTE_PRIVATE_TEMPLATE} to ${fPASTE_PRIVATE}" ; fi
 
+run:
+	python ${APPENGINE_PATH}/dev_appserver.py ${dSRC}
+
 upload:
 	python ${APPENGINE_PATH}/appcfg.py update ${dSRC}
