@@ -45,6 +45,7 @@ class Index(paste.web.RequestHandler):
         if paging.page_count > 1:
             self.content["pages"] = paging.pages
 
+        self.content["u_atom"] = paste.url("pastes.atom")
         self.content["paste_start"] = ((self.page - 1) * self.pastes_per_page) + 1
         self.content["paste_end"] = self.content["paste_start"] - 1 + len(pastes)
         self.content["paste_count"] = self.paste_count
