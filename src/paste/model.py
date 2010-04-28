@@ -172,8 +172,11 @@ class Pasty (db.Model):
         Gets the snippet if there is one and the status allows it.
         """
         snippet = ""
-        if self.status == kPASTE_STATUS_PUBLIC and self.snippet:
-            snippet = self.snippet
+        if self.snippet:
+            if self.status == kPASTE_STATUS_PUBLIC:
+                snippet = self.snippet
+            elif self.status == kPASTE_STATUS_PRIVATE:
+                snippet = "[[ PRIVATE ]]"
         return snippet
 
     def get_url (self):
