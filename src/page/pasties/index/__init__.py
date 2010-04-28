@@ -49,8 +49,9 @@ class Index(paste.web.RequestHandler):
         self.content["paste_end"] = self.content["paste_start"] - 1 + len(pastes)
         self.content["paste_count"] = self.paste_count
         self.content["pastes"] = pastes
-        self.use_template("page/pasties/index/200.html")
-        self.write_out()
+
+        self.add_atom_feed(paste.url("pastes.atom"), "Last pastes", "alternate")
+        self.write_out("page/pasties/index/200.html")
 
     def get_paste_count (self):
         """
