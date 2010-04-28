@@ -42,7 +42,7 @@
             {% if thread_paste.u_language_image %}<img src="{{ thread_paste.u_language_image|url }}" alt="{{ thread_paste.language_name }}" title="{{ thread_paste.language_name }}" width="16" height="16" /> {% endif %}
 
             {% ifequal pasty_slug thread_paste.slug %}<strong>{% endifequal %}
-            {% if thread_paste.is_moderated %}<strike>{% endif %}<a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>{% if thread_paste.is_moderated %}</strike>{% endif %}
+            <a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>
 
             <small>
                 {% ifnotequal thread_paste.slug pasty_slug %}
@@ -73,7 +73,7 @@
 
 {% if is_diffable %}
 <h2><a name="remote_diff"><strong>Remote diff</strong></a></h2>
-<form action="{{u_remote_diff}}" method="GET">
+<form action="{{u_remote_diff}}" method="get">
     <table class="invisible" style="width:500px;">
         <tr>
             <td><input name="url" type="text" /></td>
