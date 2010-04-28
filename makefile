@@ -2,6 +2,8 @@ dPYGMENTS=src/pygments
 dRECAPTCHA=src/recaptcha
 fPASTE_PRIVATE=src/paste/private.py
 fPASTE_PRIVATE_TEMPLATE=src/paste/private_TEMPLATE.py
+dROOT=.
+dSRC=${dROOT}/src
 
 check-install: check-pygments check-recaptcha check-paste-private
 
@@ -13,3 +15,6 @@ check-recaptcha:
 
 check-paste-private:
 	@if [ ! -f "${fPASTE_PRIVATE}" ] ; then echo "${fPASTE_PRIVATE} cannot be found. Rename ${fPASTE_PRIVATE_TEMPLATE} to ${fPASTE_PRIVATE}" ; fi
+
+upload:
+	python ${APPENGINE_PATH}/appcfg.py update ${dSRC}
