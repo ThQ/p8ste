@@ -531,8 +531,15 @@ small a:hover
 .success
 {
     border:1px solid #d0d0d0;
-    background-color:#f0f0f0;
+    background-color:#f0fff0;
     background:#f0f0f0 url(/images/silk/accept.png) 5px 10px no-repeat;
+    padding:10px 10px 10px 30px;
+}
+.dyn
+{
+    border:1px solid #AAE37C;
+    background-color:#f0f0f0;
+    background:#f0f0f0 url(/images/silk/lightbulb.png) 5px 10px no-repeat;
     padding:10px 10px 10px 30px;
 }
 .info
