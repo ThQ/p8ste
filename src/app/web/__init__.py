@@ -94,7 +94,7 @@ class RequestHandler (webapp.RequestHandler):
         self.content["APP_NAME"] = settings.APP_NAME
         self.content["path__"] = self.path.path
 
-        if settings.ENV == "debug" and settings.USE_GANALYTICS:
+        if settings.ENV != "debug" and settings.USE_GANALYTICS:
             self.content["GANALYTICS_ID"] = settings.GANALYTICS_ID
 
         if "user-agent" in self.request.headers:
