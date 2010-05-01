@@ -1,8 +1,8 @@
 *.pyc
 *~
 images/
-src/paste/private.py
+src/settings.py
 src/pygments/
 src/recaptcha/
 src/static/favicon.ico
-
+src/smoid/examples/*
