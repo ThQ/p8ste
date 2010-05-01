@@ -72,6 +72,13 @@ languages["scala"] = {
     "u_icon": "images/languages/scala.png"
 }
 
+languages["sql"] = {
+    "lexer": "sql",
+    "name": "SQL",
+    "home_url": "http://en.wikipedia.org/wiki/SQL",
+    "u_icon": "images/languages/sql.png"
+}
+
 languages["sh"] = {
     "lexer": "sh",
     "name": "Shell",

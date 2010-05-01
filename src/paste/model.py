@@ -62,7 +62,7 @@ class Pasty (db.Model):
     forks = db.IntegerProperty(default=0)
     indirect_forks = db.IntegerProperty(default=0)
     is_moderated = db.BooleanProperty(default=False)
-    language = db.StringProperty(choices=["html", "java", "perl", "php", "python", "python_console", "ruby", "scala", "sh", "xml"])
+    language = db.StringProperty(choices=["html", "java", "perl", "php", "python", "python_console", "ruby", "scala", "sh", "sql", "xml"])
     lines = db.IntegerProperty(default=0)
     posted_at = db.DateTimeProperty()
     posted_by_ip = db.StringProperty(default="")
@@ -137,8 +137,8 @@ class Pasty (db.Model):
         elif self.status == kPASTE_STATUS_WAITING_FOR_APPROVAL:
             url = paste.url("images/silk/hourglass.png")
         elif self.status == kPASTE_STATUS_PUBLIC:
-            if self.language and smoid.languages.languages.has_key(self.language) and smoid.languages.languages[self.language].has_key("u_icon"):
-                url = paste.url(smoid.languages.languages[self.language]["u_icon"])
+            if self.language and smoid.languages.languages.has_key(self.language):
+                url = paste.url("images/languages/" + self.language + ".png")
             else:
                 url = paste.url("images/silk/page_white_text.png")
         return url

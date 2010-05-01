@@ -13,6 +13,7 @@ import smoid.languages.python_console
 import smoid.languages.ruby
 import smoid.languages.sh
 import smoid.languages.shebang
+import smoid.languages.sql
 import smoid.languages.xml
 
 
@@ -32,6 +33,7 @@ class GrandChecker:
         self.checkers.extend(smoid.languages.ruby.RubyCheckCollection())
         self.checkers.extend(smoid.languages.sh.ShCollection())
         self.checkers.append(smoid.languages.shebang.ShebangCheck())
+        self.checkers.extend(smoid.languages.sql.SqlCheckCollection())
         self.checkers.extend(smoid.languages.xml.XmlCheck())
         self.verbose = False
         self.max_checker_name_length = 30
