@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>{% block page-title %}Paste code on Paste-It{% endblock %} - PrengePASTE</title>
+        <title>{% block page-title %}Paste code on Paste-It{% endblock %} - {{APP_NAME}}</title>
         <link href="{{"style/style.css"|url}}" type="text/css" rel="stylesheet" />
         {% for style in styles %}
             <link href="{{ style }}" type="text/css" rel="stylesheet" />
@@ -49,7 +49,7 @@
 
             {% if path__ %}
             <ul id="path">
-                <li><a href="{{u_home}}">PrengePASTE</a></li>
+                <li><a href="{{u_home}}">{{APP_NAME}}</a></li>
                 {% for item in path__ %}
                 <li>&rsaquo; {%if item.link %}<a href="{{item.link}}">{{item.text|escape}}</a>{%else%}{{item.text|escape}}{%endif%}</li>
                 {% endfor%}
@@ -66,7 +66,7 @@
             <table class="invisible">
                 <tr>
                     <td>
-                        <strong>Paste It</strong>
+                        <strong>{{APP_NAME}}</strong>
                         <ul>
                             <li><a href="{{u_home}}">Paste code</a></li>
                             <li><a href="{{u_pastes}}">Latest pastes</a></li>

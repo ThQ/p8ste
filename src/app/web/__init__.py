@@ -91,6 +91,7 @@ class RequestHandler (webapp.RequestHandler):
         self.content["u_about_features"] = app.url("about/features")
         self.content["u_module_history"] = self.module_history_url
         self.content["u_blank_image"] = app.url("images/blank.gif")
+        self.content["APP_NAME"] = settings.APP_NAME
         self.content["path__"] = self.path.path
         if "user-agent" in self.request.headers:
             self.content["bad_browser__"] = self.request.headers["user-agent"].find("MSIE") != -1
