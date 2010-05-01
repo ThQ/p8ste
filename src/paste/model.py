@@ -89,7 +89,7 @@ class Pasty (db.Model):
         char_count = len(chars)
         key = ""
         for i in xrange(0, length):
-            pos = random.randint(0, char_count)
+            pos = random.randint(0, char_count - 1)
             key += chars[pos]
         return key
 
@@ -156,6 +156,9 @@ class Pasty (db.Model):
             url = smoid.languages.languages[lang]["home_url"]
 
         return url
+
+    def get_private_url (self):
+        return paste.url("%s?key=%s", self.slug, self.secret_key)
 
     def get_title (self):
         """

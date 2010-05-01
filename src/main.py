@@ -17,6 +17,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+import settings
+
 import paste
 import page.about.features
 import page.about.index
@@ -42,11 +44,10 @@ import page.users.signup
 import page.users.signout
 import page.users.user
 
-
 template.register_template_library('common.url')
 
 # Datastore query logging
-if paste.config["env"] == "debug":
+if settings.ENV == "debug":
     import paste.appengine.hook
     paste.appengine.hook.datastore_logs = []
     apiproxy_stub_map.apiproxy.GetPreCallHooks().Append('db_log', paste.appengine.hook.hook_datastore, 'datastore_v3')

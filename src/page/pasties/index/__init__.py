@@ -16,6 +16,7 @@ import paste.model
 import paste.util
 import paste.web
 import paste.web.ui
+import settings
 import smoid.languages
 
 
@@ -98,7 +99,7 @@ class Index(paste.web.RequestHandler):
                     dpaste["forks"] = opaste.forks
 
                 if opaste.posted_at != None:
-                    dpaste["posted_at"] = opaste.posted_at.strftime(paste.config["datetime.format"])
+                    dpaste["posted_at"] = opaste.posted_at.strftime(settings.DATETIME_FORMAT)
                 else:
                     dpaste["posted_at"] = ""
 

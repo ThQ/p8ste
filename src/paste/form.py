@@ -14,6 +14,7 @@ import datetime
 import hashlib
 import paste
 import paste.model
+import settings
 
 def delete_token(ip_address, stoken):
     token = paste.model.Form()
@@ -43,7 +44,7 @@ def put_form_token(ip_address, token=""):
     ftoken.token = token
     ftoken.created_at = datetime.datetime.now()
     ftoken.created_by_ip = ip_address
-    ftoken.expired_at = datetime.datetime.now() + paste.config["pasty_form_expiration_delta"]
+    ftoken.expired_at = datetime.datetime.now() + settings.PASTE_FORM_EXPIRATION_DELTA
     key = ftoken.put()
     if key != "":
         return token

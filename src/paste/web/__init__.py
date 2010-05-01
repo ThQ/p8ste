@@ -19,6 +19,7 @@ import os
 import paste
 import paste.appengine.hook
 import paste.user
+import settings
 
 
 class Path:
@@ -75,7 +76,7 @@ class RequestHandler (webapp.RequestHandler):
         if template_path != "":
             self.use_template(template_path)
 
-        if paste.config["env"] == "debug":
+        if settings.ENV == "debug":
             self.content["debug"] = True
         self.content["header_scripts"] = self.scripts
         self.content["feeds"] = self.feeds
@@ -109,7 +110,7 @@ class RequestHandler (webapp.RequestHandler):
         else:
             self.content['u_user_login__'] = paste.url("sign-in?url=%s", self.request.url)
 
-        if paste.config["env"] == "debug":
+        if settings.ENV == "debug":
             self.content["datastore_logs"] = paste.appengine.hook.datastore_logs
 
         self.response.out.write(template.render(self.template_name, self.content))

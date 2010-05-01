@@ -2,6 +2,7 @@ import paste
 import paste.model
 import paste.util
 import paste.web
+import settings
 import smoid.languages
 
 class PasteRequestHandler (paste.web.RequestHandler):
@@ -44,7 +45,7 @@ class PasteListRequestHandler (PasteRequestHandler):
                 tpl_paste["forks"] = o_paste.forks
 
             if o_paste.posted_at != None:
-                tpl_paste["posted_at"] = o_paste.posted_at.strftime(paste.config["datetime.format"])
+                tpl_paste["posted_at"] = o_paste.posted_at.strftime(settings.DATETIME_FORMAT)
             else:
                 tpl_paste["posted_at"] = ""
 

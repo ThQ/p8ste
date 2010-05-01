@@ -20,6 +20,7 @@ import paste.lang
 import paste.model
 import paste.util
 import paste.web.pastes
+import settings
 
 class Recount (paste.web.pastes.PasteRequestHandler):
 
@@ -56,15 +57,15 @@ class Recount (paste.web.pastes.PasteRequestHandler):
         self.update_day()
         self.update_month()
 
-        self.content["pasted_at"] = self.paste.posted_at.strftime(paste.config["datetime.format"])
-        self.content["month_start"] = self.month_start.strftime(paste.config["datetime.format"])
-        self.content["month_end"] = self.month_end.strftime(paste.config["datetime.format"])
+        self.content["pasted_at"] = self.paste.posted_at.strftime(settings.DATETIME_FORMAT)
+        self.content["month_start"] = self.month_start.strftime(settings.DATETIME_FORMAT)
+        self.content["month_end"] = self.month_end.strftime(settings.DATETIME_FORMAT)
         self.content["pastes_in_month"] = self.pastes_in_month
-        self.content["hour_start"] = self.hour_start.strftime(paste.config["datetime.format"])
-        self.content["hour_end"] = self.hour_end.strftime(paste.config["datetime.format"])
+        self.content["hour_start"] = self.hour_start.strftime(settings.DATETIME_FORMAT)
+        self.content["hour_end"] = self.hour_end.strftime(settings.DATETIME_FORMAT)
         self.content["pastes_in_hour"] = self.pastes_in_hour
-        self.content["day_start"] = self.day_start.strftime(paste.config["datetime.format"])
-        self.content["day_end"] = self.day_end.strftime(paste.config["datetime.format"])
+        self.content["day_start"] = self.day_start.strftime(settings.DATETIME_FORMAT)
+        self.content["day_end"] = self.day_end.strftime(settings.DATETIME_FORMAT)
         self.content["pastes_in_day"] = self.pastes_in_day
         self.write_out("page/pasties/recount/200.html")
 

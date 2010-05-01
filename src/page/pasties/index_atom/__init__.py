@@ -18,6 +18,7 @@ import paste.model
 import paste.util
 import paste.web
 import paste.web.ui
+import settings
 import smoid.languages
 
 
@@ -87,7 +88,7 @@ class IndexAtom(paste.web.RequestHandler):
                     dpaste["forks"] = opaste.forks
 
                 if opaste.posted_at != None:
-                    dpaste["posted_at"] = opaste.posted_at.strftime(paste.config["datetime.atom"])
+                    dpaste["posted_at"] = opaste.posted_at.strftime(settings.ATOM_DATETIME_FORMAT)
                 else:
                     dpaste["posted_at"] = ""
 

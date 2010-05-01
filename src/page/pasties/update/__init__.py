@@ -19,6 +19,7 @@ import paste.lang
 import paste.model
 import paste.util
 import paste.web
+import settings
 
 class Update (paste.web.RequestHandler):
 
@@ -44,7 +45,7 @@ class Update (paste.web.RequestHandler):
             self.paste.code_colored = self.prepare_code (self.paste.code, self.paste.language)
         self.paste.characters = len(self.paste.code)
         self.paste.lines = self.paste.code.count("\n") + 1
-        self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, paste.config["pasty_snippet_length"])
+        self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, settings.PASTE_SNIPPET_MAX_LENGTH)
         self.paste.put()
 
         self.write_out("page/pasties/update/200.html")

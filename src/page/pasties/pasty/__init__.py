@@ -321,8 +321,3 @@ class Pasty (paste.web.RequestHandler):
             pastes.append(lpaste)
         self.content["lists_unclosed"] = xrange(0, lists_opened)
         return pastes
-
-    def update_expiration_time(self):
-        if self.pasty != None:
-            self.pasty.expired_at = datetime.datetime.now() + paste.config["pasty_expiration_delta"]
-            self.put()

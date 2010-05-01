@@ -23,11 +23,11 @@ import paste
 import paste.form
 import paste.model
 import paste.pasty
-import paste.private
 import paste.syhili
 import paste.tag
 import paste.web
 import recaptcha.client.captcha
+import settings
 import smoid
 
 paste.form.make_token()
@@ -149,7 +149,7 @@ class Add (paste.web.RequestHandler):
 
     def on_form_not_sent (self):
         if not self.user.is_logged_in_google:
-            self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
+            self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)
 
         self.content["pasty_token"] = paste.form.put_form_token(self.request.remote_addr)
 
@@ -205,9 +205,10 @@ class Add (paste.web.RequestHandler):
             self.increment_paste_counter()
 
             if self.paste.is_private():
-                self.content["u_pasty"] = paste.url("%s?key=%s", slug, self.paste.secret_key)
+                self.content["u_pasty"] = self.paste.get_private_url()
             else:
-                self.content["u_pasty"] = paste.url("%s", slug)
+                self.content["u_pasty"] = self.paste.get_url()
+
             self.content["is_private"] = self.paste.is_private()
             self.content["u_pasty_encoded"] = cgi.escape(self.content["u_pasty"])
             self.content["u_fork"] = paste.url("%s/fork", slug)
@@ -216,7 +217,7 @@ class Add (paste.web.RequestHandler):
 
             paste.form.delete_token(self.form_token, self.request.remote_addr)
         else:
-            self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(paste.config["recaptcha::key::public"])
+            self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)
             self.display_form()
 
     def prepare_code (self, code, language):
@@ -272,7 +273,6 @@ class Add (paste.web.RequestHandler):
         self.paste.code = self.form_code
         self.paste.edited_at = datetime.datetime.now()
         self.paste.edited_by_ip = self.request.remote_addr
-        self.paste.expired_at = datetime.datetime.now() + paste.config["pasty_expiration_delta"]
         self.paste.forks = 0
         self.paste.indirect_forks = 0
         self.paste.language = smoid.GrandChecker().find_out_language(self.paste.code)
@@ -283,7 +283,7 @@ class Add (paste.web.RequestHandler):
         self.paste.posted_by_ip = self.request.remote_addr
         self.paste.replies = 0
         self.paste.slug = slug
-        self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, paste.config["pasty_snippet_length"])
+        self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, settings.PASTE_SNIPPET_MAX_LENGTH)
 
         if not is_reply and paste_is_private:
             self.paste.status = paste.model.kPASTE_STATUS_PRIVATE
@@ -297,7 +297,7 @@ class Add (paste.web.RequestHandler):
         if self.user.is_logged_in:
             self.paste.posted_by_user_name = self.user.id
         else:
-            self.paste.posted_by_user_name = paste.config["default_user_name"]
+            self.paste.posted_by_user_name = settings.DEFAULT_USER_NAME
 
         if is_reply:
             is_first_of_thread = False
@@ -319,15 +319,17 @@ class Add (paste.web.RequestHandler):
         result = pasty_key != None
 
         if result == True:
-            dbPaste = paste.model.Pasty.get(pasty_key)
+            # If the paste is not a reply, then it's starting its own thread.
             if not is_reply:
+                dbPaste = paste.model.Pasty.get(pasty_key)
                 if dbPaste != None:
                     dbPaste.thread = slug
                     dbPaste.put()
 
-            task = Task(name = self.paste.slug, method="GET", url = "/" + self.paste.slug + "/recount")
-            task.add(queue_name="paste-recount")
-            self.put_log(dbPaste)
+            if result == True:
+                task = Task(name = self.paste.slug, method="GET", url = "/" + self.paste.slug + "/recount")
+                task.add(queue_name="paste-recount")
+                self.put_log(dbPaste)
 
         return result
 
@@ -344,7 +346,7 @@ class Add (paste.web.RequestHandler):
 
             captcha_response = recaptcha.client.captcha.submit(cap_challenge,
                                                                  cap_response,
-                                                                 paste.private.config["recaptcha::key::private"],
+                                                                 settings.RECAPTCHA_PRIVATE_KEY,
                                                                  self.request.remote_addr
                                                                 )
             if not captcha_response.is_valid:

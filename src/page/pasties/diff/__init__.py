@@ -18,6 +18,7 @@ import paste.model
 from paste.util import make_filesize_readable
 import paste.web
 import paste.web.ui
+import settings
 import smoid.languages
 
 
@@ -145,7 +146,7 @@ class Diff(paste.web.RequestHandler):
         opaste = self.pastes[paste_index]
         if opaste:
             info["slug"] = opaste.slug
-            info["posted_at"] = opaste.posted_at.strftime(paste.config["datetime.format"])
+            info["posted_at"] = opaste.posted_at.strftime(settings.DATETIME_FORMAT)
             info["u"] = url("%s", opaste.slug)
             info["posted_by"] = opaste.posted_by_user_name
 

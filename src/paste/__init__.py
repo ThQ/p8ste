@@ -10,10 +10,10 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
-import datetime
-import logging
+
 import os
 import urllib
+
 
 def url (format, *args):
     domain = "http://" + os.environ["SERVER_NAME"]
@@ -41,31 +41,3 @@ def url (format, *args):
             out += format[i:i + 1]
         i += 1
     return domain + "/" + out
-
-config = {}
-if os.environ["SERVER_NAME"] == "localhost":
-    config["env"] = "debug"
-    config["pasty_code_line_max_length"] = 100
-    config["pasty_code_max_lines"] = 15
-    config["pasty_expiration_delta"] = datetime.timedelta(minutes=10)
-    config["pasty_form_expiration_delta"] = datetime.timedelta(seconds=60)
-    config["pasty_title_max_length"] = 50
-    config["pasty_tags_max_count"] = 10
-    config["pasty_tags_max_length"] = 150
-    config["user_name_max_length"] = 100
-else:
-    config["env"] = "production"
-    config["pasty_code_line_max_length"] = 500
-    config["pasty_code_max_lines"] = 500
-    config["pasty_expiration_delta"] = datetime.timedelta(days=7)
-    config["pasty_form_expiration_delta"] = datetime.timedelta(minutes=30)
-    config["pasty_title_max_length"] = 50
-    config["pasty_tags_max_count"] = 10
-    config["pasty_tags_max_length"] = 150
-    config["user_name_max_length"] = 100
-
-config["recaptcha::key::public"] = "6LclHgwAAAAAANgHdkrnhFf4GpH94dIAyUF8caht"
-config["pasty_snippet_length"] = 50
-config["default_user_name"] = "John_Doe"
-config["datetime.format"] = "%b, %d %Y - %I:%M%p %z"
-config["datetime.atom"] = "%Y-%m-%dT%H:%M:%SZ"
