@@ -25,7 +25,7 @@ class Thread (paste.web.pastes.PasteListRequestHandler):
     """
 
     def get(self, paste_slug):
-        self.set_module("page.threads.thread.__init__")
+        self.set_module(__name__ + ".__init__")
 
         self.paste_slug = paste_slug
 
@@ -59,11 +59,11 @@ class Thread (paste.web.pastes.PasteListRequestHandler):
         self.content["thread_loc"] = global_loc
         self.content["pastes"] = tpl_pastes
         self.content["paste_count"] = len(self.pastes)
-        self.write_out("page/threads/thread/200.html")
+        self.write_out("./200.html")
 
     def get_404(self):
         self.error(404)
-        self.write_out("page/threads/thread/404.html")
+        self.write_out("./404.html")
 
     def get_pastes (self, paste_slug):
         """
