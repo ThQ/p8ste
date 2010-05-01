@@ -10,30 +10,32 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import cgi
-import paste
-import paste.model
-import paste.util
-import paste.web
-import paste.web.ui
+
+import app
+import app.model
+import app.util
+import app.web
+import app.web.ui
 import settings
 import smoid.languages
 
 
-class Index(paste.web.RequestHandler):
+class Index (app.web.RequestHandler):
     """
     A listing of the pastes.
     """
 
     def __init__(self):
-        paste.web.RequestHandler.__init__(self)
+        app.web.RequestHandler.__init__(self)
         self.set_module(__name__ + ".__init__")
         self.page = 1
         self.pastes_per_page = 10
         self.paste_count = 0
 
     def get(self):
-        self.path.add("Pastes", paste.url("pastes/"))
+        self.path.add("Pastes", app.url("pastes/"))
 
         if self.request.get("page").isdigit() and int(self.request.get("page")) > 1:
             self.page = int(self.request.get("page"))
@@ -46,13 +48,13 @@ class Index(paste.web.RequestHandler):
         if paging.page_count > 1:
             self.content["pages"] = paging.pages
 
-        self.content["u_atom"] = paste.url("pastes.atom")
+        self.content["u_atom"] = app.url("pastes.atom")
         self.content["paste_start"] = ((self.page - 1) * self.pastes_per_page) + 1
         self.content["paste_end"] = self.content["paste_start"] - 1 + len(pastes)
         self.content["paste_count"] = self.paste_count
         self.content["pastes"] = pastes
 
-        self.add_atom_feed(paste.url("pastes.atom"), "Last pastes", "alternate")
+        self.add_atom_feed(app.url("pastes.atom"), "Last pastes", "alternate")
         self.write_out("./200.html")
 
     def get_paste_count (self):
@@ -61,7 +63,7 @@ class Index(paste.web.RequestHandler):
         """
 
         count = 0
-        stats = paste.model.PasteStats.all()
+        stats = app.model.PasteStats.all()
         stats.id = 1
         stat = stats.get()
         if stat != None:
@@ -75,7 +77,7 @@ class Index(paste.web.RequestHandler):
 
         pastes = []
 
-        db = paste.model.Pasty.all()
+        db = app.model.Pasty.all()
         db.order("-posted_at")
         dbpastes = db.fetch(self.pastes_per_page, (self.page - 1) * self.pastes_per_page)
 
@@ -87,7 +89,7 @@ class Index(paste.web.RequestHandler):
                 dpaste["snippet"] = opaste.get_snippet()
 
                 if opaste.user:
-                    dpaste["u_user"] = paste.url("users/%s", opaste.user.id)
+                    dpaste["u_user"] = app.url("users/%s", opaste.user.id)
                 dpaste["user_name"] = opaste.posted_by_user_name
 
                 if opaste.user:
@@ -104,7 +106,7 @@ class Index(paste.web.RequestHandler):
                     dpaste["posted_at"] = ""
 
                 if opaste.characters:
-                    dpaste["size"] = paste.util.make_filesize_readable(opaste.characters)
+                    dpaste["size"] = app.util.make_filesize_readable(opaste.characters)
                 dpaste["lines"] = opaste.lines
                 if opaste.language:
                     dpaste["language"] = opaste.get_language_name()
@@ -119,14 +121,14 @@ class Index(paste.web.RequestHandler):
         Makes the paging UI component.
         """
 
-        paging = paste.web.ui.CursorPaging()
+        paging = app.web.ui.CursorPaging()
         paging.page = self.page
         paging.items = self.paste_count
         paging.page_length = 10
         paging.left_margin = 2
         paging.right_margin = 2
         paging.cursor_margin = 1
-        paging.page_url = paste.url("pastes/?page={page}")
+        paging.page_url = app.url("pastes/?page={page}")
         paging.prepare()
 
         return paging

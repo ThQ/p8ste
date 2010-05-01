@@ -19,24 +19,24 @@ import logging
 import pygments.lexers
 import pygments.formatters
 
-import paste
-import paste.form
-import paste.model
-import paste.pasty
-import paste.syhili
-import paste.tag
-import paste.web
+import app
+import app.form
+import app.model
+import app.pasty
+import app.syhili
+import app.tag
+import app.web
 import recaptcha.client.captcha
 import settings
 import smoid
 
-paste.form.make_token()
+app.form.make_token()
 
-class Add (paste.web.RequestHandler):
+class Add (app.web.RequestHandler):
 
     def __init__ (self):
-        paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pastes.add.__init__")
+        app.web.RequestHandler.__init__(self)
+        self.set_module(__name__ + ".__init__")
         self.form_code = ""
         self.form_title = ""
         self.form_tags = ""
@@ -48,7 +48,7 @@ class Add (paste.web.RequestHandler):
         self.parent_paste_slug = ""
 
     def delete_old_forms (self):
-        qforms = paste.model.Form.all()
+        qforms = app.model.Form.all()
         qforms.filter("expired_at <", datetime.datetime.now())
         forms = qforms.fetch(10)
         for form in forms:
@@ -80,22 +80,22 @@ class Add (paste.web.RequestHandler):
             self.parent_slug = self.form_parent_slug
 
         if self.parent_slug != "":
-            pasties = paste.model.Pasty.all()
+            pasties = app.model.Pasty.all()
             pasties.filter("slug =", self.parent_slug)
             parent = pasties.get()
 
         return parent
 
     def increment_paste_counter (self):
-        stats = paste.model.PasteStats.all()
+        stats = app.model.PasteStats.all()
         stats.id = 1
         stat = stats.get()
         if stat != None:
-            dbnew = paste.model.PasteStats(key_name=stat.key().name())
+            dbnew = app.model.PasteStats(key_name=stat.key().name())
             dbnew.paste_count = stat.paste_count + 1
             dbnew.put()
         else:
-            dbnew = paste.model.PasteStats(key_name="c1")
+            dbnew = app.model.PasteStats(key_name="c1")
             dbnew.paste_count = 1
             dbnew.put()
 
@@ -113,7 +113,7 @@ class Add (paste.web.RequestHandler):
             # Going up, from parent to parent
             parent_slug = self.parent_paste.slug
             while parent_slug != "":
-                pastes = paste.model.Pasty.all()
+                pastes = app.model.Pasty.all()
                 pastes.filter("slug =", parent_slug)
                 fork = pastes.get()
                 if fork:
@@ -130,12 +130,12 @@ class Add (paste.web.RequestHandler):
 
         if self.parent_paste:
             self.content["is_fork"] = True
-            self.content["u_parent_paste"] = paste.url("%s", self.parent_paste.slug)
+            self.content["u_parent_paste"] = app.url("%s", self.parent_paste.slug)
             self.content["pasty_parent_slug"] = self.parent_paste.slug
 
-            self.path.add("Pastes", paste.url("pastes/"))
-            self.path.add(self.parent_paste.title, paste.url("%s", self.parent_paste.slug))
-            self.path.add("Fork", paste.url("%s/fork", self.parent_paste_slug))
+            self.path.add("Pastes", app.url("pastes/"))
+            self.path.add(self.parent_paste.title, app.url("%s", self.parent_paste.slug))
+            self.path.add("Fork", app.url("%s/fork", self.parent_paste_slug))
 
         if not self.parent_paste or self.parent_paste.is_forkable():
             if self.form_token == "":
@@ -154,7 +154,7 @@ class Add (paste.web.RequestHandler):
         if not self.user.is_logged_in_google:
             self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)
 
-        self.content["pasty_token"] = paste.form.put_form_token(self.request.remote_addr)
+        self.content["pasty_token"] = app.form.put_form_token(self.request.remote_addr)
 
         if self.parent_paste != None:
             self.content["pasty_code"] = cgi.escape(self.parent_paste.code)
@@ -162,11 +162,11 @@ class Add (paste.web.RequestHandler):
             if self.parent_paste.forks >= 1:
                 self.content["pasty_title"] += str(self.parent_paste.forks + 1)
             self.content["pasty_title"] += ": " + cgi.escape(self.parent_paste.title)
-            self.content["u_parent"] = paste.url("%s", self.parent_paste.slug)
+            self.content["u_parent"] = app.url("%s", self.parent_paste.slug)
             self.content["parent_slug"] = self.parent_paste.slug
-            self.content["u_form"] = paste.url("%s/fork", self.parent_paste.slug)
+            self.content["u_form"] = app.url("%s/fork", self.parent_paste.slug)
         else:
-            self.content["u_form"] = paste.url("")
+            self.content["u_form"] = app.url("")
 
         if self.request.get("code") != "":
             self.content["pasty_code"] = cgi.escape(self.request.get("code"))
@@ -179,7 +179,7 @@ class Add (paste.web.RequestHandler):
         self.delete_old_forms()
 
     def move_all_same_level_forks_down (self):
-        qry = paste.model.Pasty.all()
+        qry = app.model.Pasty.all()
         qry.filter("thread =", self.parent_paste.thread)
         qry.filter("thread_position >", self.parent_paste.thread_position + self.parent_paste.indirect_forks)
         forks = qry.fetch(1000)
@@ -190,7 +190,7 @@ class Add (paste.web.RequestHandler):
                 fork.put()
 
     def on_form_sent (self):
-        slug = paste.pasty.make_unique_slug(8)
+        slug = app.pasty.make_unique_slug(8)
 
         self.content["pasty_code"] = self.form_code
         self.content["pasty_tags"] = self.form_tags
@@ -198,7 +198,7 @@ class Add (paste.web.RequestHandler):
         self.content["pasty_token"] = self.form_token
         self.content["pasty_slug"] = cgi.escape(slug)
         if self.parent_paste:
-            self.content["u_diff"] = paste.url("%s/diff/%s", self.parent_paste.slug, slug)
+            self.content["u_diff"] = app.url("%s/diff/%s", self.parent_paste.slug, slug)
 
         if self.validate_form():
             self.put_paste(slug)
@@ -214,12 +214,12 @@ class Add (paste.web.RequestHandler):
 
             self.content["is_private"] = self.paste.is_private()
             self.content["u_pasty_encoded"] = cgi.escape(self.content["u_pasty"])
-            self.content["u_fork"] = paste.url("%s/fork", slug)
-            self.content["u_add"] = paste.url("")
+            self.content["u_fork"] = app.url("%s/fork", slug)
+            self.content["u_add"] = app.url("")
 
             self.write_out("./added.html")
 
-            paste.form.delete_token(self.form_token, self.request.remote_addr)
+            app.form.delete_token(self.form_token, self.request.remote_addr)
         else:
             self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)
             self.display_form()
@@ -231,7 +231,7 @@ class Add (paste.web.RequestHandler):
             if "lexer" in smoid.languages.languages[language]:
                 lexer_name = smoid.languages.languages[language]["lexer"]
                 lexer = pygments.lexers.get_lexer_by_name(lexer_name)
-                formatter = paste.syhili.HtmlFormatter(linenos=True, cssclass="code")
+                formatter = app.syhili.HtmlFormatter(linenos=True, cssclass="code")
                 if lexer and formatter:
                     result = pygments.highlight(code, lexer, formatter)
 
@@ -248,7 +248,7 @@ class Add (paste.web.RequestHandler):
         """
         Puts a log entry to the datastore.
         """
-        log = paste.model.Log()
+        log = app.model.Log()
         log.user = db_paste.user
 
         if db_paste.slug == db_paste.thread:
@@ -270,7 +270,7 @@ class Add (paste.web.RequestHandler):
 
         is_reply = self.form_parent_slug != ""
 
-        self.paste = paste.model.Pasty()
+        self.paste = app.model.Pasty()
         paste_is_private = self.request.get("submit") == "privately"
 
         self.paste.characters = len(self.form_code)
@@ -287,15 +287,15 @@ class Add (paste.web.RequestHandler):
         self.paste.posted_by_ip = self.request.remote_addr
         self.paste.replies = 0
         self.paste.slug = slug
-        self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, settings.PASTE_SNIPPET_MAX_LENGTH)
+        self.paste.snippet = app.model.Pasty.make_snippet(self.paste.code, settings.PASTE_SNIPPET_MAX_LENGTH)
 
         if not is_reply and paste_is_private:
-            self.paste.status = paste.model.kPASTE_STATUS_PRIVATE
-            self.paste.secret_key = paste.model.Pasty.make_secret_key()
+            self.paste.status = app.model.kPASTE_STATUS_PRIVATE
+            self.paste.secret_key = app.model.Pasty.make_secret_key()
         else:
-            self.paste.status = paste.model.kPASTE_STATUS_PUBLIC
+            self.paste.status = app.model.kPASTE_STATUS_PUBLIC
             self.paste.secret_key = ""
-        self.paste.title = paste.pasty.filter_title(self.form_title, slug)
+        self.paste.title = app.pasty.filter_title(self.form_title, slug)
         self.paste.user = self.user.db_user
 
         if self.user.is_logged_in:
@@ -323,7 +323,7 @@ class Add (paste.web.RequestHandler):
         result = pasty_key != None
 
         if result == True:
-            dbPaste = paste.model.Pasty.get(pasty_key)
+            dbPaste = app.model.Pasty.get(pasty_key)
             # If the paste is not a reply, then it's starting its own thread.
             if not is_reply:
                 if dbPaste != None:
@@ -357,9 +357,9 @@ class Add (paste.web.RequestHandler):
                 self.content["pasty_captcha_error"] = "Please try again."
                 result = False
 
-        if result == True and not paste.form.has_valid_token(self.request.remote_addr, token):
+        if result == True and not app.form.has_valid_token(self.request.remote_addr, token):
             if token != "":
-                self.content["pasty_error"] = "<strong>Your form has expired</strong>, you probably took too much time to fill it. <a href=\"" + paste.url("") + "\"><strong>Refresh this page</strong></a>."
+                self.content["pasty_error"] = "<strong>Your form has expired</strong>, you probably took too much time to fill it. <a href=\"" + app.url("") + "\"><strong>Refresh this page</strong></a>."
             result = False
 
         if result == True and len(code) == 0:

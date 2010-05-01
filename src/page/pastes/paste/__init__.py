@@ -15,21 +15,21 @@ import cgi
 import datetime
 import logging
 
-import smoid.languages
-import paste
-import paste.lang
-import paste.model
-import paste.util
-import paste.web
+import app
+import app.lang
+import app.model
+import app.util
+import app.web
 import settings
+import smoid.languages
 
 
-class Paste (paste.web.RequestHandler):
+class Paste (app.web.RequestHandler):
 
     def __init__ (self):
-        paste.web.RequestHandler.__init__(self)
+        app.web.RequestHandler.__init__(self)
         self.set_module(__name__ + ".__init__")
-        self.use_style(paste.url("style/code.css"))
+        self.use_style(app.url("style/code.css"))
         self.highlights = set([])
         self.has_edited_lines = False
         self.has_highlights = False
@@ -37,7 +37,7 @@ class Paste (paste.web.RequestHandler):
         self.lines = []
         self.line_count = 0
         self.parent = None
-        self.path.add("Pastes", paste.url("pastes/"))
+        self.path.add("Pastes", app.url("pastes/"))
 
     def update_highlights (self, hl_string):
         line_max = self.line_count + 1
@@ -131,7 +131,7 @@ class Paste (paste.web.RequestHandler):
         return result
 
     def get(self, pasty_slug):
-        pasties = paste.model.Pasty.all()
+        pasties = app.model.Pasty.all()
         pasties.filter("slug =", pasty_slug)
         self.pasty = pasties.get()
         self.pasty_slug = pasty_slug
@@ -176,15 +176,6 @@ class Paste (paste.web.RequestHandler):
         else:
             (lines, code) = self.format_simple_code()
 
-
-        if self.pasty.language != "":
-            lang = paste.lang.get_by_tag(self.pasty.language)
-            if lang != None:
-                self.content["language"] = lang.name
-                self.content["u_language"] = lang.url
-
-        tc = paste.tag.TagCollection()
-        tc.import_string(self.pasty.tags)
         if self.pasty.parent_paste or self.pasty.forks > 0:
             thread_pastes = self.get_thread_pastes()
         else:
@@ -193,13 +184,13 @@ class Paste (paste.web.RequestHandler):
         tpl_paste = {}
         tpl_paste["u"] = self.pasty.get_url()
         tpl_paste["u_fork"] = self.pasty.get_fork_url()
-        tpl_paste["u_raw_text"] = paste.url("%s.txt", self.pasty_slug)
-        tpl_paste["u_atom"] = paste.url("%s.atom", self.pasty_slug)
+        tpl_paste["u_raw_text"] = app.url("%s.txt", self.pasty_slug)
+        tpl_paste["u_atom"] = app.url("%s.atom", self.pasty_slug)
         tpl_paste["slug"] = self.pasty.slug
         tpl_paste["loc"] = self.pasty.lines
         tpl_paste["lines"] = lines
         tpl_paste["code"] = code
-        tpl_paste["size"] = paste.util.make_filesize_readable(self.pasty.characters)
+        tpl_paste["size"] = app.util.make_filesize_readable(self.pasty.characters)
         tpl_paste["pasted_at"] = self.pasty.posted_at.strftime(settings.DATETIME_FORMAT)
         tpl_paste["is_moderated"] = self.pasty.is_moderated()
         tpl_paste["is_private"] = self.pasty.is_private()
@@ -217,9 +208,9 @@ class Paste (paste.web.RequestHandler):
         self.content["paste"] = tpl_paste
         self.content["is_thread"] = len(thread_pastes) > 1
         self.content["thread_paste_count"] = len(thread_pastes)
-        self.content["u_thread_atom"] = paste.url("threads/%s.atom", self.pasty.thread)
-        self.content["u_thread"] = paste.url("threads/%s", self.pasty.thread)
-        self.content["u_remote_diff"] = paste.url("%s/diff", self.pasty.slug)
+        self.content["u_thread_atom"] = app.url("threads/%s.atom", self.pasty.thread)
+        self.content["u_thread"] = app.url("threads/%s", self.pasty.thread)
+        self.content["u_remote_diff"] = app.url("%s/diff", self.pasty.slug)
         if self.content["is_thread"] == True:
             self.content["thread_pastes"] = thread_pastes
         self.content["h1"] = "p" + self.pasty_slug
@@ -233,7 +224,7 @@ class Paste (paste.web.RequestHandler):
         self.content["is_diffable"] = self.pasty.is_diffable()
         self.content["user_name"] = self.pasty.posted_by_user_name
         if self.pasty.user:
-            self.content["u_user"] = paste.url("users/%s", self.pasty.user.id)
+            self.content["u_user"] = app.url("users/%s", self.pasty.user.id)
             self.content["u_gravatar"] = self.pasty.user.get_gravatar(48)
 
         self.content["posted_at"] = self.pasty.posted_at.strftime("%b, %d %Y at %H:%M")
@@ -241,7 +232,7 @@ class Paste (paste.web.RequestHandler):
             lang = smoid.languages.languages[self.pasty.language]
             self.content["pasty_language_url"] = lang["home_url"]
 
-        self.add_atom_feed(paste.url("%s.atom", self.pasty_slug), self.pasty_slug + " (Atom feed)", "alternate")
+        self.add_atom_feed(app.url("%s.atom", self.pasty_slug), self.pasty_slug + " (Atom feed)", "alternate")
         self.write_out("./200.html")
 
         #self.update_expiration_time()
@@ -250,17 +241,17 @@ class Paste (paste.web.RequestHandler):
         self.path.add("Paste not found")
         self.error(404)
         self.content["pasty_slug"] = cgi.escape(self.pasty_slug)
-        self.content["u_paste"] = paste.url("")
-        self.content["u_pastes"] = paste.url("pastes/")
+        self.content["u_paste"] = app.url("")
+        self.content["u_pastes"] = app.url("pastes/")
         self.write_out("./404.html")
 
     def get_parent_paste(self):
         if self.pasty != None and self.pasty.parent_paste != "":
-            qparent = paste.model.Pasty.all()
+            qparent = app.model.Pasty.all()
             qparent.filter("slug =", self.pasty.parent_paste)
             self.parent = qparent.get()
             if self.parent != None:
-                self.content["u_parent"] = paste.url("%s", self.parent.slug)
+                self.content["u_parent"] = app.url("%s", self.parent.slug)
                 self.content["parent_title"] = cgi.escape(self.parent.title)
 
             # Datastore is not up to date, removing <parent_paste> slug
@@ -274,7 +265,7 @@ class Paste (paste.web.RequestHandler):
         default_loc = self.pasty.lines
 
         pastes = []
-        dbqry = paste.model.Pasty.all()
+        dbqry = app.model.Pasty.all()
         dbqry.filter("thread =", self.pasty.thread)
         dbqry.order("thread_position")
         dbpastes = dbqry.fetch(1000)
@@ -289,18 +280,18 @@ class Paste (paste.web.RequestHandler):
             lpaste["slug"] = dbpaste.slug
             lpaste["user_name"] = dbpaste.posted_by_user_name
             lpaste["is_moderated"] = dbpaste.is_moderated
-            lpaste["u"] = paste.url("%s", dbpaste.slug)
-            lpaste["u_diff"] = paste.url("%s/diff/%s", self.pasty.slug, dbpaste.slug)
+            lpaste["u"] = dbpaste.get_url()
+            lpaste["u_diff"] = app.url("%s/diff/%s", self.pasty.slug, dbpaste.slug)
             lpaste["ident"] = ("&nbsp;&nbsp;&nbsp;&nbsp;" * dbpaste.thread_level)
 
             lpaste["language_name"] = dbpaste.get_language_name()
             lpaste["u_language_image"] = dbpaste.get_icon_url()
 
             if dbpaste.characters > default_chars:
-                lpaste["diff_size"] = paste.util.make_filesize_readable(dbpaste.characters - default_chars)
+                lpaste["diff_size"] = app.util.make_filesize_readable(dbpaste.characters - default_chars)
                 lpaste["diff_size"].append("+")
             else:
-                lpaste["diff_size"] = paste.util.make_filesize_readable(default_chars - dbpaste.characters)
+                lpaste["diff_size"] = app.util.make_filesize_readable(default_chars - dbpaste.characters)
                 lpaste["diff_size"].append("-")
 
             if dbpaste.lines > default_loc:

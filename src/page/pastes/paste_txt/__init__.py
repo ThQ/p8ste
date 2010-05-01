@@ -13,15 +13,15 @@
 
 import cgi
 
-import paste.model
-import paste.web
+import app.model
+import app.web
 
 
-class PasteTxt(paste.web.RequestHandler):
+class PasteTxt (app.web.RequestHandler):
 
-    def get(self, pasty_slug):
+    def get (self, pasty_slug):
         self.set_module(__name__ + ".__init__")
-        pasties = paste.model.Pasty.all()
+        pasties = app.model.Pasty.all()
         pasties.filter("slug =", pasty_slug)
 
         self.pasty = pasties.get()
@@ -32,11 +32,11 @@ class PasteTxt(paste.web.RequestHandler):
         else:
             self.get_200()
 
-    def get_200(self):
+    def get_200 (self):
         self.content["content"] = self.pasty.get_code()
         self.set_header("Content-Type", "text/plain")
         self.write_out("./200.tpl")
 
-    def get_404(self):
+    def get_404 (self):
         self.write_out("page/txt.tpl")
         self.error(404)

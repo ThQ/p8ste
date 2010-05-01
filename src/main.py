@@ -22,9 +22,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-import settings
-
-import paste
+import app
 import page.about.features
 import page.about.index
 import page.about.thanks
@@ -48,14 +46,16 @@ import page.users.signin
 import page.users.signup
 import page.users.signout
 import page.users.user
+import settings
+
 
 template.register_template_library('common.url')
 
 # Datastore query logging
 if settings.ENV == "debug":
-    import paste.appengine.hook
-    paste.appengine.hook.datastore_logs = []
-    apiproxy_stub_map.apiproxy.GetPreCallHooks().Append('db_log', paste.appengine.hook.hook_datastore, 'datastore_v3')
+    import app.appengine.hook
+    app.appengine.hook.datastore_logs = []
+    apiproxy_stub_map.apiproxy.GetPreCallHooks().Append('db_log', app.appengine.hook.hook_datastore, 'datastore_v3')
 
 re_paste = "P[a-zA-Z0-9_-]+"
 re_user = "[a-zA-Z0-9_-]+"

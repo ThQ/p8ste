@@ -15,23 +15,23 @@ import cgi
 import datetime
 from google.appengine.api import users
 
-import paste.model
-import paste.web
+import app.model
+import app.web
 
 
-class SignUp (paste.web.RequestHandler):
+class SignUp (app.web.RequestHandler):
 
     def get (self):
         self.set_module("page.users.signup.__init__")
 
-        self.content["u_signup"] = paste.url("sign-up")
+        self.content["u_signup"] = app.url("sign-up")
 
         if self.user.is_logged_in:
             self.write_out("page/users/signup/already_logged_in.html")
         else:
             if not self.user.is_logged_in_google or self.request.get("user_id") == "":
                 self.content["google_email"] = self.user.google_email
-                self.content["u_google_login"] = users.create_login_url(paste.url("sign-up"))
+                self.content["u_google_login"] = users.create_login_url(app.url("sign-up"))
                 self.get_form()
             else:
                 self.get_form_sent()
@@ -47,7 +47,7 @@ class SignUp (paste.web.RequestHandler):
         self.get()
 
     def put_user (self):
-        db_user = paste.model.User()
+        db_user = app.model.User()
         db_user.id = self.request.get("user_id")
         db_user.google_id = self.user.google_id
         db_user.email = self.user.google_email

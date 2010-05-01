@@ -14,24 +14,24 @@
 import cgi
 import difflib
 
-from paste import url
-import paste.model
-from paste.util import make_filesize_readable
-import paste.web
-import paste.web.ui
+import app
+import app.model
+import app.util
+import app.web
+import app.web.ui
 import settings
 import smoid.languages
 
 
-class Diff(paste.web.RequestHandler):
+class Diff (app.web.RequestHandler):
     """
     Shows a diff of two pastes (maybe more in the future ?)
     """
 
     def __init__ (self):
-        paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pastes.diff.__init__")
-        self.use_style(paste.url("style/code.css"))
+        app.web.RequestHandler.__init__(self)
+        self.set_module(__name__ + ".__init__")
+        self.use_style(app.url("style/code.css"))
         self.paste1_slug = ""
         self.paste1 = None
         self.paste2_slug = ""
@@ -68,8 +68,8 @@ class Diff(paste.web.RequestHandler):
         Shows the diff if all the pastes submitted are found.
         """
 
-        self.content["u_list"] = paste.url(self.paste_slugs[0] + "+" + self.paste_slugs[1])
-        self.content["u_reverse"] = paste.url(self.paste_slugs[1] + "/diff/" + self.paste_slugs[0])
+        self.content["u_list"] = app.url(self.paste_slugs[0] + "+" + self.paste_slugs[1])
+        self.content["u_reverse"] = app.url(self.paste_slugs[1] + "/diff/" + self.paste_slugs[0])
         tpl_pastes = [self.get_template_info_for_paste(0), self.get_template_info_for_paste(1)]
         self.content["pastes"] = tpl_pastes
         self.content["diff"] = self.get_diff()
@@ -84,11 +84,11 @@ class Diff(paste.web.RequestHandler):
         self.content["error"] = {}
         self.content["error"]["pastes_not_found"] = []
         self.content["error"]["pastes_found"] = []
-        self.content["u_pastes"] = paste.url("pastes/")
+        self.content["u_pastes"] = app.url("pastes/")
         i = 0
         for opaste in self.pastes:
            tpl_paste = {}
-           tpl_paste["u"] = paste.url("%s", self.paste_slugs[i])
+           tpl_paste["u"] = app.url("%s", self.paste_slugs[i])
            tpl_paste["slug"] = self.paste_slugs[i]
            if opaste == None:
                self.content["error"]["pastes_not_found"].append(tpl_paste)
@@ -135,7 +135,7 @@ class Diff(paste.web.RequestHandler):
         Retrieves a paste from the datastore given its slug.
         """
 
-        qry_paste = paste.model.Pasty.all()
+        qry_paste = app.model.Pasty.all()
         qry_paste.filter("slug =", slug)
 
         return qry_paste.get()
@@ -151,15 +151,14 @@ class Diff(paste.web.RequestHandler):
         if opaste:
             info["slug"] = opaste.slug
             info["posted_at"] = opaste.posted_at.strftime(settings.DATETIME_FORMAT)
-            info["u"] = url("%s", opaste.slug)
+            info["u"] = app.url("%s", opaste.slug)
             info["posted_by"] = opaste.posted_by_user_name
 
-            if opaste.language in smoid.languages.languages:
-                info["language"] = smoid.languages.languages[opaste.language]["name"]
-                info["u_language_icon"] = smoid.languages.languages[opaste.language]["u_icon"]
+            info["language"] = opaste.get_language_name()
+            info["u_language_icon"] = opaste.get_icon_url()
 
             if opaste.characters:
-                info["size"] = make_filesize_readable(opaste.characters)
+                info["size"] = app.util.make_filesize_readable(opaste.characters)
 
             if opaste.lines:
                 info["loc"] = opaste.lines

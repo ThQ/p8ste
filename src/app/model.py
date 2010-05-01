@@ -14,7 +14,7 @@
 from google.appengine.ext import db
 import random
 
-import paste
+import app
 import smoid.languages
 
 
@@ -125,22 +125,22 @@ class Pasty (db.Model):
         return code
 
     def get_fork_url (self):
-        return paste.url("%s/fork", self.slug)
+        return app.url("%s/fork", self.slug)
 
     def get_icon_url (self):
         url = ""
 
         if self.status == kPASTE_STATUS_PRIVATE:
-            url = paste.url("images/silk/lock.png")
+            url = app.url("images/silk/lock.png")
         elif self.status == kPASTE_STATUS_MODERATED:
-            url = paste.url("images/silk/flag_red.png")
+            url = app.url("images/silk/flag_red.png")
         elif self.status == kPASTE_STATUS_WAITING_FOR_APPROVAL:
-            url = paste.url("images/silk/hourglass.png")
+            url = app.url("images/silk/hourglass.png")
         elif self.status == kPASTE_STATUS_PUBLIC:
             if self.language and smoid.languages.languages.has_key(self.language):
-                url = paste.url("images/languages/" + self.language + ".png")
+                url = app.url("images/languages/" + self.language + ".png")
             else:
-                url = paste.url("images/silk/page_white_text.png")
+                url = app.url("images/silk/page_white_text.png")
         return url
 
     def get_language_name (self):
@@ -160,7 +160,7 @@ class Pasty (db.Model):
         return url
 
     def get_private_url (self):
-        return paste.url("%s?key=%s", self.slug, self.secret_key)
+        return app.url("%s?key=%s", self.slug, self.secret_key)
 
     def get_title (self):
         """
@@ -185,7 +185,7 @@ class Pasty (db.Model):
         return snippet
 
     def get_url (self):
-        return paste.url("%s", self.slug)
+        return app.url("%s", self.slug)
 
     def is_code_viewable (self):
         return self.status == kPASTE_STATUS_PUBLIC

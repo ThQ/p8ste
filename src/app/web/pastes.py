@@ -1,14 +1,14 @@
-import paste
-import paste.model
-import paste.util
-import paste.web
+import app
+import app.model
+import app.util
+import app.web
 import settings
 import smoid.languages
 
-class PasteRequestHandler (paste.web.RequestHandler):
+class PasteRequestHandler (app.web.RequestHandler):
 
     def get_paste (self, pasty_slug):
-        qry_pastes = paste.model.Pasty.all()
+        qry_pastes = app.model.Pasty.all()
         qry_pastes.filter("slug =", pasty_slug)
         return qry_pastes.get()
 
@@ -23,8 +23,8 @@ class PasteListRequestHandler (PasteRequestHandler):
             tpl_paste["slug"] = o_paste.slug
             tpl_paste["u"] = o_paste.get_url()
             tpl_paste["u_fork"] = o_paste.get_fork_url()
-            tpl_paste["u_atom"] = paste.url("%s.atom", o_paste.slug)
-            tpl_paste["u_raw_text"] = paste.url("%s.txt", o_paste.slug)
+            tpl_paste["u_atom"] = app.url("%s.atom", o_paste.slug)
+            tpl_paste["u_raw_text"] = app.url("%s.txt", o_paste.slug)
             tpl_paste["snippet"] = o_paste.snippet
             tpl_paste["is_moderated"] = o_paste.is_moderated()
             tpl_paste["is_private"] = o_paste.is_private()
@@ -32,7 +32,7 @@ class PasteListRequestHandler (PasteRequestHandler):
             tpl_paste["is_awaiting_approval"] = o_paste.is_waiting_for_approval()
             tpl_paste["is_code_viewable"] = o_paste.is_code_viewable()
             if o_paste.user:
-                tpl_paste["u_user"] = paste.url("users/%s", o_paste.user.id)
+                tpl_paste["u_user"] = app.url("users/%s", o_paste.user.id)
             tpl_paste["user_name"] = o_paste.posted_by_user_name
 
             if o_paste.user:
@@ -50,7 +50,7 @@ class PasteListRequestHandler (PasteRequestHandler):
                 tpl_paste["posted_at"] = ""
 
             if o_paste.characters:
-                tpl_paste["size"] = paste.util.make_filesize_readable(o_paste.characters)
+                tpl_paste["size"] = app.util.make_filesize_readable(o_paste.characters)
             tpl_paste["loc"] = o_paste.lines
 
             tpl_paste["language"] = {}

@@ -14,14 +14,13 @@
 import cgi
 from google.appengine.api import users
 
-import paste.model
-import paste.web
+import app.model
+import app.web
 
 
-class SignIn(paste.web.RequestHandler):
+class SignIn (app.web.RequestHandler):
 
-    def get(self):
-        redirect_url = self.request.get("url", paste.url(""))
+    def get (self):
+        redirect_url = self.request.get("url", app.url(""))
         signin_url = users.create_login_url(redirect_url)
         self.redirect(signin_url)
-

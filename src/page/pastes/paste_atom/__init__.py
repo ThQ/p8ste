@@ -14,18 +14,18 @@
 import datetime
 import cgi
 
-import paste.model
-import paste.web
+import app.model
+import app.web
 
 
-class PasteAtom(paste.web.RequestHandler):
+class PasteAtom (app.web.RequestHandler):
     """
     Displays an atom feed representing the current paste.
     """
 
     def get(self, pasty_slug):
         self.set_module(__name__ + ".__init__")
-        pasties = paste.model.Pasty.all()
+        pasties = app.model.Pasty.all()
         pasties.filter("slug =", pasty_slug)
 
         self.pasty = pasties.get()
@@ -40,8 +40,8 @@ class PasteAtom(paste.web.RequestHandler):
         self.content["paste_title"] = self.pasty.get_title()
         self.content["paste_code"] = self.pasty.get_code()
 
-        self.content["u_paste"] = paste.url("%s", self.pasty.slug)
-        self.content["u_paste_self"] = paste.url("%s.atom", self.pasty.slug)
+        self.content["u_paste"] = app.url("%s", self.pasty.slug)
+        self.content["u_paste_self"] = app.url("%s.atom", self.pasty.slug)
         self.content["paste_username"] = self.pasty.posted_by_user_name
         self.content["paste_posted_at"] = self.pasty.posted_at.strftime("%Y-%m-%dT%H:%M:%SZ")
 

@@ -12,14 +12,15 @@
 import cgi
 
 import smoid.languages
-import paste.model
-import paste.web
+import app.model
+import app.web
 
 
-class Index (paste.web.RequestHandler):
+class Index (app.web.RequestHandler):
 
     def get (self):
-        self.path.add("About", paste.url("about"))
+        self.set_module(__name__ + ".__init__")
 
-        self.set_module("page.about.index.__init__")
-        self.write_out("page/about/index/200.html")
+        self.path.add("About", app.url("about"))
+
+        self.write_out("./200.html")

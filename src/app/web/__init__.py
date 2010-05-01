@@ -16,9 +16,9 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 import os
 
-import paste
-import paste.appengine.hook
-import paste.user
+import app
+import app.appengine.hook
+import app.user
 import settings
 
 
@@ -31,8 +31,8 @@ class Path:
 
 class RequestHandler (webapp.RequestHandler):
     def __init__(self):
-        import paste.appengine.hook
-        paste.appengine.hook.datastore_logs = []
+        import app.appengine.hook
+        app.appengine.hook.datastore_logs = []
 
         webapp.RequestHandler.__init__(self)
         self.path = Path()
@@ -43,7 +43,7 @@ class RequestHandler (webapp.RequestHandler):
         self.scripts = []
         self.feeds = []
         self.styles = []
-        self.user = paste.user.User()
+        self.user = app.user.User()
 
     def add_atom_feed (self, url, title, rel):
         self.add_feed (url, "application/atom+xml", title, rel)
@@ -84,13 +84,13 @@ class RequestHandler (webapp.RequestHandler):
         self.content["feeds"] = self.feeds
         self.content["styles"] = self.styles
         self.content["module"] = self.module
-        self.content["u_home"] = paste.url("")
-        self.content["u_pastes"] = paste.url("pastes/")
+        self.content["u_home"] = app.url("")
+        self.content["u_pastes"] = app.url("pastes/")
         self.content["u_module"] = self.module_url
-        self.content["u_about_thanks"] = paste.url("about/thanks")
-        self.content["u_about_features"] = paste.url("about/features")
+        self.content["u_about_thanks"] = app.url("about/thanks")
+        self.content["u_about_features"] = app.url("about/features")
         self.content["u_module_history"] = self.module_history_url
-        self.content["u_blank_image"] = paste.url("images/blank.gif")
+        self.content["u_blank_image"] = app.url("images/blank.gif")
         self.content["path__"] = self.path.path
         if "user-agent" in self.request.headers:
             self.content["bad_browser__"] = self.request.headers["user-agent"].find("MSIE") != -1
@@ -105,15 +105,15 @@ class RequestHandler (webapp.RequestHandler):
             self.content['user_signed_in__'] = False
 
         self.content["user_logged_in_google__"] = self.user.is_logged_in_google
-        self.content["u_user_signup__"] = paste.url("sign-up?url=%s", self.request.url)
+        self.content["u_user_signup__"] = app.url("sign-up?url=%s", self.request.url)
 
         if self.user.is_logged_in_google:
-            self.content['u_user_logout__'] = paste.url("sign-out?url=%s", self.request.url)
+            self.content['u_user_logout__'] = app.url("sign-out?url=%s", self.request.url)
         else:
-            self.content['u_user_login__'] = paste.url("sign-in?url=%s", self.request.url)
+            self.content['u_user_login__'] = app.url("sign-in?url=%s", self.request.url)
 
         if settings.ENV == "debug":
-            self.content["datastore_logs"] = paste.appengine.hook.datastore_logs
+            self.content["datastore_logs"] = app.appengine.hook.datastore_logs
 
         tpl_path = ""
         if self.template_name.startswith("./"):
@@ -128,6 +128,6 @@ class RequestHandler (webapp.RequestHandler):
 class UserRequestHandler (RequestHandler):
 
     def get_user (self, user_id):
-        qry_user = paste.model.User.all()
+        qry_user = app.model.User.all()
         qry_user.filter("id =", user_id)
         return qry_user.get()

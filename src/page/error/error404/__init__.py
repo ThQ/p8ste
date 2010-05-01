@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright 2008 Thomas Quemard
 #
 # Paste-It is free software; you can redistribute it and/or modify it
@@ -11,21 +10,24 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
-import cgi
-import os
-import paste
-import paste.web
 
-class Error404(paste.web.RequestHandler):
-    def get(self):
-        self.set_module("page.error.error404")
+import cgi
+
+import app
+import app.web
+
+
+class Error404 (app.web.RequestHandler):
+
+    def get (self):
+        self.set_module(__name__ + "__init__")
         self.content["http_query"] = self.request.path
         if self.request.query != "":
             self.content["http_query"] = self.content["http_query"] + self.request.query
-        self.content["http_query"] = cgi.escape(self.content["http_query"])
-        self.content["u_paste"] = paste.url("")
-        self.content["u_pastes"] = paste.url("pastes/")
+        self.content["http_query"] = self.content["http_query"]
+        self.content["u_paste"] = app.url("")
+        self.content["u_pastes"] = app.url("pastes/")
 
         self.error(404)
-        self.use_template("page/error/error404/page.html")
+        self.use_template("./page.html")
         self.write_out()

@@ -10,22 +10,22 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import calendar
 import copy
 import datetime
 
-
-import paste
-import paste.lang
-import paste.model
-import paste.util
-import paste.web.pastes
+import app
+import app.model
+import app.util
+import app.web.pastes
 import settings
 
-class Recount (paste.web.pastes.PasteRequestHandler):
+
+class Recount (app.web.pastes.PasteRequestHandler):
 
     def __init__ (self):
-        paste.web.pastes.PasteRequestHandler.__init__(self)
+        app.web.pastes.PasteRequestHandler.__init__(self)
 
         self.paste = None
 
@@ -34,8 +34,8 @@ class Recount (paste.web.pastes.PasteRequestHandler):
     def get (self, paste_slug):
         self.paste = self.get_paste(paste_slug)
 
-        self.content["u_pastes"] = paste.url("pastes/")
-        self.content["u_paste"] = paste.url("%s", paste_slug)
+        self.content["u_pastes"] = app.url("pastes/")
+        self.content["u_paste"] = app.url("%s", paste_slug)
         self.content["paste_slug"] = paste_slug
 
         if self.paste:
@@ -103,7 +103,7 @@ class Recount (paste.web.pastes.PasteRequestHandler):
 
     def update_hour (self):
         while True:
-            qry_pastes = paste.model.Pasty.all()
+            qry_pastes = app.model.Pasty.all()
             qry_pastes.filter("posted_at >", self.hour_start)
             qry_pastes.order("posted_at")
             db_pastes = qry_pastes.fetch(20)
@@ -124,12 +124,12 @@ class Recount (paste.web.pastes.PasteRequestHandler):
         hour_path += "/" + str(self.hour_start.day)
         hour_path += "." + str(self.hour_start.hour)
 
-        qry_hour = paste.model.PasteCount.all()
+        qry_hour = app.model.PasteCount.all()
         qry_hour.filter("path =", hour_path)
         hour = qry_hour.get()
 
         if not hour:
-            hour = paste.model.PasteCount()
+            hour = app.model.PasteCount()
             hour.path = hour_path
 
         hour.last_checked = datetime.datetime.now()
@@ -144,7 +144,7 @@ class Recount (paste.web.pastes.PasteRequestHandler):
             hour_path += "/" + str(self.day_start.day)
             hour_path += "." + str(hour)
 
-            qry_hour = paste.model.PasteCount.all()
+            qry_hour = app.model.PasteCount.all()
             qry_hour.filter("path =", hour_path)
             db_hour = qry_hour.get()
 
@@ -156,12 +156,12 @@ class Recount (paste.web.pastes.PasteRequestHandler):
         day_path += "/" + str(self.day_start.month)
         day_path += "/" + str(self.day_start.day)
 
-        qry_day = paste.model.PasteCount.all()
+        qry_day = app.model.PasteCount.all()
         qry_day.filter("path = ", day_path)
         day = qry_day.get()
 
         if not day:
-            day = paste.model.PasteCount()
+            day = app.model.PasteCount()
             day.path = day_path
 
         day.last_checked = datetime.datetime.now()
@@ -174,7 +174,7 @@ class Recount (paste.web.pastes.PasteRequestHandler):
         self.pastes_in_month = 0
         for day in xrange(1, days_in_month):
             day_path ="day/" + str(self.day_start.year) + "/" + str(self.day_start.month) + "/" + str(day)
-            qry_day = paste.model.PasteCount.all()
+            qry_day = app.model.PasteCount.all()
             qry_day.filter("path =", day_path)
             db_day = qry_day.get()
 
@@ -182,12 +182,12 @@ class Recount (paste.web.pastes.PasteRequestHandler):
                 self.pastes_in_month += db_day.count
 
         month_path ="month/" + str(self.day_start.year) + "/" + str(self.day_start.month)
-        qry_month = paste.model.PasteCount.all()
+        qry_month = app.model.PasteCount.all()
         qry_month.filter("path = ", month_path)
         month = qry_month.get()
 
         if not month:
-            month = paste.model.PasteCount()
+            month = app.model.PasteCount()
             month.path = month_path
 
         month.last_checked = datetime.datetime.now()

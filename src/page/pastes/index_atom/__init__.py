@@ -13,30 +13,30 @@
 
 import cgi
 
-import paste
-import paste.model
-import paste.util
-import paste.web
-import paste.web.ui
+import app
+import app.model
+import app.util
+import app.web
+import app.web.ui
 import settings
 import smoid.languages
 
 
-class IndexAtom(paste.web.RequestHandler):
+class IndexAtom (app.web.RequestHandler):
     """
     A listing of the pastes as an atom feed.
     """
 
-    def __init__(self):
-        paste.web.RequestHandler.__init__(self)
+    def __init__ (self):
+        app.web.RequestHandler.__init__(self)
         self.set_module(__name__ + ".__init__")
         self.paste_count = 0
 
-    def get(self):
+    def get (self):
         self.paste_count = self.get_paste_count()
 
-        self.content["u_pastes"] = paste.url("pastes/")
-        self.content["u_self"] = paste.url("pastes.atom")
+        self.content["u_pastes"] = app.url("pastes/")
+        self.content["u_self"] = app.url("pastes.atom")
         self.content["paste_count"] = self.paste_count
         self.content["pastes"] = self.get_pastes()
 
@@ -49,7 +49,7 @@ class IndexAtom(paste.web.RequestHandler):
         """
 
         count = 0
-        stats = paste.model.PasteStats.all()
+        stats = app.model.PasteStats.all()
         stats.id = 1
         stat = stats.get()
         if stat != None:
@@ -63,7 +63,7 @@ class IndexAtom(paste.web.RequestHandler):
 
         pastes = []
 
-        db = paste.model.Pasty.all()
+        db = app.model.Pasty.all()
         db.order("-posted_at")
         dbpastes = db.fetch(10, 0)
 
@@ -93,7 +93,7 @@ class IndexAtom(paste.web.RequestHandler):
                     dpaste["posted_at"] = ""
 
                 if opaste.characters:
-                    dpaste["size"] = paste.util.make_filesize_readable(opaste.characters)
+                    dpaste["size"] = app.util.make_filesize_readable(opaste.characters)
                 dpaste["lines"] = opaste.lines
                 dpaste["language"] = opaste.get_language_name()
 

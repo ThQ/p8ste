@@ -8,17 +8,19 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import cgi
 
+import app.model
+import app.web
 import smoid.languages
-import paste.model
-import paste.web
 
-class Thanks(paste.web.RequestHandler):
+
+class Thanks (app.web.RequestHandler):
 
     def get(self):
-        self.path.add("About", paste.url("about"))
-        self.path.add("Thanks", paste.url("about/thanks"))
+        self.path.add("About", app.url("about"))
+        self.path.add("Thanks", app.url("about/thanks"))
 
         self.set_module("page.about.thanks.__init__")
         self.write_out("page/about/thanks/200.html")

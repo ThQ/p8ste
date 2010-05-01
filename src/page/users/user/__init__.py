@@ -14,14 +14,14 @@
 import cgi
 from google.appengine.api import users
 
-import paste.model
-import paste.web
+import app.model
+import app.web
 
 
-class User (paste.web.UserRequestHandler):
+class User (app.web.UserRequestHandler):
 
     def get (self, user_id):
-        self.set_module("page.users.user.__init__")
+        self.set_module(__name__ + ".__init__")
         self.db_user = self.get_user(user_id)
         self.content["user_name"] = user_id
 
@@ -31,8 +31,8 @@ class User (paste.web.UserRequestHandler):
             self.get_404()
 
     def get_200 (self):
-        self.write_out("page/users/user/200.html")
+        self.write_out("./200.html")
 
     def get_404 (self):
         self.error(404)
-        self.write_out("page/users/user/404.html")
+        self.write_out("./404.html")

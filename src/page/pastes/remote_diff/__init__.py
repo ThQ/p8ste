@@ -18,24 +18,23 @@ import google.appengine.api.urlfetch
 import logging
 
 import smoid.languages
-import paste
-import paste.lang
-import paste.model
-import paste.util
-import paste.web
-import paste.web.pastes
-import paste.web.ui
+import app
+import app.model
+import app.util
+import app.web
+import app.web.pastes
+import app.web.ui
 
 
-class RemoteDiff (paste.web.pastes.PasteRequestHandler):
+class RemoteDiff (app.web.pastes.PasteRequestHandler):
     """
     Displays a diff between a local paste and a remote file.
     """
 
     def __init__ (self):
-        paste.web.RequestHandler.__init__(self)
+        app.web.RequestHandler.__init__(self)
         self.set_module(__name__ + ".__init__")
-        self.use_style(paste.url("style/code.css"))
+        self.use_style(app.url("style/code.css"))
         self.paste = None
 
 
@@ -53,11 +52,11 @@ class RemoteDiff (paste.web.pastes.PasteRequestHandler):
         self.paste = self.get_paste(slug)
         self.paste_slug = slug
         self.content["paste_slug"] = self.paste_slug
-        self.content["u_paste"] = paste.url("%s", slug)
+        self.content["u_paste"] = app.url("%s", slug)
 
         if self.paste:
 
-            self.path.add("Pastes", paste.url("pastes/"))
+            self.path.add("Pastes", app.url("pastes/"))
             self.path.add(self.paste.get_title(), self.paste.get_url())
 
             if self.paste.is_public():
@@ -84,7 +83,7 @@ class RemoteDiff (paste.web.pastes.PasteRequestHandler):
     def get_200 (self):
         self.content["diff"] = self.get_diff()
         self.content["paste_title"] = self.paste.title
-        self.content["paste_size"] = paste.util.make_filesize_readable(self.paste.characters)
+        self.content["paste_size"] = app.util.make_filesize_readable(self.paste.characters)
         self.content["paste_loc"] = self.paste.lines
         self.write_out("./200.html")
 

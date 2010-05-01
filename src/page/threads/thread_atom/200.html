@@ -11,19 +11,17 @@
         <name>{{ paste_username|escape }}</name>
     </author>
 
-    {% if forks %}
     {% for fork in forks %}
     <entry>
         <id>{{ fork.u}}</id>
-        <title>{% if fork.is_moderated %}{{ fork.slug }}{% else %}{{ fork.title|escape }}{% endif %}</title>
+        <title>{{ fork.title|escape }}</title>
         <published>{{ fork.published_at }}</published>
         <updated>{{ fork.updated_at }}</updated>
         <link rel="alternate">{{ fork.u }}</link>
         <author>
             <name>{{ fork.author_name }}</name>
         </author>
-        <summary type="text">{% if fork.is_moderated %}This paste has been moderated.{% else %}{{ fork.summary|escape }}{% endif %}</summary>
+        <summary type="text">{{ fork.summary|escape }}</summary>
     </entry>
     {% endfor %}
-    {% endif %}
 </feed>

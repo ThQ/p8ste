@@ -14,14 +14,13 @@
 import cgi
 from google.appengine.api import users
 
-import paste.model
-import paste.web
+import app.model
+import app.web
 
 
-class SignOut(paste.web.RequestHandler):
+class SignOut (app.web.RequestHandler):
 
-    def get(self):
-        redirect_url = self.request.get("url", paste.url(""))
+    def get (self):
+        redirect_url = self.request.get("url", app.url(""))
         signout_url = users.create_logout_url(redirect_url)
         self.redirect(signout_url)
-

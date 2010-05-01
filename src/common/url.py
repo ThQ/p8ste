@@ -10,15 +10,17 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 from django import template
 from google.appengine.ext import webapp
 
-import paste
+import app
+
 
 register = webapp.template.create_template_register()
 
 def url (value):
-    return paste.url(value)
+    return app.url(value)
 
 
 register.filter("url", url)

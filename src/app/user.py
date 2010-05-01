@@ -14,8 +14,8 @@
 from google.appengine.api import users
 import hashlib
 
-import paste
-import paste.model
+import app
+import app.model
 
 
 class User:
@@ -37,11 +37,11 @@ class User:
             self.is_logged_in_google = False
 
         if self.google_id != "":
-            qry_user = paste.model.User.all()
+            qry_user = app.model.User.all()
             qry_user.filter("google_id =", self.google_id)
             self.db_user = qry_user.get()
             if self.db_user:
                 self.is_logged_in = True
                 self.id = self.db_user.id
                 self.paste_count = self.db_user.paste_count
-                self.url = paste.url("users/%s", self.id)
+                self.url = app.url("users/%s", self.id)

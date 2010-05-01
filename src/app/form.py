@@ -10,14 +10,17 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import datetime
 import hashlib
-import paste
-import paste.model
+
+import app
+import app.model
 import settings
 
+
 def delete_token(ip_address, stoken):
-    token = paste.model.Form()
+    token = app.model.Form()
     token.token = stoken
     token.created_by_ip = ip_address
 
@@ -30,7 +33,7 @@ def delete_token(ip_address, stoken):
     return result
 
 def has_valid_token(ip_address, token):
-    tokens = paste.model.Form.all()
+    tokens = app.model.Form.all()
     tokens.filter("token =", token)
     tokens.filter("created_by_ip =", ip_address)
     tokens.filter("expired_at >", datetime.datetime.now())
@@ -40,7 +43,7 @@ def put_form_token(ip_address, token=""):
     if token == "":
         token = make_token()
 
-    ftoken = paste.model.Form()
+    ftoken = app.model.Form()
     ftoken.token = token
     ftoken.created_at = datetime.datetime.now()
     ftoken.created_by_ip = ip_address

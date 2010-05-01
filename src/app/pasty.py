@@ -17,6 +17,7 @@ def filter_title(title, default_value = ""):
     result = "" + "".join([ c for c in title if c in chars ])
     if result == "":
         result = default_value
+    result = result.strip()
     return result
 
 def filter_user_name(name):

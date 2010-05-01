@@ -11,14 +11,15 @@
 import cgi
 
 import smoid.languages
-import paste.model
-import paste.web
+import app.model
+import app.web
 
-class Features(paste.web.RequestHandler):
+class Features (app.web.RequestHandler):
 
     def get(self):
-        self.path.add("About", paste.url("about"))
-        self.path.add("Features", paste.url("about/features"))
+        self.set_module(__name__ + ".__init__")
 
-        self.set_module("page.about.features.__init__")
+        self.path.add("About", app.url("about"))
+        self.path.add("Features", app.url("about/features"))
+
         self.write_out("page/about/features/200.html")

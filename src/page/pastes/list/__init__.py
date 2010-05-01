@@ -15,20 +15,20 @@ import datetime
 import logging
 
 import smoid.languages
-import paste
-import paste.lang
-import paste.model
-import paste.util
-import paste.web
-import paste.web.pastes
-import paste.web.ui
+import app
+import app.lang
+import app.model
+import app.util
+import app.web
+import app.web.pastes
+import app.web.ui
 
-class List (paste.web.pastes.PasteListRequestHandler):
+class List (app.web.pastes.PasteListRequestHandler):
 
     def __init__ (self):
-        paste.web.RequestHandler.__init__(self)
+        app.web.RequestHandler.__init__(self)
         self.set_module(__name__ + ".__init__")
-        self.use_style(paste.url("style/code.css"))
+        self.use_style(app.url("style/code.css"))
         self.parent = None
         self.pastes = []
         self.paste_count = 0
@@ -47,7 +47,7 @@ class List (paste.web.pastes.PasteListRequestHandler):
 
         self.paste_count = len(self.pastes)
         if self.paste_count == 1:
-            self.redirect(paste.url("%s", self.pastes[0].slug))
+            self.redirect(app.url("%s", self.pastes[0].slug))
         elif self.paste_count > 0:
             self.get_200()
         else:
@@ -62,7 +62,7 @@ class List (paste.web.pastes.PasteListRequestHandler):
 
         global_size = 0
         global_line_count = 0
-        ui_code = paste.web.ui.Code()
+        ui_code = app.web.ui.Code()
         i = 0
         for p in self.pastes:
             line_nos, code_lines = ui_code.format_code(p.code_colored)
@@ -73,7 +73,7 @@ class List (paste.web.pastes.PasteListRequestHandler):
             i += 1
 
         self.content["pastes"] = self.tpl_pastes
-        self.content["global_size"] = paste.util.make_filesize_readable(global_size)
+        self.content["global_size"] = app.util.make_filesize_readable(global_size)
         self.content["global_line_count"] = global_line_count
 
         self.write_out("./200.html")
