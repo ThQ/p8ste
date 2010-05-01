@@ -27,7 +27,7 @@ class List (paste.web.pastes.PasteListRequestHandler):
 
     def __init__ (self):
         paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pasties.list.__init__")
+        self.set_module(__name__ + ".__init__")
         self.use_style(paste.url("style/code.css"))
         self.parent = None
         self.pastes = []
@@ -76,7 +76,7 @@ class List (paste.web.pastes.PasteListRequestHandler):
         self.content["global_size"] = paste.util.make_filesize_readable(global_size)
         self.content["global_line_count"] = global_line_count
 
-        self.write_out("page/pasties/list/200.html")
+        self.write_out("./200.html")
 
     def get_404 (self):
         """
@@ -84,4 +84,4 @@ class List (paste.web.pastes.PasteListRequestHandler):
         """
 
         self.error(404)
-        self.write_out("page/pasties/list/404.html")
+        self.write_out("./404.html")

@@ -29,7 +29,7 @@ class Recount (paste.web.pastes.PasteRequestHandler):
 
         self.paste = None
 
-        self.set_module("page.pasties.recount.__init__")
+        self.set_module(__name__ + ".__init__")
 
     def get (self, paste_slug):
         self.paste = self.get_paste(paste_slug)
@@ -67,10 +67,10 @@ class Recount (paste.web.pastes.PasteRequestHandler):
         self.content["day_start"] = self.day_start.strftime(settings.DATETIME_FORMAT)
         self.content["day_end"] = self.day_end.strftime(settings.DATETIME_FORMAT)
         self.content["pastes_in_day"] = self.pastes_in_day
-        self.write_out("page/pasties/recount/200.html")
+        self.write_out("./200.html")
 
     def get_404 (self):
-        self.write_out("page/pasties/recount/404.html")
+        self.write_out("./404.html")
 
     def get_hour (self):
         hour_start = copy.copy(self.paste.posted_at)

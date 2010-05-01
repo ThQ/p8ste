@@ -10,6 +10,7 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import pygments.lexers
 import pygments.formatters
 
@@ -21,12 +22,13 @@ import paste.util
 import paste.web
 import settings
 
+
 class Update (paste.web.RequestHandler):
 
     def __init__ (self):
         paste.web.RequestHandler.__init__(self)
         self.paste = None
-        self.set_module("page.pasties.update.__init__")
+        self.set_module(__name__ + ".__init__")
 
     def get (self, paste_slug):
         self.paste = self.get_paste(paste_slug)
@@ -48,10 +50,10 @@ class Update (paste.web.RequestHandler):
         self.paste.snippet = paste.model.Pasty.make_snippet(self.paste.code, settings.PASTE_SNIPPET_MAX_LENGTH)
         self.paste.put()
 
-        self.write_out("page/pasties/update/200.html")
+        self.write_out("./200.html")
 
     def get_404 (self):
-        self.write_out("page/pasties/update/404.html")
+        self.write_out("./404.html")
 
     def get_paste (self, pasty_slug):
         qry_pastes = paste.model.Pasty.all()
@@ -73,4 +75,3 @@ class Update (paste.web.RequestHandler):
             result = cgi.escape(code)
 
         return result
-

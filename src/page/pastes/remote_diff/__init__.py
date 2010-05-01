@@ -10,6 +10,7 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import cgi
 import datetime
 import difflib
@@ -25,13 +26,18 @@ import paste.web
 import paste.web.pastes
 import paste.web.ui
 
+
 class RemoteDiff (paste.web.pastes.PasteRequestHandler):
+    """
+    Displays a diff between a local paste and a remote file.
+    """
 
     def __init__ (self):
         paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pasties.remote_diff.__init__")
+        self.set_module(__name__ + ".__init__")
         self.use_style(paste.url("style/code.css"))
         self.paste = None
+
 
     def fetch_url (self):
         content = None
@@ -48,7 +54,12 @@ class RemoteDiff (paste.web.pastes.PasteRequestHandler):
         self.paste_slug = slug
         self.content["paste_slug"] = self.paste_slug
         self.content["u_paste"] = paste.url("%s", slug)
+
         if self.paste:
+
+            self.path.add("Pastes", paste.url("pastes/"))
+            self.path.add(self.paste.get_title(), self.paste.get_url())
+
             if self.paste.is_public():
                 self.remote_url = self.request.get("url")
                 if self.remote_url[0:7] != "http://":
@@ -75,13 +86,13 @@ class RemoteDiff (paste.web.pastes.PasteRequestHandler):
         self.content["paste_title"] = self.paste.title
         self.content["paste_size"] = paste.util.make_filesize_readable(self.paste.characters)
         self.content["paste_loc"] = self.paste.lines
-        self.write_out("page/pasties/remote_diff/200.html")
+        self.write_out("./200.html")
 
     def get_404_paste (self):
-        self.write_out("page/pasties/remote_diff/404_paste.html")
+        self.write_out("./404_paste.html")
 
     def get_404_remote (self):
-        self.write_out("page/pasties/remote_diff/404_remote.html")
+        self.write_out("./404_remote.html")
 
     def get_diff (self):
         """

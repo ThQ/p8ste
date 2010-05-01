@@ -21,13 +21,14 @@ import paste.lang
 import paste.model
 import paste.util
 import paste.web
+import settings
 
 
 class Pasty (paste.web.RequestHandler):
 
     def __init__ (self):
         paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pasties.pasty.__init__")
+        self.set_module(__name__ + ".__init__")
         self.use_style(paste.url("style/code.css"))
         self.highlights = set([])
         self.has_edited_lines = False
@@ -199,6 +200,7 @@ class Pasty (paste.web.RequestHandler):
         tpl_paste["lines"] = lines
         tpl_paste["code"] = code
         tpl_paste["size"] = paste.util.make_filesize_readable(self.pasty.characters)
+        tpl_paste["pasted_at"] = self.pasty.posted_at.strftime(settings.DATETIME_FORMAT)
         tpl_paste["is_moderated"] = self.pasty.is_moderated()
         tpl_paste["is_private"] = self.pasty.is_private()
         tpl_paste["is_waiting_for_approval"] = self.pasty.is_waiting_for_approval()
@@ -238,9 +240,9 @@ class Pasty (paste.web.RequestHandler):
         if self.pasty.language:
             lang = smoid.languages.languages[self.pasty.language]
             self.content["pasty_language_url"] = lang["home_url"]
-        
+
         self.add_atom_feed(paste.url("%s.atom", self.pasty_slug), self.pasty_slug + " (Atom feed)", "alternate")
-        self.write_out("page/pasties/pasty/200.html")
+        self.write_out("./200.html")
 
         #self.update_expiration_time()
 
@@ -250,7 +252,7 @@ class Pasty (paste.web.RequestHandler):
         self.content["pasty_slug"] = cgi.escape(self.pasty_slug)
         self.content["u_paste"] = paste.url("")
         self.content["u_pastes"] = paste.url("pastes/")
-        self.write_out("page/pasties/pasty/404.html")
+        self.write_out("./404.html")
 
     def get_parent_paste(self):
         if self.pasty != None and self.pasty.parent_paste != "":
@@ -291,11 +293,8 @@ class Pasty (paste.web.RequestHandler):
             lpaste["u_diff"] = paste.url("%s/diff/%s", self.pasty.slug, dbpaste.slug)
             lpaste["ident"] = ("&nbsp;&nbsp;&nbsp;&nbsp;" * dbpaste.thread_level)
 
-            if dbpaste.language:
-                lpaste["language_name"] = smoid.languages.languages[dbpaste.language]["name"]
-                lpaste["u_language_image"] = smoid.languages.languages[dbpaste.language]["u_icon"]
-            else:
-                lpaste["u_language_image"] = paste.url("images/silk/page_white_text.png")
+            lpaste["language_name"] = dbpaste.get_language_name()
+            lpaste["u_language_image"] = dbpaste.get_icon_url()
 
             if dbpaste.characters > default_chars:
                 lpaste["diff_size"] = paste.util.make_filesize_readable(dbpaste.characters - default_chars)
@@ -319,5 +318,7 @@ class Pasty (paste.web.RequestHandler):
                 lpaste["close_list"] = 1
                 list_opened -= 1
             pastes.append(lpaste)
+
         self.content["lists_unclosed"] = xrange(0, lists_opened)
+
         return pastes

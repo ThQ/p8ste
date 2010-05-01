@@ -10,6 +10,7 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import cgi
 import difflib
 
@@ -29,7 +30,7 @@ class Diff(paste.web.RequestHandler):
 
     def __init__ (self):
         paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pasties.diff.__init__")
+        self.set_module("page.pastes.diff.__init__")
         self.use_style(paste.url("style/code.css"))
         self.paste1_slug = ""
         self.paste1 = None
@@ -58,7 +59,7 @@ class Diff(paste.web.RequestHandler):
                 self.content["paste_is_moderated"] = unpublic_paste.is_moderated()
                 self.content["paste_is_awaiting_approval"] = unpublic_paste.is_waiting_for_approval()
                 self.error(401)
-                self.write_out("template/paste/not_public.html")
+                self.write_out("./not_public.html")
             else:
                 self.get_200()
 
@@ -72,8 +73,8 @@ class Diff(paste.web.RequestHandler):
         tpl_pastes = [self.get_template_info_for_paste(0), self.get_template_info_for_paste(1)]
         self.content["pastes"] = tpl_pastes
         self.content["diff"] = self.get_diff()
-        self.use_template("page/pasties/diff/200.html")
-        self.write_out()
+
+        self.write_out("./200.html")
 
     def get_404 (self):
         """
@@ -95,8 +96,7 @@ class Diff(paste.web.RequestHandler):
                self.content["error"]["pastes_found"].append(tpl_paste)
            i = i + 1
 
-        self.use_template("page/pasties/diff/404.html")
-        self.write_out()
+        self.write_out("./404.html")
 
     def get_diff (self):
         """
@@ -134,16 +134,20 @@ class Diff(paste.web.RequestHandler):
         """
         Retrieves a paste from the datastore given its slug.
         """
+
         qry_paste = paste.model.Pasty.all()
         qry_paste.filter("slug =", slug)
+
         return qry_paste.get()
 
     def get_template_info_for_paste (self, paste_index):
         """
         Builds an info map about a paste for using in the template.
         """
+
         info = {}
         opaste = self.pastes[paste_index]
+
         if opaste:
             info["slug"] = opaste.slug
             info["posted_at"] = opaste.posted_at.strftime(settings.DATETIME_FORMAT)
@@ -153,8 +157,10 @@ class Diff(paste.web.RequestHandler):
             if opaste.language in smoid.languages.languages:
                 info["language"] = smoid.languages.languages[opaste.language]["name"]
                 info["u_language_icon"] = smoid.languages.languages[opaste.language]["u_icon"]
+
             if opaste.characters:
                 info["size"] = make_filesize_readable(opaste.characters)
+
             if opaste.lines:
                 info["loc"] = opaste.lines
 

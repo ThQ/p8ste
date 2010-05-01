@@ -24,7 +24,7 @@ class PastyAtom(paste.web.RequestHandler):
     """
 
     def get(self, pasty_slug):
-        self.set_module("page.pasties.pasty_txt.py")
+        self.set_module(__name__ + ".__init__")
         pasties = paste.model.Pasty.all()
         pasties.filter("slug =", pasty_slug)
 
@@ -46,7 +46,7 @@ class PastyAtom(paste.web.RequestHandler):
         self.content["paste_posted_at"] = self.pasty.posted_at.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         self.set_header("Content-Type", "application/atom+xml")
-        self.write_out("page/pasties/pasty_atom/200.html")
+        self.write_out("./200.html")
 
     def get_404(self):
         self.content["paste_slug"] = self.pasty_slug
@@ -54,4 +54,4 @@ class PastyAtom(paste.web.RequestHandler):
 
         self.set_header("Content-Type", "application/atom+xml")
         self.error(404)
-        self.write_out("page/pasties/pasty_atom/404.html")
+        self.write_out("./404.html")

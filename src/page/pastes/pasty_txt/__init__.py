@@ -19,7 +19,7 @@ import paste.web
 class PastyTxt(paste.web.RequestHandler):
 
     def get(self, pasty_slug):
-        self.set_module("page.pasties.pasty_txt.py")
+        self.set_module(__name__ + ".__init__")
         pasties = paste.model.Pasty.all()
         pasties.filter("slug =", pasty_slug)
 
@@ -34,7 +34,7 @@ class PastyTxt(paste.web.RequestHandler):
     def get_200(self):
         self.content["content"] = self.pasty.get_code()
         self.set_header("Content-Type", "text/plain")
-        self.write_out("page/pasties/pasty_txt/200.tpl")
+        self.write_out("./200.tpl")
 
     def get_404(self):
         self.write_out("page/txt.tpl")

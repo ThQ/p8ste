@@ -29,7 +29,7 @@ class IndexAtom(paste.web.RequestHandler):
 
     def __init__(self):
         paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pasties.index_atom.__init__")
+        self.set_module(__name__ + ".__init__")
         self.paste_count = 0
 
     def get(self):
@@ -41,7 +41,7 @@ class IndexAtom(paste.web.RequestHandler):
         self.content["pastes"] = self.get_pastes()
 
         self.set_header("Content-Type", "application/atom+xml")
-        self.write_out("page/pasties/index_atom/200.html")
+        self.write_out("./200.html")
 
     def get_paste_count (self):
         """

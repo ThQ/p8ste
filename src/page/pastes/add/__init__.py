@@ -36,7 +36,7 @@ class Add (paste.web.RequestHandler):
 
     def __init__ (self):
         paste.web.RequestHandler.__init__(self)
-        self.set_module("page.pasties.add.__init__")
+        self.set_module("page.pastes.add.__init__")
         self.form_code = ""
         self.form_title = ""
         self.form_tags = ""
@@ -55,7 +55,7 @@ class Add (paste.web.RequestHandler):
             form.delete()
 
     def display_form (self):
-        self.write_out("page/pasties/add/add.html")
+        self.write_out("./form.html")
 
     def get(self, parent_paste_slug=""):
         self.parent_paste_slug = parent_paste_slug
@@ -127,6 +127,7 @@ class Add (paste.web.RequestHandler):
     def on_load (self):
         self.get_form_data()
         self.parent_paste = self.get_parent_paste()
+
         if self.parent_paste:
             self.content["is_fork"] = True
             self.content["u_parent_paste"] = paste.url("%s", self.parent_paste.slug)
@@ -141,11 +142,13 @@ class Add (paste.web.RequestHandler):
                 self.on_form_not_sent()
             else:
                 self.on_form_sent()
+
         elif self.parent_paste:
             self.content["is_private"] = self.parent_paste.is_private()
             self.content["is_moderated"] = self.parent_paste.is_moderated()
             self.content["is_awaiting_approval"] = self.parent_paste.is_waiting_for_approval()
-            self.write_out("page/pasties/add/unforkable.html")
+
+            self.write_out("./unforkable.html")
 
     def on_form_not_sent (self):
         if not self.user.is_logged_in_google:
@@ -213,7 +216,8 @@ class Add (paste.web.RequestHandler):
             self.content["u_pasty_encoded"] = cgi.escape(self.content["u_pasty"])
             self.content["u_fork"] = paste.url("%s/fork", slug)
             self.content["u_add"] = paste.url("")
-            self.write_out("page/pasties/add/added.html")
+
+            self.write_out("./added.html")
 
             paste.form.delete_token(self.form_token, self.request.remote_addr)
         else:
@@ -319,9 +323,9 @@ class Add (paste.web.RequestHandler):
         result = pasty_key != None
 
         if result == True:
+            dbPaste = paste.model.Pasty.get(pasty_key)
             # If the paste is not a reply, then it's starting its own thread.
             if not is_reply:
-                dbPaste = paste.model.Pasty.get(pasty_key)
                 if dbPaste != None:
                     dbPaste.thread = slug
                     dbPaste.put()

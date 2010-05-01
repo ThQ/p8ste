@@ -136,9 +136,11 @@ class Pasty (db.Model):
             url = paste.url("images/silk/flag_red.png")
         elif self.status == kPASTE_STATUS_WAITING_FOR_APPROVAL:
             url = paste.url("images/silk/hourglass.png")
-        elif self.language and self.status == kPASTE_STATUS_PUBLIC:
-            if smoid.languages.languages.has_key(self.language) and smoid.languages.languages[self.language].has_key("u_icon"):
+        elif self.status == kPASTE_STATUS_PUBLIC:
+            if self.language and smoid.languages.languages.has_key(self.language) and smoid.languages.languages[self.language].has_key("u_icon"):
                 url = paste.url(smoid.languages.languages[self.language]["u_icon"])
+            else:
+                url = paste.url("images/silk/page_white_text.png")
         return url
 
     def get_language_name (self):

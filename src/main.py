@@ -25,18 +25,18 @@ import page.about.index
 import page.about.thanks
 import page.error.error404
 import page.languages.autodetected
-import page.pasties.add
-import page.pasties.diff
-import page.pasties.index
-import page.pasties.index_atom
-import page.pasties.list
-import page.pasties.pasty
-import page.pasties.pasty_txt
-import page.pasties.pasty_atom
-import page.pasties.recount
-import page.pasties.remote_diff
-import page.pasties.sitemap
-import page.pasties.update
+import page.pastes.add
+import page.pastes.diff
+import page.pastes.index
+import page.pastes.index_atom
+import page.pastes.list
+import page.pastes.pasty
+import page.pastes.pasty_txt
+import page.pastes.pasty_atom
+import page.pastes.recount
+import page.pastes.remote_diff
+import page.pastes.sitemap
+import page.pastes.update
 import page.threads.thread
 import page.threads.thread_atom
 import page.users.signin
@@ -56,24 +56,24 @@ re_paste = "P[a-zA-Z0-9_-]+"
 re_user = "[a-zA-Z0-9_-]+"
 
 pages = [
-    ('/', page.pasties.add.Add),
+    ('/', page.pastes.add.Add),
 
     # Pastes
-    ('/(' + re_paste + ')', page.pasties.pasty.Pasty),
-    ('/(' + re_paste + '(?:%2B' + re_paste + ')+)', page.pasties.list.List),
-    ('/pastes/', page.pasties.index.Index),
-    ('/pastes.atom', page.pasties.index_atom.IndexAtom),
-    ('/(' + re_paste + ')/fork', page.pasties.add.Add),
-    ('/(' + re_paste + ').txt', page.pasties.pasty_txt.PastyTxt),
-    ('/(' + re_paste + ').atom', page.pasties.pasty_atom.PastyAtom),
-    ('/(' + re_paste + ')/diff', page.pasties.remote_diff.RemoteDiff),
-    ('/(' + re_paste + ')/diff/(' + re_paste + ')', page.pasties.diff.Diff),
-    ('/(' + re_paste + ')/recount', page.pasties.recount.Recount),
-    ('/(' + re_paste + ')/update', page.pasties.update.Update),
+    ('/(' + re_paste + ')', page.pastes.pasty.Pasty),
+    ('/(' + re_paste + '(?:%2B' + re_paste + ')+)', page.pastes.list.List),
+    ('/pastes/', page.pastes.index.Index),
+    ('/pastes.atom', page.pastes.index_atom.IndexAtom),
+    ('/(' + re_paste + ')/fork', page.pastes.add.Add),
+    ('/(' + re_paste + ').txt', page.pastes.pasty_txt.PastyTxt),
+    ('/(' + re_paste + ').atom', page.pastes.pasty_atom.PastyAtom),
+    ('/(' + re_paste + ')/diff', page.pastes.remote_diff.RemoteDiff),
+    ('/(' + re_paste + ')/diff/(' + re_paste + ')', page.pastes.diff.Diff),
+    ('/(' + re_paste + ')/recount', page.pastes.recount.Recount),
+    ('/(' + re_paste + ')/update', page.pastes.update.Update),
     ('/users/(' + re_user + ')', page.users.user.User),
     ('/threads/(' + re_paste + ')', page.threads.thread.Thread),
     ('/threads/(' + re_paste + ').atom', page.threads.thread_atom.ThreadAtom),
-    ('/sitemap.xml', page.pasties.sitemap.Sitemap),
+    ('/sitemap.xml', page.pastes.sitemap.Sitemap),
     ('/sign-in', page.users.signin.SignIn),
     ('/sign-up', page.users.signup.SignUp),
     ('/sign-out', page.users.signout.SignOut),

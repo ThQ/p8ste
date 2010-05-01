@@ -37,6 +37,7 @@ class RequestHandler (webapp.RequestHandler):
         webapp.RequestHandler.__init__(self)
         self.path = Path()
         self.module = ""
+        self.module_directory = ""
         self.module_url = ""
         self.content = {}
         self.scripts = []
@@ -58,6 +59,7 @@ class RequestHandler (webapp.RequestHandler):
             self.response.headers[name] = value
 
     def set_module(self, name):
+        self.module_directory = "/".join(name.split(".")[0:-1])
         self.module = name.replace(".", "/") + ".py"
         self.module_url = "http://github.com/thomas-quemard/p8ste/blob/master/src/" + self.module
         self.module_history_url = "http://github.com/thomas-quemard/p8ste/commits/master/src/" + self.module
@@ -113,7 +115,14 @@ class RequestHandler (webapp.RequestHandler):
         if settings.ENV == "debug":
             self.content["datastore_logs"] = paste.appengine.hook.datastore_logs
 
-        self.response.out.write(template.render(self.template_name, self.content))
+        tpl_path = ""
+        if self.template_name.startswith("./"):
+            tpl_path = self.module_directory + "/" + self.template_name[2:]
+        else:
+            tpl_path = self.template_name
+
+        rendered_template = template.render(tpl_path, self.content)
+        self.response.out.write(rendered_template)
 
 
 class UserRequestHandler (RequestHandler):
