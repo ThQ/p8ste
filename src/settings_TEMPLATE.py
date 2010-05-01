@@ -8,6 +8,14 @@ else:
 
 
 # -----------------------------------------------------------------------------
+# APPLICATION
+# -----------------------------------------------------------------------------
+
+# This name will appear in the title, in the headers, in the path bar...
+APP_NAME = "PrengePASTE"
+
+
+# -----------------------------------------------------------------------------
 # PASTES
 # -----------------------------------------------------------------------------
 
@@ -47,6 +55,17 @@ USER_NAME_MAX_LENGTH = 100
 
 # The default user name (when the user is not logged in)
 DEFAULT_USER_NAME = "John Doe"
+
+
+# -----------------------------------------------------------------------------
+# GOOGLE ANALYTICS
+# -----------------------------------------------------------------------------
+
+# Whether to use Google Analytics or not.
+USE_GANALYTICS = False
+
+# Your Google Analytics ID, something like <UA-123456-5>
+GANALYTICS_ID = ""
 
 
 # -----------------------------------------------------------------------------

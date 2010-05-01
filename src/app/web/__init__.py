@@ -93,6 +93,10 @@ class RequestHandler (webapp.RequestHandler):
         self.content["u_blank_image"] = app.url("images/blank.gif")
         self.content["APP_NAME"] = settings.APP_NAME
         self.content["path__"] = self.path.path
+
+        if settings.ENV == "debug" and settings.USE_GANALYTICS:
+            self.content["GANALYTICS_ID"] = settings.GANALYTICS_ID
+
         if "user-agent" in self.request.headers:
             self.content["bad_browser__"] = self.request.headers["user-agent"].find("MSIE") != -1
 
