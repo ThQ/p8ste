@@ -5,11 +5,11 @@ api_version: 1
 
 handlers:
 - url: /style
-  static_dir: css/
+  static_dir: static/css/
 
 - url: /style.css
-  static_files: css/style.css
-  upload: css/style.css
+  static_files: static/css/style.css
+  upload: static/css/style.css
 
 - url: /favicon.ico
   static_files: static/favicon.ico
@@ -32,7 +32,7 @@ handlers:
   upload: static/y_key_f04f979d5652fb0d.html
 
 - url: /images
-  static_dir: images
+  static_dir: static/images
 
 - url: /stats.*
   script: $PYTHON_LIB/google/appengine/ext/appstats/ui.py
