@@ -12,6 +12,11 @@
 # License for more details.
 
 
+import os.path
+import sys
+sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), "libs"))
+
+
 from google.appengine.api import apiproxy_stub_map
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
