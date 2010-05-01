@@ -2,7 +2,7 @@
 *~
 images/
 src/settings.py
-src/pygments/
-src/recaptcha/
+src/libs/pygments/
+src/libs/recaptcha/
+src/libs/smoid/examples/*
 src/static/favicon.ico
-src/smoid/examples/*
