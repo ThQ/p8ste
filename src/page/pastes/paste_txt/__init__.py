@@ -10,13 +10,14 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import cgi
 
 import paste.model
 import paste.web
 
 
-class PastyTxt(paste.web.RequestHandler):
+class PasteTxt(paste.web.RequestHandler):
 
     def get(self, pasty_slug):
         self.set_module(__name__ + ".__init__")

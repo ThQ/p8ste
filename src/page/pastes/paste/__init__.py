@@ -24,7 +24,7 @@ import paste.web
 import settings
 
 
-class Pasty (paste.web.RequestHandler):
+class Paste (paste.web.RequestHandler):
 
     def __init__ (self):
         paste.web.RequestHandler.__init__(self)

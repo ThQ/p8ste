@@ -18,7 +18,7 @@ import paste.model
 import paste.web
 
 
-class PastyAtom(paste.web.RequestHandler):
+class PasteAtom(paste.web.RequestHandler):
     """
     Displays an atom feed representing the current paste.
     """

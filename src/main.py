@@ -30,9 +30,9 @@ import page.pastes.diff
 import page.pastes.index
 import page.pastes.index_atom
 import page.pastes.list
-import page.pastes.pasty
-import page.pastes.pasty_txt
-import page.pastes.pasty_atom
+import page.pastes.paste
+import page.pastes.paste_txt
+import page.pastes.paste_atom
 import page.pastes.recount
 import page.pastes.remote_diff
 import page.pastes.sitemap
@@ -59,13 +59,13 @@ pages = [
     ('/', page.pastes.add.Add),
 
     # Pastes
-    ('/(' + re_paste + ')', page.pastes.pasty.Pasty),
+    ('/(' + re_paste + ')', page.pastes.paste.Paste),
     ('/(' + re_paste + '(?:%2B' + re_paste + ')+)', page.pastes.list.List),
     ('/pastes/', page.pastes.index.Index),
     ('/pastes.atom', page.pastes.index_atom.IndexAtom),
     ('/(' + re_paste + ')/fork', page.pastes.add.Add),
-    ('/(' + re_paste + ').txt', page.pastes.pasty_txt.PastyTxt),
-    ('/(' + re_paste + ').atom', page.pastes.pasty_atom.PastyAtom),
+    ('/(' + re_paste + ').txt', page.pastes.paste_txt.PasteTxt),
+    ('/(' + re_paste + ').atom', page.pastes.paste_atom.PasteAtom),
     ('/(' + re_paste + ')/diff', page.pastes.remote_diff.RemoteDiff),
     ('/(' + re_paste + ')/diff/(' + re_paste + ')', page.pastes.diff.Diff),
     ('/(' + re_paste + ')/recount', page.pastes.recount.Recount),
