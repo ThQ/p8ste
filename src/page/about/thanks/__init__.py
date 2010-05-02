@@ -1,3 +1,5 @@
+# Copyright 2008 Thomas Quemard
+#
 # Paste-It is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published
 # by the Free Software Foundation; either version 3.0, or (at your option)
@@ -9,18 +11,18 @@
 # License for more details.
 
 
-import cgi
-
-import app.model
 import app.web
-import smoid.languages
 
 
 class Thanks (app.web.RequestHandler):
+    """
+    Listing thanks.
+    """
 
-    def get(self):
+    def get (self):
+        self.set_module(__name__ + ".__init__")
+
         self.path.add("About", app.url("about"))
         self.path.add("Thanks", app.url("about/thanks"))
 
-        self.set_module("page.about.thanks.__init__")
-        self.write_out("page/about/thanks/200.html")
+        self.write_out("./200.html")

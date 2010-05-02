@@ -11,12 +11,13 @@
 # License for more details.
 
 
-import cgi
-
 import app.web
 
 
 class Features (app.web.RequestHandler):
+    """
+    A list of PrengePASTES features.
+    """
 
     def get(self):
         self.set_module(__name__ + ".__init__")
