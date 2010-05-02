@@ -2,7 +2,9 @@
 
 ## Actions
 
-* src/page/users/recount : Recount user pastes
+* Create src/page/users/recount : Recount user pastes
+* Create src/page/pastes/moderate : Moderate a paste
+
 
 ### Smoid
 
@@ -18,3 +20,4 @@
 
 * Improve language detection
 * Should also detect licenses
+* Create something like an inbox telling a user when his paste is forked / when he has a comment / etc.
