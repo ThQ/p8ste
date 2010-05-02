@@ -22,7 +22,7 @@ class Sitemap (app.web.RequestHandler):
 
     def __init__ (self):
         app.web.RequestHandler.__init__(self)
-        self.set_module(__name__ + "__init__")
+        self.set_module(__name__ + ".__init__")
 
     def get (self):
         self.set_header("Content-Type", "text/xml")
