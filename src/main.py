@@ -33,6 +33,7 @@ import page.pastes.diff
 import page.pastes.index
 import page.pastes.index_atom
 import page.pastes.list
+import page.pastes.moderate
 import page.pastes.paste
 import page.pastes.paste_txt
 import page.pastes.paste_atom
@@ -69,6 +70,7 @@ pages = [
     ('/pastes/', page.pastes.index.Index),
     ('/pastes.atom', page.pastes.index_atom.IndexAtom),
     ('/(' + re_paste + ')/fork', page.pastes.add.Add),
+    ('/(' + re_paste + ')/moderate', page.pastes.moderate.Moderate),
     ('/(' + re_paste + ').txt', page.pastes.paste_txt.PasteTxt),
     ('/(' + re_paste + ').atom', page.pastes.paste_atom.PasteAtom),
     ('/(' + re_paste + ')/diff', page.pastes.remote_diff.RemoteDiff),

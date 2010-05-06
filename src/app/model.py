@@ -11,10 +11,12 @@
 # License for more details.
 
 
+import google.appengine.api.users
 from google.appengine.ext import db
 import random
 
 import app
+import app.user
 import smoid.languages
 
 
@@ -82,6 +84,11 @@ class Pasty (db.Model):
     title = db.TextProperty(default="")
     status = db.IntegerProperty(default=0, choices=[kPASTE_STATUS_PUBLIC, kPASTE_STATUS_PRIVATE, kPASTE_STATUS_MODERATED, kPASTE_STATUS_WAITING_FOR_APPROVAL])
     user = db.ReferenceProperty(User)
+
+    def _is_current_user_author_or_admin (self):
+        cuser = app.user.get_current_user()
+        is_author = self.user and self.user.id == cuser.id
+        return cuser.is_google_admin or is_author
 
     @staticmethod
     def make_secret_key (length = 16):
@@ -159,8 +166,14 @@ class Pasty (db.Model):
 
         return url
 
+    def get_moderate_url (self):
+        return app.url("%s/moderate", self.slug)
+
     def get_private_url (self):
         return app.url("%s?key=%s", self.slug, self.secret_key)
+
+    def get_real_moderate_url (self):
+        return app.url("%s/moderate?sure=yes", self.slug)
 
     def get_title (self):
         """
@@ -168,8 +181,9 @@ class Pasty (db.Model):
         """
 
         title = self.slug
-        if self.status == kPASTE_STATUS_PUBLIC and self.title:
-            title = self.title
+        if self.title:
+            if self.status == kPASTE_STATUS_PUBLIC or self._is_current_user_author_or_admin():
+                title = self.title
         return title
 
     def get_snippet (self):
@@ -178,7 +192,7 @@ class Pasty (db.Model):
         """
         snippet = ""
         if self.snippet:
-            if self.status == kPASTE_STATUS_PUBLIC:
+            if self.status == kPASTE_STATUS_PUBLIC or self._is_current_user_author_or_admin():
                 snippet = self.snippet
             elif self.status == kPASTE_STATUS_PRIVATE:
                 snippet = "[[ PRIVATE ]]"
@@ -188,7 +202,7 @@ class Pasty (db.Model):
         return app.url("%s", self.slug)
 
     def is_code_viewable (self):
-        return self.status == kPASTE_STATUS_PUBLIC
+        return self.status == kPASTE_STATUS_PUBLIC or self._is_current_user_author_or_admin()
 
     def is_diffable (self):
         return self.status == kPASTE_STATUS_PUBLIC

@@ -146,14 +146,6 @@ class Paste (app.web.RequestHandler):
         self.secret_key = self.request.get("key")
         user_is_poster = (self.pasty.user and self.user.db_user and self.pasty.user.id == self.user.db_user.id)
 
-        if self.pasty.is_private() and (self.secret_key == self.pasty.secret_key or user_is_poster):
-            self.paste_title = self.pasty.title
-            self.code_is_viewable = True
-        else:
-            self.paste_title = self.pasty.get_title()
-            self.code_is_viewable = self.pasty.is_code_viewable()
-
-        self.path.add(self.paste_title, self.pasty.get_url())
 
         self.lines = self.pasty.code_colored.splitlines()
         self.line_count = len(self.lines)
@@ -187,6 +179,7 @@ class Paste (app.web.RequestHandler):
         tpl_paste["u_raw_text"] = app.url("%s.txt", self.pasty_slug)
         tpl_paste["u_atom"] = app.url("%s.atom", self.pasty_slug)
         tpl_paste["slug"] = self.pasty.slug
+        tpl_paste["title"] = self.pasty.get_title()
         tpl_paste["loc"] = self.pasty.lines
         tpl_paste["lines"] = lines
         tpl_paste["code"] = code
@@ -194,8 +187,9 @@ class Paste (app.web.RequestHandler):
         tpl_paste["pasted_at"] = self.pasty.posted_at.strftime(settings.DATETIME_FORMAT)
         tpl_paste["is_moderated"] = self.pasty.is_moderated()
         tpl_paste["is_private"] = self.pasty.is_private()
+        tpl_paste["is_public"] = self.pasty.is_public()
         tpl_paste["is_waiting_for_approval"] = self.pasty.is_waiting_for_approval()
-        tpl_paste["is_code_viewable"] = self.code_is_viewable
+        tpl_paste["is_code_viewable"] = self.pasty.is_code_viewable()
 
         tpl_paste["language"] = {}
         tpl_paste["language"]["u"] = self.pasty.get_language_url()
@@ -214,14 +208,6 @@ class Paste (app.web.RequestHandler):
         if self.content["is_thread"] == True:
             self.content["thread_pastes"] = thread_pastes
         self.content["h1"] = "p" + self.pasty_slug
-        self.content["page-title"] =  self.paste_title
-        self.content["pasty_title"] =  self.paste_title
-        self.content["pasty_slug"] = self.pasty.slug
-        self.content["pasty_is_moderated"] = self.pasty.is_moderated
-        self.content["is_code_viewable"] = self.code_is_viewable
-        self.content["is_private"] = self.pasty.is_private()
-        self.content["is_public"] = self.pasty.is_public()
-        self.content["is_diffable"] = self.pasty.is_diffable()
         self.content["user_name"] = self.pasty.posted_by_user_name
         if self.pasty.user:
             self.content["u_user"] = app.url("users/%s", self.pasty.user.id)
@@ -233,9 +219,8 @@ class Paste (app.web.RequestHandler):
             self.content["pasty_language_url"] = lang["home_url"]
 
         self.add_atom_feed(app.url("%s.atom", self.pasty_slug), self.pasty_slug + " (Atom feed)", "alternate")
+        self.path.add(self.pasty.get_title(), self.pasty.get_url())
         self.write_out("./200.html")
-
-        #self.update_expiration_time()
 
     def get_404(self):
         self.path.add("Paste not found")

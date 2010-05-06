@@ -3,7 +3,7 @@
 {%block page-title %}
     {{user_name|escape}}
     /
-    {{ pasty_title }} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ paste.size.0 }} {{ paste.size.1 }}, {{ paste.loc }} LOC)
+    {{paste.title|escape}} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ paste.size.0 }} {{ paste.size.1 }}, {{ paste.loc }} LOC)
 {% endblock %}
 
 {%block h1 %}
@@ -12,7 +12,7 @@
     {% endif%}
     {%if u_user %}<a href="{{u_user}}">{{user_name|escape}}</a>{%else%}{{user_name|escape}}{%endif%}
     /
-    <a href="{{u_pasty}}">{{ pasty_title }}</a>
+    <a href="{{paste.u}}">{{paste.title|escape}}</a>
 {% endblock %}
 
 {% block h1-headers %}
@@ -24,7 +24,7 @@ Pasted at {{paste.pasted_at}}
 
 {% include "../../../template/paste/code.html" %}
 
-{% if is_thread or is_public %}
+{% if is_thread or paste.is_public %}
     <h2>
         <a href="{{u_thread}}" name="thread"><strong>Thread</strong></a>
         {% if paste.thread.length %}
@@ -46,7 +46,7 @@ Pasted at {{paste.pasted_at}}
 {% endif %}
 
 
-{% if is_diffable %}
+{% if paste.is_diffable %}
 <h2><a name="remote_diff"><strong>Remote diff</strong></a></h2>
 <form action="{{u_remote_diff}}" method="get">
     <table class="invisible" style="width:500px;">

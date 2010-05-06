@@ -43,7 +43,9 @@ class RequestHandler (webapp.RequestHandler):
         self.scripts = []
         self.feeds = []
         self.styles = []
-        self.user = app.user.User()
+        self.user = app.user.get_current_user()
+        if self.user:
+            self.user.refresh()
 
     def add_atom_feed (self, url, title, rel):
         self.add_feed (url, "application/atom+xml", title, rel)
