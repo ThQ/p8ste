@@ -15,18 +15,18 @@ import os
 import urllib
 
 
-def url (format, *args):
+def _url (path_prefix, path_format, path_suffix, *args):
     domain = "http://" + os.environ["SERVER_NAME"]
     if os.environ["SERVER_PORT"] != "80":
         domain += ":" + os.environ["SERVER_PORT"]
     out = ""
     argc = 0
     i = 0
-    format += " "
-    i_max = len(format) - 1
+    path_format += " "
+    i_max = len(path_format) - 1
     while i < i_max:
-        if format[i:i+1] == "%":
-            c = format[i + 1:i + 2]
+        if path_format[i:i+1] == "%":
+            c = path_format[i + 1:i + 2]
             if c == "i":
                 out += str(int(args[argc]))
                 argc += 1
@@ -36,8 +36,14 @@ def url (format, *args):
                 argc += 1
                 i += 1
             else:
-                out += "%" + format
+                out += "%" + path_format
         else:
-            out += format[i:i + 1]
+            out += path_format[i:i + 1]
         i += 1
-    return domain + "/" + out
+    return domain + "/" + path_prefix + out + path_suffix
+
+def url (path_format, *args):
+    return _url ("", path_format, "", *args)
+
+def image_url (image_path, *args):
+    return _url("images/", image_path, "", *args)

@@ -138,16 +138,16 @@ class Pasty (db.Model):
         url = ""
 
         if self.status == kPASTE_STATUS_PRIVATE:
-            url = app.url("images/silk/lock.png")
+            url = app.image_url("silk/lock.png")
         elif self.status == kPASTE_STATUS_MODERATED:
-            url = app.url("images/silk/flag_red.png")
+            url = app.image_url("silk/flag_red.png")
         elif self.status == kPASTE_STATUS_WAITING_FOR_APPROVAL:
-            url = app.url("images/silk/hourglass.png")
+            url = app.image_url("silk/hourglass.png")
         elif self.status == kPASTE_STATUS_PUBLIC:
             if self.language and smoid.languages.languages.has_key(self.language):
-                url = app.url("images/languages/" + self.language + ".png")
+                url = app.image_url("languages/%s.png", self.language)
             else:
-                url = app.url("images/silk/page_white_text.png")
+                url = app.image_url("silk/page_white_text.png")
         return url
 
     def get_language_name (self):
