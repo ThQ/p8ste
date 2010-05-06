@@ -1,0 +1,17 @@
+{% extends "../../index.html" %}
+
+{%block page-title %}Moderate {{paste.slug|escape}}{% endblock %}
+
+{%block h1 %}
+Moderate <a href="{{paste.u}}">{{paste.slug|escape}}</a>
+{% endblock %}
+
+{%block page-content %}
+<p class="info"><strong><a href="{{paste.u}}">{{paste.slug|escape}}</a> has been moderated.</strong></p>
+
+<ul>
+    <li><a href="{{paste.u}}"><strong>Go back to {{paste.slug|escape}}</strong></a></li>
+</ul>
+
+{% endblock %}
+
