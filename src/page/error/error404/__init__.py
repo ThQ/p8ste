@@ -20,7 +20,7 @@ import app.web
 class Error404 (app.web.RequestHandler):
 
     def get (self):
-        self.set_module(__name__ + "__init__")
+        self.set_module(__name__ + ".__init__")
         self.content["http_query"] = self.request.path
         if self.request.query != "":
             self.content["http_query"] = self.content["http_query"] + self.request.query
