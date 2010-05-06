@@ -292,7 +292,7 @@ class Paste (app.web.RequestHandler):
             elif dbpaste.thread_level < cur_level:
                 cur_level = dbpaste.thread_level
                 lpaste["close_list"] = 1
-                list_opened -= 1
+                lists_opened -= 1
             pastes.append(lpaste)
 
         self.content["lists_unclosed"] = xrange(0, lists_opened)

@@ -7,11 +7,11 @@
         <li>
             {% if thread_paste.u_language_image %}<img src="{{thread_paste.u_language_image}}" alt="{{thread_paste.language_name}}" title="{{ thread_paste.language_name }}" width="16" height="16" /> {% endif %}
 
-            {% ifequal pasty_slug thread_paste.slug %}<strong>{% endifequal %}
+            {% ifequal paste.slug thread_paste.slug %}<strong>{% endifequal %}
             <a href="{{ thread_paste.u }}">{{ thread_paste.title|escape }}</a>
 
             <small>
-                {% ifnotequal thread_paste.slug pasty_slug %}
+                {% ifnotequal thread_paste.slug paste.slug %}
                 [ {% ifequal thread_paste.diff_size.0 0 %}
                     =B
                 {%else%}
@@ -20,9 +20,9 @@
                 ]
                 {% endifnotequal %}
                 &mdash; {{thread_paste.user_name}}
-                {% ifnotequal pasty_slug thread_paste.slug %}| <a href="{{thread_paste.u_diff}}">Diff</a>{% endifnotequal %}
+                {% ifnotequal paste.slug thread_paste.slug %}| <a href="{{thread_paste.u_diff}}">Diff</a>{% endifnotequal %}
             </small>
-            {% ifequal pasty_slug thread_paste.slug %}</strong>{% endifequal %}
+            {% ifequal paste.slug thread_paste.slug %}</strong>{% endifequal %}
         </li>
         {% if thread_paste.close_list %}
             </ul></li>

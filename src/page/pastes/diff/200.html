@@ -26,9 +26,9 @@
         <tr>
             <td>{{ paste.posted_at }}</td>
             <td>{{ paste.posted_by }}</td>
-            <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon|url}}" alt="{{ paste.language }}" width="16" height="16" />{% endif %}</td>
+            <td>{% if paste.u_language_icon %}<img src="{{ paste.u_language_icon}}" alt="{{ paste.language }}" width="16" height="16" />{% endif %}</td>
             <td><a href="{{ paste.u }}"><strong>{{ paste.slug|escape }}</strong></a></td>
-            <td>{{ paste.size.0 }}<small>{{ paste.size.1 }}</td>
+            <td>{{ paste.size.0 }}<small>{{ paste.size.1 }}</small></td>
             <td>{{ paste.loc }}</td>
         </tr>
         {% endfor %}
