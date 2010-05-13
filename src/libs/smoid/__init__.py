@@ -2,6 +2,7 @@ import sys
 
 
 import smoid.languages.ada
+import smoid.languages.begin
 import smoid.languages.klass
 import smoid.languages.html
 import smoid.languages.imports
@@ -23,6 +24,7 @@ class GrandChecker:
         self.languages = {}
         self.checkers = []
         self.checkers.extend(smoid.languages.ada.AdaCheckCollection())
+        self.checkers.append(smoid.languages.begin.BeginCheck())
         self.checkers.append(smoid.languages.klass.KlassCheck())
         self.checkers.extend(smoid.languages.html.HtmlCheckCollection())
         self.checkers.append(smoid.languages.imports.ImportCheck())
