@@ -16,6 +16,13 @@ import re
 
 languages = {}
 
+languages["ada"] = {
+    "lexer": "ada",
+    "name": "Ada",
+    "home_url": "http://en.wikipedia.org/wiki/Ada_%28programming_language%29",
+    "u_icon": "images/languages/ada.png"
+}
+
 languages["html"] = {
     "lexer": "html",
     "name": "HTML",
