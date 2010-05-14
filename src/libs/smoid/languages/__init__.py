@@ -37,6 +37,13 @@ languages["java"] = {
     "u_icon": "images/languages/java.png"
 }
 
+languages["lua"] = {
+    "lexer": "lua",
+    "name": "Lua",
+    "home_url": "http://www.lua.org",
+    "u_icon": "images/languages/lua.png"
+}
+
 languages["php"] = {
     "lexer": "php",
     "name": "PHP",
