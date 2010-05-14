@@ -1,3 +1,5 @@
+import re
+
 from smoid.languages import Check, CheckCollection
 
 
@@ -18,8 +20,39 @@ class RubyFunctionDeclarationCheck (Check):
         self.name = "Ruby:Functiondeclaration"
         self.example = "def do_it!"
         self.add_language("ruby")
-        self.add_multiple_matches("(^|\r|\n)\s*def\s+(self\.)?[a-zA-Z_][a-zA-Z_0-9]*(!|\?)?", 20)
 
+        res_sol = "(?:^|\r|\n)"
+        res_name = "(?:self\.)?[a-zA-Z_][a-zA-Z0-9_]*(?:!|\?)?"
+        res_arg = "(?:&|\*)?\s*[a-zA-Z0-9_]+"
+        res_args = "(?:\(\s*(" + res_arg + "(?:\s*,\s*" + res_arg + ")*)?\s*\))?"
+        res_eol = "\s*(?:\r|\n)"
+
+        res_func = res_sol + "\s*"
+        res_func += "def\s+"
+        res_func += "(" + res_name + ")\s*"
+        res_func += res_args
+        res_func += res_eol
+
+        self.re_func = re.compile(res_func)
+
+        self.special_methods = [
+            "initialize",
+            "inspect",
+            "method_missing",
+            "respond_to?",
+            "to_a",
+            "to_enum",
+            "to_s"
+        ]
+
+    def check (self, content):
+        self.reset()
+
+        for match in self.re_func.finditer(content):
+            func_name = match.group(1)
+            self.incr_language_probability("ruby", 20)
+            if func_name in self.special_methods:
+                self.incr_language_probability("ruby", 20)
 
 class RubyModuleDeclarationCheck (Check):
     def __init__ (self):
