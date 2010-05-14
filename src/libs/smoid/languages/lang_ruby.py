@@ -4,7 +4,7 @@ from smoid.languages import Check, CheckCollection
 class RubyClassDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "RubyClassDeclaration"
+        self.name = "Ruby:ClassDeclaration"
         self.example = "CoolClass < CoolClassDad"
 
         self.add_language("ruby")
@@ -15,7 +15,7 @@ class RubyClassDeclarationCheck (Check):
 class RubyFunctionDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "RubyFunctiondeclaration"
+        self.name = "Ruby:Functiondeclaration"
         self.example = "def do_it!"
         self.add_language("ruby")
         self.add_multiple_matches("(^|\r|\n)\s*def\s+(self\.)?[a-zA-Z_][a-zA-Z_0-9]*(!|\?)?", 20)
@@ -24,7 +24,7 @@ class RubyFunctionDeclarationCheck (Check):
 class RubyModuleDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "RubyModuleDeclaration"
+        self.name = "Ruby:ModuleDeclaration"
         self.example = "module CoolModule"
         self.add_language("ruby")
         self.add_multiple_matches("(^|\r|\n)\s*module\s+[a-zA-Z_][a-zA-Z_0-9]*", 20)
@@ -33,7 +33,7 @@ class RubyModuleDeclarationCheck (Check):
 class RubyRequireCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "RubyRequire"
+        self.name = "Ruby:Require"
         self.example = "require 'dude.rb'"
         self.add_language("ruby")
         self.add_multiple_matches("(^|\n|\r)\s*require\s+'[^']+'\s*(\r|\n|$)", 40)
@@ -42,7 +42,7 @@ class RubyRequireCheck (Check):
 class RubyStrangeFunctionNamesCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "RubyStrangeFunctionNames"
+        self.name = "Ruby:StrangeFunctionNames"
         self.example = ".do_it!"
         self.add_language("ruby")
         self.add_multiple_matches("\.[a-zA-Z_][a-zA-Z_0-9](\?|!)", 20)
