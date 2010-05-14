@@ -64,7 +64,7 @@ class Pasty (db.Model):
     forks = db.IntegerProperty(default=0)
     indirect_forks = db.IntegerProperty(default=0)
     is_moderated = db.BooleanProperty(default=False)
-    language = db.StringProperty(choices=["ada", "html", "java", "perl", "php", "python", "python_console", "ruby", "scala", "sh", "sql", "xml"])
+    language = db.StringProperty(choices=["ada", "html", "java", "lua", "perl", "php", "python", "python_console", "ruby", "scala", "sh", "sql", "xml"])
     lines = db.IntegerProperty(default=0)
     posted_at = db.DateTimeProperty()
     posted_by_ip = db.StringProperty(default="")
