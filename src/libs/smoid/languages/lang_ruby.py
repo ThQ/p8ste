@@ -77,6 +77,7 @@ class RubyStrangeFunctionNamesCheck (Check):
         Check.__init__(self)
         self.name = "Ruby:StrangeFunctionNames"
         self.example = ".do_it!"
+        self.type = Check.kTYPE_MICRO
         self.add_language("ruby")
         self.add_multiple_matches("\.[a-zA-Z_][a-zA-Z_0-9](\?|!)", 20)
 
