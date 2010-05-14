@@ -6,7 +6,7 @@ from smoid.languages import Check, CheckCollection
 class PythonClassDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "PythonClassDeclaration"
+        self.name = "Python:ClassDeclaration"
         self.example = "class CoolClass:"
         self.add_language("python")
         re_class = "(?:[a-zA-Z_][a-zA-Z0-9_]*)"
@@ -17,7 +17,7 @@ class PythonClassDeclarationCheck (Check):
 class PythonInitMethodCheck(Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "PythonInitMethod"
+        self.name = "Python:InitMethod"
         self.add_language("python")
         self.add_multiple_matches("\s+def\s+__init__\s*\(\s*self\s*,", 40)
 
@@ -25,7 +25,7 @@ class PythonInitMethodCheck(Check):
 class PythonImportCheck(Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "PythonImport"
+        self.name = "Python:Import"
         self.example = "from subprocess import Popen, PIPE"
         self.add_language("python")
 
