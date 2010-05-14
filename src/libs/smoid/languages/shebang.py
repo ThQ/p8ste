@@ -7,6 +7,7 @@ class ShebangCheck (Check):
         Check.__init__ (self)
         self.name = "Shebang"
         self.example = "#!/usr/bin/python"
+        self.type = Check.kTYPE_FINAL
         self.add_language("perl")
         self.add_language("php")
         self.add_language("python")
