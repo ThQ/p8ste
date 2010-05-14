@@ -12,6 +12,7 @@ class KlassCheck (Check):
         self.example = "public class GreatClassRight : DadClass"
         self.add_language("csharp")
         self.add_language("java")
+        self.add_language("python")
         self.add_language("php")
         self.add_language("scala")
 
@@ -54,6 +55,7 @@ class KlassCheck (Check):
 
             self.incr_language_probability("java", 20)
             self.incr_language_probability("csharp", 20)
+            self.incr_language_probability("python", 20)
             self.incr_language_probability("php", 20)
 
             if match_str != "":
