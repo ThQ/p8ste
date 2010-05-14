@@ -10,13 +10,13 @@ import smoid.languages.lang_lua
 import smoid.languages.lang_perl
 import smoid.languages.lang_php
 import smoid.languages.lang_python
+import smoid.languages.lang_python_console
 import smoid.languages.lang_ruby
 import smoid.languages.lang_sh
 import smoid.languages.lang_sql
 import smoid.languages.lang_xml
 import smoid.languages.namespace
 import smoid.languages.package
-import smoid.languages.python_console
 import smoid.languages.shebang
 import smoid.languages.whyle
 
@@ -25,12 +25,14 @@ class GrandChecker:
     def __init__ (self):
         self.languages = {}
         self.checkers = []
+
         self.checkers.extend(smoid.languages.lang_ada.AdaCheckCollection())
         self.checkers.extend(smoid.languages.lang_html.HtmlCheckCollection())
         self.checkers.extend(smoid.languages.lang_lua.LuaCheckCollection())
         self.checkers.extend(smoid.languages.lang_perl.PerlCheckCollection())
         self.checkers.extend(smoid.languages.lang_php.PhpCheckCollection())
         self.checkers.extend(smoid.languages.lang_python.PythonCheck())
+        self.checkers.extend(smoid.languages.lang_python_console.PythonConsoleCheck())
         self.checkers.extend(smoid.languages.lang_ruby.RubyCheckCollection())
         self.checkers.extend(smoid.languages.lang_sh.ShCollection())
         self.checkers.extend(smoid.languages.lang_sql.SqlCheckCollection())
@@ -41,9 +43,9 @@ class GrandChecker:
         self.checkers.append(smoid.languages.imports.ImportCheck())
         self.checkers.append(smoid.languages.namespace.NamespaceCheck())
         self.checkers.append(smoid.languages.package.PackageCheck())
-        self.checkers.extend(smoid.languages.python_console.PythonConsoleCheck())
         self.checkers.append(smoid.languages.shebang.ShebangCheck())
         self.checkers.append(smoid.languages.whyle.WhileCheck())
+
         self.verbose = False
         self.max_checker_name_length = 30
 
