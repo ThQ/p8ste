@@ -5,7 +5,7 @@ class PerlSubroutineCheck (Check):
     def __init__ (self):
         Check.__init__(self)
 
-        self.name = "Subroutine"
+        self.name = "Perl:Subroutine"
         self.example = "sub do_as_i_say {"
         self.add_language("perl")
 
@@ -16,7 +16,7 @@ class PerlUseCheck (Check):
     def __init__ (self):
         Check.__init__(self)
 
-        self.name = "Use"
+        self.name = "Perl:Use"
         self.example = "use File::Spec;"
         self.add_language("perl")
 
