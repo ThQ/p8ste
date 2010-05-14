@@ -5,7 +5,7 @@ class PhpChildClassDeclarationCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "Php:ClassDeclaration"
+        self.name = "Php:Class/Declaration"
         self.example = "class MyClassIsColl extends Dad {"
 
         self.add_language("php")

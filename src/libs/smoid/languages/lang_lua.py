@@ -5,7 +5,7 @@ class LuaFunctionDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
 
-        self.name = "Lua:FunctionDeclaration"
+        self.name = "Lua:Function/Declaration"
         self.example = "function Knot:load(stream)"
         self.add_language("lua")
 

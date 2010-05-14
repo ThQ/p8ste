@@ -41,21 +41,15 @@ class KlassCheck (Check):
             res_modifiers += "(?:" + modifier + "\s+)"
         res_modifiers = "((?:" + res_modifiers + ")*)"
 
-        res_class_name = "[a-zA-Z0-9_][a-zA-Z0-9_-]*"
-        res_class = "((?:\n|\r|;|^)\s*" + res_modifiers + "class " + res_class_name + ")"
+        res_class_name = "[a-zA-Z0-9_\.]+"
+        res_class = "(?:\n|\r|;|^)\s*" + res_modifiers + "class (" + res_class_name + ")"
 
         self.re_class = re.compile(res_class)
 
     def check (self, content):
         self.reset()
-        #matches = self.re_class.findall(content)
 
-        cur_pos = 0
-        while True:
-            match = self.re_class.search(content, cur_pos)
-            if not match:
-                break
-
+        for match in self.re_class.finditer(content):
             match_str = match.group(0)
 
             self.incr_language_probability("java", 20)
@@ -77,6 +71,3 @@ class KlassCheck (Check):
 
             else:
                 self.incr_language_probability("scala", 20)
-
-
-            cur_pos = match.endpos

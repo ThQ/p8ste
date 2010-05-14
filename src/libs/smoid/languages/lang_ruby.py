@@ -6,7 +6,7 @@ from smoid.languages import Check, CheckCollection
 class RubyClassDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Ruby:ClassDeclaration"
+        self.name = "Ruby:Class/Declaration"
         self.example = "CoolClass < CoolClassDad"
 
         self.add_language("ruby")
@@ -17,7 +17,7 @@ class RubyClassDeclarationCheck (Check):
 class RubyFunctionDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Ruby:Functiondeclaration"
+        self.name = "Ruby:Function/Declaration"
         self.example = "def do_it!"
         self.add_language("ruby")
 
@@ -57,7 +57,7 @@ class RubyFunctionDeclarationCheck (Check):
 class RubyModuleDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Ruby:ModuleDeclaration"
+        self.name = "Ruby:Module/Declaration"
         self.example = "module CoolModule"
         self.add_language("ruby")
         self.add_multiple_matches("(^|\r|\n)\s*module\s+[a-zA-Z_][a-zA-Z_0-9]*", 20)

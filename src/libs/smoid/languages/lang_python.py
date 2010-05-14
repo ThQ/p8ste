@@ -6,12 +6,17 @@ from smoid.languages import Check, CheckCollection
 class PythonClassDeclarationCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "Python:ClassDeclaration"
+        self.name = "Python:Class/Declaration"
         self.example = "class CoolClass:"
         self.add_language("python")
-        re_class = "(?:[a-zA-Z_][a-zA-Z0-9_]*)"
-        re_class_full = re_class + "(?:\." + re_class + ")*"
-        self.add_multiple_matches("\s*class\s+" + re_class + "\s*(\(\s*" + re_class_full + "\s*\))?\s*:", 50)
+
+        res_name = "(?:[a-zA-Z_][a-zA-Z0-9_]*)"
+        res_full_name = res_name + "(?:\." + res_name + ")*"
+
+        res_class = "\s*class\s+" + res_name + "\s*"
+        res_class += "(\(\s*" + res_full_name + "\s*\))?\s*:"
+
+        self.add_multiple_matches(res_class, 50)
 
 
 class PythonInitMethodCheck(Check):
