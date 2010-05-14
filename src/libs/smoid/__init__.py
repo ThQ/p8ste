@@ -48,42 +48,47 @@ class GrandChecker:
         self.max_checker_name_length = 30
 
     def check (self, content):
-        check_no = 0
+        types = [
+            smoid.languages.Check.kTYPE_FINAL,
+            smoid.languages.Check.kTYPE_MACRO,
+            smoid.languages.Check.kTYPE_MICRO
+        ]
 
-        check_no_filled_width = len(str(len(self.checkers)))
+        for t in types:
+            self.check_type (t, content)
+
+    def check_type (self, t,  content):
 
         for checker in self.checkers:
+            if checker.type == t:
+                if self.verbose:
+                   display_name = ("<" + checker.name + ">...").ljust(self.max_checker_name_length)
+                   print "[" + self.get_check_type_name(checker.type) + "]",
+                   print "Checking " + display_name,
 
-            if self.verbose:
-               check_no += 1
-               display_name = ("<" + checker.name + ">...").ljust(self.max_checker_name_length)
-               print "#" + str(check_no).zfill(check_no_filled_width) + ".",
-               print "[" + self.get_check_type_name(checker.type) + "]",
-               print "Checking " + display_name,
+                checker.check(content)
 
-            checker.check(content)
-
-            for language_name in checker.languages:
-                language = checker.languages[language_name]
-                if not self.languages.has_key(language_name):
-                    self.languages[language_name] = {"name": language_name, "probability": language.probability}
-                else:
-                    self.languages[language_name]["probability"] += language.probability
-
-            did_languages_passed = False
-            languages = ""
-            if len(checker.languages) > 0:
                 for language_name in checker.languages:
-                    prob = checker.languages[language_name].probability
-                    if prob > 0:
-                        languages += language_name + " +" + str(prob) + ", "
-                        did_languages_passed = True
+                    language = checker.languages[language_name]
+                    if not self.languages.has_key(language_name):
+                        self.languages[language_name] = {"name": language_name, "probability": language.probability}
+                    else:
+                        self.languages[language_name]["probability"] += language.probability
 
-            if self.verbose:
-                if did_languages_passed:
-                    print "[" + languages[:-2] + "]"
-                else:
-                    print "-"
+                did_languages_passed = False
+                languages = ""
+                if len(checker.languages) > 0:
+                    for language_name in checker.languages:
+                        prob = checker.languages[language_name].probability
+                        if prob > 0:
+                            languages += language_name + " +" + str(prob) + ", "
+                            did_languages_passed = True
+
+                if self.verbose:
+                    if did_languages_passed:
+                        print "[" + languages[:-2] + "]"
+                    else:
+                        print "-"
 
     def get_check_type_name (self, t):
         name = ""
