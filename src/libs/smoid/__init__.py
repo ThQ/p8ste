@@ -17,6 +17,7 @@ import smoid.languages.python_console
 import smoid.languages.sh
 import smoid.languages.shebang
 import smoid.languages.sql
+import smoid.languages.whyle
 import smoid.languages.xml
 
 
@@ -40,6 +41,7 @@ class GrandChecker:
         self.checkers.extend(smoid.languages.sh.ShCollection())
         self.checkers.append(smoid.languages.shebang.ShebangCheck())
         self.checkers.extend(smoid.languages.sql.SqlCheckCollection())
+        self.checkers.append(smoid.languages.whyle.WhileCheck())
         self.checkers.extend(smoid.languages.xml.XmlCheck())
         self.verbose = False
         self.max_checker_name_length = 30
@@ -55,6 +57,7 @@ class GrandChecker:
                check_no += 1
                display_name = ("<" + checker.name + ">...").ljust(self.max_checker_name_length)
                print "#" + str(check_no).zfill(check_no_filled_width) + ".",
+               print "[" + self.get_check_type_name(checker.type) + "]",
                print "Checking " + display_name,
 
             checker.check(content)
@@ -80,6 +83,18 @@ class GrandChecker:
                     print "[" + languages[:-2] + "]"
                 else:
                     print "-"
+
+    def get_check_type_name (self, t):
+        name = ""
+        if t == smoid.languages.Check.kTYPE_FINAL:
+            name = "FINAL"
+        elif t == smoid.languages.Check.kTYPE_MACRO:
+            name = "MACRO"
+        elif t == smoid.languages.Check.kTYPE_MICRO:
+            name = "MICRO"
+        else:
+            name = "UNKNO"
+        return name
 
     def find_out_language_of_file (self, file_path):
         lang = ""
