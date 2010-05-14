@@ -5,7 +5,7 @@ class PhpChildClassDeclarationCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "PhpClassDeclaration"
+        self.name = "Php:ClassDeclaration"
         self.example = "class MyClassIsColl extends Dad {"
 
         self.add_language("php")
@@ -17,7 +17,7 @@ class PhpClosingTagCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "PhpClosingTag"
+        self.name = "Php:ClosingTag"
         self.example = "?>"
 
         self.add_language("php")
@@ -28,8 +28,9 @@ class PhpInstanceMemberCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "PhpInstanceMember"
+        self.name = "Php:InstanceMember"
         self.example = "$my_var->is_cool"
+        self.type = Check.kTYPE_MICRO
 
         self.add_language("php")
         self.add_multiple_matches("\$[a-zA-Z_][a-zA-Z0-9]*->[a-zA-Z_][a-zA-Z0-9]*", 20)
@@ -39,8 +40,9 @@ class PhpGetPostVariablesCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "PhpGetPostVariables"
+        self.name = "Php:GetPostVariables"
         self.example = "$_GET";
+        self.type = Check.kTYPE_MICRO
         self.add_language("php")
 
         self.add_multiple_matches("\$_(GET)|(POST)", 20)
@@ -50,7 +52,7 @@ class PhpOpeningTagCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "PhpOpeningTag"
+        self.name = "Php:OpeningTag"
         self.example = "<?php"
         self.add_language("php")
         self.add_one_time_match("\<\?php\\s|\n|\r", 80)
@@ -61,5 +63,6 @@ class PhpCheckCollection (CheckCollection):
 
         self.append(PhpChildClassDeclarationCheck())
         self.append(PhpClosingTagCheck())
+        self.append(PhpInstanceMemberCheck())
         self.append(PhpGetPostVariablesCheck())
         self.append(PhpOpeningTagCheck())
