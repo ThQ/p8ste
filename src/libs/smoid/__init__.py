@@ -11,11 +11,11 @@ import smoid.languages.lang_perl
 import smoid.languages.lang_php
 import smoid.languages.lang_python
 import smoid.languages.lang_ruby
+import smoid.languages.lang_sh
 import smoid.languages.lang_xml
 import smoid.languages.namespace
 import smoid.languages.package
 import smoid.languages.python_console
-import smoid.languages.sh
 import smoid.languages.shebang
 import smoid.languages.sql
 import smoid.languages.whyle
@@ -32,6 +32,7 @@ class GrandChecker:
         self.checkers.extend(smoid.languages.lang_php.PhpCheckCollection())
         self.checkers.extend(smoid.languages.lang_python.PythonCheck())
         self.checkers.extend(smoid.languages.lang_ruby.RubyCheckCollection())
+        self.checkers.extend(smoid.languages.lang_sh.ShCollection())
         self.checkers.extend(smoid.languages.lang_xml.XmlCheck())
 
         self.checkers.append(smoid.languages.begin.BeginCheck())
@@ -40,7 +41,6 @@ class GrandChecker:
         self.checkers.append(smoid.languages.namespace.NamespaceCheck())
         self.checkers.append(smoid.languages.package.PackageCheck())
         self.checkers.extend(smoid.languages.python_console.PythonConsoleCheck())
-        self.checkers.extend(smoid.languages.sh.ShCollection())
         self.checkers.append(smoid.languages.shebang.ShebangCheck())
         self.checkers.extend(smoid.languages.sql.SqlCheckCollection())
         self.checkers.append(smoid.languages.whyle.WhileCheck())

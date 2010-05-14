@@ -5,7 +5,7 @@ class ShControlFlowCheck (Check):
 
     def __init__ (self):
         Check.__init__ (self)
-        self.name = "ShControlFlow"
+        self.name = "Sh:ControlFlow"
         self.example = "if [ -f ./myfile ] ;"
 
         self.add_language("sh")
