@@ -4,7 +4,7 @@ from smoid.languages import Check, CheckCollection
 class SqlCommandsCheck (Check):
     def __init__ (self):
         Check.__init__(self)
-        self.name = "SqlCommands"
+        self.name = "Sql:Commands"
         self.example = "create table sql_commands;"
 
         sql_commands = []
