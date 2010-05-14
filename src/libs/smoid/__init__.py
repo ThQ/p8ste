@@ -1,11 +1,11 @@
 import sys
 
 
-import smoid.languages.ada
 import smoid.languages.begin
 import smoid.languages.klass
 import smoid.languages.html
 import smoid.languages.imports
+import smoid.languages.lang_ada
 import smoid.languages.lang_lua
 import smoid.languages.namespace
 import smoid.languages.package
@@ -24,11 +24,11 @@ class GrandChecker:
     def __init__ (self):
         self.languages = {}
         self.checkers = []
-        self.checkers.extend(smoid.languages.ada.AdaCheckCollection())
         self.checkers.append(smoid.languages.begin.BeginCheck())
         self.checkers.append(smoid.languages.klass.KlassCheck())
         self.checkers.extend(smoid.languages.html.HtmlCheckCollection())
         self.checkers.append(smoid.languages.imports.ImportCheck())
+        self.checkers.extend(smoid.languages.lang_ada.AdaCheckCollection())
         self.checkers.extend(smoid.languages.lang_lua.LuaCheckCollection())
         self.checkers.append(smoid.languages.namespace.NamespaceCheck())
         self.checkers.append(smoid.languages.package.PackageCheck())
