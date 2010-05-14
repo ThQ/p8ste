@@ -11,6 +11,7 @@ import smoid.languages.lang_perl
 import smoid.languages.lang_php
 import smoid.languages.lang_python
 import smoid.languages.lang_ruby
+import smoid.languages.lang_xml
 import smoid.languages.namespace
 import smoid.languages.package
 import smoid.languages.python_console
@@ -18,7 +19,6 @@ import smoid.languages.sh
 import smoid.languages.shebang
 import smoid.languages.sql
 import smoid.languages.whyle
-import smoid.languages.xml
 
 
 class GrandChecker:
@@ -32,6 +32,7 @@ class GrandChecker:
         self.checkers.extend(smoid.languages.lang_php.PhpCheckCollection())
         self.checkers.extend(smoid.languages.lang_python.PythonCheck())
         self.checkers.extend(smoid.languages.lang_ruby.RubyCheckCollection())
+        self.checkers.extend(smoid.languages.lang_xml.XmlCheck())
 
         self.checkers.append(smoid.languages.begin.BeginCheck())
         self.checkers.append(smoid.languages.klass.KlassCheck())
@@ -43,7 +44,6 @@ class GrandChecker:
         self.checkers.append(smoid.languages.shebang.ShebangCheck())
         self.checkers.extend(smoid.languages.sql.SqlCheckCollection())
         self.checkers.append(smoid.languages.whyle.WhileCheck())
-        self.checkers.extend(smoid.languages.xml.XmlCheck())
         self.verbose = False
         self.max_checker_name_length = 30
 
