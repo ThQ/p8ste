@@ -101,9 +101,9 @@ languages["xml"] = {
 }
 
 class Check:
-    kTYPE_DECISIVE = 1
-    kTYPE_NORMAL = 2
-    kTYPE_SUPERFLUOUS = 3
+    kTYPE_FINAL = 1
+    kTYPE_MACRO = 2
+    kTYPE_MICRO = 3
 
     def __init__(self):
         self.content = ""
@@ -112,7 +112,7 @@ class Check:
         self.multiple_matches = []
         self.name = ""
         self.one_time_matches = []
-        self.type = Check.kTYPE_SUPERFLUOUS
+        self.type = Check.kTYPE_MACRO
 
     def add_language (self, language_name):
         self.languages[language_name] = CheckLanguage(name=language_name)
@@ -159,6 +159,9 @@ class Check:
 
     def set_languages (self, languages):
         self.languages = languages
+
+    def set_type (self, t):
+        self.type = t
 
     def _test (self):
         pass
