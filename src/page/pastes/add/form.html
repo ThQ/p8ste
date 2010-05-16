@@ -24,13 +24,14 @@
             <td>
                 <ul>
                     <li>
-                        <label for="pasty_code">Your code <small>(we'll try to guess which language you're using, and highlight accordingly)</small></label>
+                        <label for="pasty_code">Your code <small>(we'll try to guess which language you're using, and choose a syntax-highlighting accordingly)</small></label>
                         {% if pasty_code_error %}
                         <p class="warning">{{ pasty_code_error }}</p>
                         {% endif %}
                         <div class="input">
                             <div><textarea name="pasty_code" id="pasty_code" rows="15" cols="50">{{ pasty_code }}</textarea></div>
                         </div>
+                        <p class="dyn"><strong>Did you know ?</strong> You can highlight a specific line by prefixing it with <code>@h@</code></p>
                     </li>
                     <li>
                         <p style="text-align:right;">
