@@ -11,6 +11,8 @@
 # License for more details.
 
 
+import feedparser
+from google.appengine.api import memcache
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
@@ -40,12 +42,24 @@ class RequestHandler (webapp.RequestHandler):
         self.module_directory = ""
         self.module_url = ""
         self.content = {}
+        self.content["APP"] = {}
         self.scripts = []
         self.feeds = []
         self.styles = []
         self.user = app.user.get_current_user()
         if self.user:
             self.user.refresh()
+
+        self.content["APP"]["SHOW_TWITTER"] = settings.SHOW_TWITTER and settings.TWITTER_ACCOUNT
+        if self.content["APP"]["SHOW_TWITTER"]:
+            tweet = memcache.get("twitter/latest")
+            if tweet is None:
+                feed = feedparser.parse("http://twitter.com/statuses/user_timeline/" + settings.TWITTER_ACCOUNT + ".rss")
+                if len(feed.entries) > 0:
+                    tweet = feed.entries[0].description[len(settings.TWITTER_ACCOUNT) + 2:]
+                    memcache.add("twitter/latest", tweet, settings.TWITTER_UPDATE_FREQUENCY)
+            self.content["APP"]["U_TWITTER"] = "http://twitter.com/" + settings.TWITTER_ACCOUNT
+            self.content["APP"]["TWEET"] = tweet
 
     def add_atom_feed (self, url, title, rel):
         self.add_feed (url, "application/atom+xml", title, rel)

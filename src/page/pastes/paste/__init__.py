@@ -44,7 +44,8 @@ class Paste (app.web.RequestHandler):
         r_lines = ""
 
         for i, line in enumerate(self.lines):
-            r_lines += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a>\n"
+            j = i + 1
+            r_lines += "<a href=\"#l" + str(j) + "\" name=\"l" + str(j) + "\">" + str(j) + "</a>\n"
 
             if str(i) in highlights:
                 r_code += """<span class="hl">""" + line + "</span>\n"

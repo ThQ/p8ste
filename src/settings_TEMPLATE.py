@@ -78,3 +78,18 @@ USE_RECAPTCHA = False
 RECAPTCHA_PUBLIC_KEY = ""
 
 RECAPTCHA_PRIVATE_KEY = ""
+
+
+# -----------------------------------------------------------------------------
+# TWITTER
+# You'll need feedparser from http://www.feedparser.org to use that.
+# -----------------------------------------------------------------------------
+
+# Whether to fetch the latest tweet or not.
+SHOW_TWITTER = False
+
+# The twitter account to fetch.
+TWITTER_ACCOUNT = ""
+
+# How often do we have to update twitter news (in seconds)
+TWITTER_UPDATE_FREQUENCY = 60 * 60 * 2

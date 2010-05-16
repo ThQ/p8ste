@@ -63,6 +63,9 @@
         </div>
 
         <div id="footers">
+            {% if APP.SHOW_TWITTER %}
+            <p class="twitter"><a href="{{APP.U_TWITTER}}"><strong>Follow us on Twitter</strong></a> : {{APP.TWEET|escape}}</p>
+            {% endif %}
             <table class="invisible">
                 <tr>
                     <td>
