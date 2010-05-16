@@ -224,38 +224,6 @@ class Add (app.web.RequestHandler):
             self.content["recaptcha"] = recaptcha.client.captcha.displayhtml(settings.RECAPTCHA_PUBLIC_KEY)
             self.display_form()
 
-    def parse_code (self, raw_code):
-        code = ""
-        highlights = []
-        lines = raw_code.splitlines()
-        for i, line in enumerate(lines):
-            if line.startswith("@h@"):
-                highlights.append(i + 1)
-                code += line[3:]
-            else:
-                code += line
-            code += "\n"
-
-        return code, highlights
-
-    def prepare_code (self, code, language_name, highlights):
-        result = code
-
-        if language_name != "":
-            if language_name in smoid.languages.languages:
-                language = smoid.languages.languages[language_name]
-                if "lexer" in language:
-                    lexer_name = language["lexer"]
-                    lexer = pygments.lexers.get_lexer_by_name(lexer_name)
-                    formatter = app.syhili.HtmlFormatter(linenos=True, cssclass="code")
-                    if lexer and formatter:
-                        result = pygments.highlight(code, lexer, formatter)
-
-        if result == "":
-            result = cgi.escape(code)
-
-        return result
-
     def post (self, parent_paste_slug=""):
         self.parent_paste_slug = parent_paste_slug
         self.on_load()
@@ -289,25 +257,16 @@ class Add (app.web.RequestHandler):
         self.paste = app.model.Pasty()
         paste_is_private = self.request.get("submit") == "privately"
 
-        raw_code, highlights = self.parse_code(self.form_code)
-        code_colored = self.prepare_code(raw_code, self.paste.language, highlights)
-
-        self.paste.characters = len(self.form_code)
-        self.paste.code = self.form_code
+        self.paste.set_code(self.form_code)
         self.paste.edited_at = datetime.datetime.now()
         self.paste.edited_by_ip = self.request.remote_addr
         self.paste.forks = 0
-        self.paste.highlights = ",".join([str(line) for line in highlights])
         self.paste.indirect_forks = 0
-        self.paste.language = smoid.GrandChecker().find_out_language(self.paste.code)
-        self.paste.code_colored = code_colored
-        self.paste.lines = self.form_code.count("\n") + 1
         self.paste.parent_paste = ""
         self.paste.posted_at = datetime.datetime.now()
         self.paste.posted_by_ip = self.request.remote_addr
         self.paste.replies = 0
         self.paste.slug = slug
-        self.paste.snippet = app.model.Pasty.make_snippet(raw_code, settings.PASTE_SNIPPET_MAX_LENGTH)
 
         if not is_reply and paste_is_private:
             self.paste.status = app.model.kPASTE_STATUS_PRIVATE

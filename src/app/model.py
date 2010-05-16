@@ -11,12 +11,14 @@
 # License for more details.
 
 
+import cgi
 import google.appengine.api.users
 from google.appengine.ext import db
 import random
 
 import app
 import app.user
+import settings
 import smoid.languages
 
 
@@ -146,6 +148,20 @@ class Pasty (db.Model):
 
         return highlights
 
+    def extract_highlights_from_code (self, code):
+        raw_code = ""
+        highlights = []
+        lines = code.splitlines()
+        for i, line in enumerate(lines):
+            if line.startswith("@h@"):
+                highlights.append(i)
+                raw_code += line[3:]
+            else:
+                raw_code += line
+            raw_code += "\n"
+
+        return raw_code, highlights
+
     def get_code (self):
         code = ""
         if self.status == kPASTE_STATUS_PUBLIC:
@@ -242,6 +258,33 @@ class Pasty (db.Model):
 
     def is_waiting_for_approval (self):
         return self.status == kPASTE_STATUS_WAITING_FOR_APPROVAL
+
+    def set_code (self, code):
+        raw_code, highlights = self.extract_highlights_from_code(code)
+
+        self.code = code
+        self.highlights = ",".join([str(line) for line in highlights])
+        self.characters = len(code)
+        self.snippet = Pasty.make_snippet(raw_code, settings.PASTE_SNIPPET_MAX_LENGTH)
+        self.language = smoid.GrandChecker().find_out_language(raw_code)
+        self.code_colored = self.syntax_highlight_code(raw_code, self.language)
+        self.lines = raw_code.count("\n") + 1
+
+    def syntax_highlight_code (self, code, language_name):
+        result = ""
+
+        if language_name != "" and language_name in smoid.languages.languages:
+            language = smoid.languages.languages[language_name]
+            if "lexer" in language:
+                lexer = pygments.lexers.get_lexer_by_name(language["lexer"])
+                if lexer:
+                    formatter = app.syhili.HtmlFormatter(linenos=True, cssclass="code")
+                    result = pygments.highlight(code, lexer, formatter)
+
+        if result == "":
+            result = cgi.escape(code)
+
+        return result
 
 class Log (db.Model):
    type = db.StringProperty(choices=["paste_add", "paste_fork", "user_register"])
