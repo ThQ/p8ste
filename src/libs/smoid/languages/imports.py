@@ -13,7 +13,7 @@ class ImportCheck (Check):
         self.add_language("java")
         self.add_language("python")
         self.add_language("scala")
-        res_package = "import\s+([a-zA-Z_.]+)\s*(?:\n|\r|;)"
+        res_package = "\s*import\s+([a-zA-Z_.]+)\s*(?:\n|\r|;)"
         self.re_package = re.compile(res_package)
 
     def check (self, content):

@@ -52,6 +52,10 @@
     border:1px solid #FF0000;
 }
 
+.snippet span.hl
+{
+    background-color:#CACACD;
+}
 
 td.lines
 {

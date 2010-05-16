@@ -39,98 +39,60 @@ class Paste (app.web.RequestHandler):
         self.parent = None
         self.path.add("Pastes", app.url("pastes/"))
 
-    def update_highlights (self, hl_string):
-        line_max = self.line_count + 1
-        if hl_string != "":
-            hl_items = hl_string.split(",")
-            for item in hl_items:
-                if item.isdigit():
-                    self.highlights.add(int(item))
-
-                # Line range
-                elif ":" in item != -1:
-                    part = item.partition(":")
-                    if part[0].isdigit() and part[2].isdigit():
-                        r_start = int(part[0])
-                        r_end = int(part[2]) + 1
-                        if r_start > r_end :
-                            t_end = r_end
-                            r_end = t_end
-                            r_start = t_end
-                        if r_start > line_max : r_start = line_max
-                        if r_end > line_max : r_end = line_max
-
-                        if r_start != r_end and not (r_start == 1 and r_end == line_max):
-                            for i in range(r_start, r_end):
-                                if not i in self.highlights:
-                                    self.highlights.add(i)
-
-                # Reset
-                elif item == "-":
-                    self.highlights = []
-
-                # Reverse
-                elif item == "!":
-                    rhl = [hl_string]
-                    for i in range(1, line_max):
-                        if not i in hl:
-                            rhl.add(i)
-                    self.highlights = rhl
-        return self.highlights
-
-    def format_code(self):
+    def format_complex_code (self, highlights):
         r_code = ""
         r_lines = ""
-        i = 1
-        for line in self.lines:
-            #r_lines += "<tr><td class=\"line\">"
+
+        for i, line in enumerate(self.lines):
             r_lines += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a>\n"
-            #r_lines += "</td></tr>\n"
 
-            #r_code += "<tr>"
-            #if i in self.highlights: r_code += "<td class=\"hl\">"
-            #else: r_code += "<td>"
-
-            if self.has_edited_lines and self.edited_lines.has_key(str(i)):
-                r_code += self.format_line_start(cgi.escape(self.request.get("e" + str(i))))
+            if str(i) in highlights:
+                r_code += """<span class="hl">""" + line + "</span>\n"
             else:
-                if line == "": r_code += "\n"
-                else: r_code += self.format_line_start(line)
-
-            #r_code += "</td></tr>\n"
-            i += 1
+                r_code += self.format_line_start(line) + "\n"
 
         return (r_lines, r_code)
 
-    def format_simple_code(self):
-        r_lines = ""
-        r_code = ""
-        i = 1
-        for line in self.lines:
-            #r_lines += "<tr><td class=\"line\"><a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a></td></tr>"
-            r_lines += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">" + str(i) + "</a>\n"
-            #r_code += "<tr><td>"
-            if line == "": r_code += "\n"
-            else: r_code += self.format_line_start(line) + "\n"
-            #r_code += "</td></tr>\n"
-            i += 1
-        return (r_lines, r_code)
-
-    def format_line_start(self, line):
+    def format_line_start (self, line):
+        """
+        Make whitespaces print right in HTML:
+        * Replace spaces with <&nbsp;>
+        * Replace tabs with three <&nbsp;>
+        """
         result = ""
-        i = 0
-        for c in line:
-            if c == " ":
+
+        for i, char in enumerate(line):
+            if char == " ":
                 result += "&nbsp;"
-            elif c == "\t":
+            elif char == "\t":
                 result += "&nbsp;&nbsp;&nbsp;"
             else:
                 result += line[i:]
-                break;
-            i += 1
+                break
+
         return result
 
-    def get(self, pasty_slug):
+    def format_simple_code(self):
+        """
+        Make whitespaces at line starts print right in HTML.
+        """
+
+        r_lines = ""
+        r_code = ""
+
+        for i, line in enumerate(self.lines):
+            r_lines += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">"
+            r_lines += str(i)
+            r_lines += "</a>\n"
+
+            if line == "":
+                r_code += "\n"
+            else:
+                r_code += self.format_line_start(line) + "\n"
+
+        return (r_lines, r_code)
+
+    def get (self, pasty_slug):
         pasties = app.model.Pasty.all()
         pasties.filter("slug =", pasty_slug)
         self.pasty = pasties.get()
@@ -142,29 +104,18 @@ class Paste (app.web.RequestHandler):
         else:
             self.get_200()
 
-    def get_200(self):
+    def get_200 (self):
         self.secret_key = self.request.get("key")
         user_is_poster = (self.pasty.user and self.user.db_user and self.pasty.user.id == self.user.db_user.id)
 
-
         self.lines = self.pasty.code_colored.splitlines()
-        self.line_count = len(self.lines)
         lines = ""
         code = ""
 
-        complex_formating = self.request.get("h") != ""
-
-        if self.request.get("h"):
-            self.update_highlights(self.request.get("h"))
-
-        for arg in self.request.arguments():
-            if arg[0:1] == "e" and arg[1:].isdigit():
-                self.edited_lines[arg[1:]] = True
-                self.has_edited_lines = True
-                complex_formating = True
+        complex_formating = self.pasty.highlights != ""
 
         if complex_formating:
-            (lines, code) = self.format_code()
+            (lines, code) = self.format_complex_code(self.pasty.highlights)
         else:
             (lines, code) = self.format_simple_code()
 
@@ -222,7 +173,7 @@ class Paste (app.web.RequestHandler):
         self.path.add(self.pasty.get_title(), self.pasty.get_url())
         self.write_out("./200.html")
 
-    def get_404(self):
+    def get_404 (self):
         self.path.add("Paste not found")
         self.error(404)
         self.content["pasty_slug"] = cgi.escape(self.pasty_slug)
@@ -230,20 +181,11 @@ class Paste (app.web.RequestHandler):
         self.content["u_pastes"] = app.url("pastes/")
         self.write_out("./404.html")
 
-    def get_parent_paste(self):
+    def get_parent_paste (self):
         if self.pasty != None and self.pasty.parent_paste != "":
             qparent = app.model.Pasty.all()
             qparent.filter("slug =", self.pasty.parent_paste)
             self.parent = qparent.get()
-            if self.parent != None:
-                self.content["u_parent"] = app.url("%s", self.parent.slug)
-                self.content["parent_title"] = cgi.escape(self.parent.title)
-
-            # Datastore is not up to date, removing <parent_paste> slug
-            # because the parent has been deleted
-            else:
-                self.pasty.parent_paste = ""
-                self.pasty.put()
 
     def get_thread_pastes (self):
         default_chars = self.pasty.characters

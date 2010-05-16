@@ -62,6 +62,7 @@ class Pasty (db.Model):
     code = db.TextProperty(default="")
     code_colored = db.TextProperty(default="")
     forks = db.IntegerProperty(default=0)
+    highlights = db.TextProperty(default="")
     indirect_forks = db.IntegerProperty(default=0)
     is_moderated = db.BooleanProperty(default=False)
     language = db.StringProperty(choices=["ada", "html", "java", "lua", "perl", "php", "python", "python_console", "ruby", "scala", "sh", "sql", "xml"])
@@ -124,6 +125,26 @@ class Pasty (db.Model):
                 break
 
         return snippet
+
+    @staticmethod
+    def parse_highlights (hl_str, line_count):
+        highlights = []
+        hls = hl_str.split(",")
+
+        for hl in hls:
+            # Highlight a given line
+            if hl.isdigit():
+                highlights.append(str(hl))
+
+            # Reset highlights
+            elif hl == "-":
+                highlights = []
+
+            # Unhighlight a given line
+            elif hl[0:1] == "!" and hl[1:] in highlights:
+                highlights.remove(hl[1:])
+
+        return highlights
 
     def get_code (self):
         code = ""
