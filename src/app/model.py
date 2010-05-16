@@ -14,6 +14,7 @@
 import cgi
 import google.appengine.api.users
 from google.appengine.ext import db
+import pygments.lexer
 import random
 
 import app
