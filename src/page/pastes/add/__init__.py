@@ -307,7 +307,7 @@ class Add (app.web.RequestHandler):
         self.paste.posted_by_ip = self.request.remote_addr
         self.paste.replies = 0
         self.paste.slug = slug
-        self.paste.snippet = app.model.Pasty.make_snippet(self.paste.code, settings.PASTE_SNIPPET_MAX_LENGTH)
+        self.paste.snippet = app.model.Pasty.make_snippet(raw_code, settings.PASTE_SNIPPET_MAX_LENGTH)
 
         if not is_reply and paste_is_private:
             self.paste.status = app.model.kPASTE_STATUS_PRIVATE
