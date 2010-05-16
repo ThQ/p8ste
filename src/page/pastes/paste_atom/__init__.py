@@ -38,7 +38,7 @@ class PasteAtom (app.web.RequestHandler):
 
     def get_200(self):
         self.content["paste_title"] = self.pasty.get_title()
-        self.content["paste_code"] = self.pasty.get_code()
+        self.content["paste_code"] = self.pasty.get_raw_code()
 
         self.content["u_paste"] = app.url("%s", self.pasty.slug)
         self.content["u_paste_self"] = app.url("%s.atom", self.pasty.slug)

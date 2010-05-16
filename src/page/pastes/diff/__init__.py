@@ -109,7 +109,7 @@ class Diff (app.web.RequestHandler):
         lineno1 = 0
         lineno2 = 0
 
-        for line in differ.compare(self.pastes[0].code.splitlines(), self.pastes[1].code.splitlines()):
+        for line in differ.compare(self.pastes[0].get_raw_code().splitlines(), self.pastes[1].get_raw_code().splitlines()):
             line_start = line[0:2]
 
             if line_start == "- ":

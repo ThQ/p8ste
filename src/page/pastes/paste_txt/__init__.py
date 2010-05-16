@@ -33,7 +33,7 @@ class PasteTxt (app.web.RequestHandler):
             self.get_200()
 
     def get_200 (self):
-        self.content["content"] = self.pasty.get_code()
+        self.content["content"] = self.pasty.get_raw_code()
         self.set_header("Content-Type", "text/plain")
         self.write_out("./200.tpl")
 

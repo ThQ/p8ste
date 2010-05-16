@@ -209,6 +209,18 @@ class Pasty (db.Model):
     def get_private_url (self):
         return app.url("%s?key=%s", self.slug, self.secret_key)
 
+    def get_raw_code (self):
+        raw_code = ""
+        lines = self.code.splitlines()
+        for i, line in enumerate(lines):
+            if line.startswith("@h@"):
+                raw_code += line[3:]
+            else:
+                raw_code += line
+            raw_code += "\r\n"
+
+        return raw_code
+
     def get_real_moderate_url (self):
         return app.url("%s/moderate?sure=yes", self.slug)
 

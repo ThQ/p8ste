@@ -98,7 +98,7 @@ class RemoteDiff (app.web.pastes.PasteRequestHandler):
         Compute a diff and annotate each line with a line number.
         """
 
-        paste_content = self.paste.code
+        paste_content = self.paste.get_raw_code()
         remote_content = self.remote_content
 
         diff = []
