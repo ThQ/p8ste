@@ -212,13 +212,16 @@ class Pasty (db.Model):
 
     def get_raw_code (self):
         raw_code = ""
-        lines = self.code.splitlines()
-        for i, line in enumerate(lines):
-            if line.startswith("@h@"):
-                raw_code += line[3:]
-            else:
-                raw_code += line
-            raw_code += "\r\n"
+        if self.highlights:
+            lines = self.code.splitlines()
+            for i, line in enumerate(lines):
+                if line.startswith("@h@"):
+                    raw_code += line[3:]
+                else:
+                    raw_code += line
+                raw_code += "\r\n"
+        else:
+            raw_code = self.code
 
         return raw_code
 
