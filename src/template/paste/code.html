@@ -17,12 +17,12 @@
             <th colspan="2">
                 <a name="{{paste.slug}}"></a>
                 {% if paste.language.name %}
-                    <img src="{{paste.language.u_icon}}" alt="{{paste.language.name}}" title="{{paste.language.name}}" width="16" height="16" />
-                    <strong><a href="{{ paste.language.u }}">{{paste.language.name}}</a> paste</strong>
+                    <img src="{{paste.language.u_icon}}" alt="{{paste.language.name|escape}}" title="{{paste.language.name|escape}}" width="16" height="16" />
+                    <strong><a href="{{ paste.u }}">{{paste.slug|escape}}</a></strong>
                 {% else %}
                     <strong>Paste</strong>
                 {% endif %}
-                <small>({{paste.size.0}} {{paste.size.1}}, {{paste.loc}} LOC)</small>
+                <small>({{paste.language.name|escape}}, {{paste.size.0}} {{paste.size.1}}, {{paste.loc}} LOC)</small>
                 <ul>
                     <li>
                         <img src="{{"images/silk/page_white_edit.png"|url}}" alt="Fork paste" title="Fork paste" width="16" height="16" />
