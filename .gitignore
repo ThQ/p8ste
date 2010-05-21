@@ -1,7 +1,10 @@
 *.pyc
 *~
+AUTHORS
+CONTRIBUTORS
 images/
 src/settings.py
+src/libs/feedparser.py
 src/libs/pygments/
 src/libs/recaptcha/
 src/libs/smoid/examples/*
