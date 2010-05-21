@@ -82,8 +82,9 @@ class Paste (app.web.RequestHandler):
         r_code = ""
 
         for i, line in enumerate(self.lines):
-            r_lines += "<a href=\"#l" + str(i) + "\" name=\"l" + str(i) + "\">"
-            r_lines += str(i)
+            j = i + 1
+            r_lines += "<a href=\"#l" + str(j) + "\" name=\"l" + str(j) + "\">"
+            r_lines += str(j)
             r_lines += "</a>\n"
 
             if line == "":
