@@ -138,6 +138,7 @@ class Paste (app.web.RequestHandler):
         tpl_paste["code"] = code
         tpl_paste["size"] = app.util.make_filesize_readable(self.pasty.characters)
         tpl_paste["pasted_at"] = self.pasty.posted_at.strftime(settings.DATETIME_FORMAT)
+        tpl_paste["is_diffable"] = self.pasty.is_diffable()
         tpl_paste["is_moderated"] = self.pasty.is_moderated()
         tpl_paste["is_private"] = self.pasty.is_private()
         tpl_paste["is_public"] = self.pasty.is_public()
