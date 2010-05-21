@@ -14,7 +14,7 @@ class WhileCheck (Check):
         self.example = "while true do"
 
         self.add_language("c")
-        self.add_language("cpp")
+        self.add_language("c++")
         self.add_language("csharp")
         self.add_language("lua")
         self.add_language("perl")
@@ -44,7 +44,7 @@ class WhileCheck (Check):
 
             elif eol == "{":
                 self.incr_language_probability("c", 30)
-                self.incr_language_probability("cpp", 30)
+                self.incr_language_probability("c++", 30)
                 self.incr_language_probability("csharp", 30)
                 self.incr_language_probability("perl", 30)
                 self.incr_language_probability("php", 30)

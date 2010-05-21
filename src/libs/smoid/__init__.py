@@ -2,9 +2,11 @@ import sys
 
 
 import smoid.languages.begin
+import smoid.languages.exception
 import smoid.languages.klass
 import smoid.languages.imports
 import smoid.languages.lang_ada
+import smoid.languages.lang_c
 import smoid.languages.lang_html
 import smoid.languages.lang_lua
 import smoid.languages.lang_perl
@@ -27,6 +29,7 @@ class GrandChecker:
         self.checkers = []
 
         self.checkers.extend(smoid.languages.lang_ada.AdaCheckCollection())
+        self.checkers.extend(smoid.languages.lang_c.CCheckCollection())
         self.checkers.extend(smoid.languages.lang_html.HtmlCheckCollection())
         self.checkers.extend(smoid.languages.lang_lua.LuaCheckCollection())
         self.checkers.extend(smoid.languages.lang_perl.PerlCheckCollection())
@@ -39,6 +42,7 @@ class GrandChecker:
         self.checkers.extend(smoid.languages.lang_xml.XmlCheck())
 
         self.checkers.append(smoid.languages.begin.BeginCheck())
+        self.checkers.extend(smoid.languages.exception.ExceptionCheckCollection())
         self.checkers.append(smoid.languages.klass.KlassCheck())
         self.checkers.append(smoid.languages.imports.ImportCheck())
         self.checkers.append(smoid.languages.namespace.NamespaceCheck())
