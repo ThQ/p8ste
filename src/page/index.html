@@ -17,6 +17,7 @@
             <link href="{{ feed.url }}" type="{{ feed.type }}" rel="{{ feed.rel }}" title="{{ feed.title|escape }}" />
             {% endfor %}
         {% endif %}
+        {% block html.head %}{% endblock %}
     </head>
 
     <body>
