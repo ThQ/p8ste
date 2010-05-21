@@ -29,7 +29,6 @@ class Paste (app.web.RequestHandler):
     def __init__ (self):
         app.web.RequestHandler.__init__(self)
         self.set_module(__name__ + ".__init__")
-        self.use_style(app.url("style/code.css"))
         self.highlights = set([])
         self.has_edited_lines = False
         self.has_highlights = False
@@ -172,7 +171,6 @@ class Paste (app.web.RequestHandler):
             lang = smoid.languages.languages[self.pasty.language]
             self.content["pasty_language_url"] = lang["home_url"]
 
-        self.add_atom_feed(app.url("%s.atom", self.pasty_slug), self.pasty_slug + " (Atom feed)", "alternate")
         self.path.add(self.pasty.get_title(), self.pasty.get_url())
         self.write_out("./200.html")
 

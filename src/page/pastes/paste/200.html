@@ -6,6 +6,12 @@
     {{paste.title|escape}} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ paste.size.0 }} {{ paste.size.1 }}, {{ paste.loc }} LOC)
 {% endblock %}
 
+{% block html.head %}
+    <link href="{{"style/code.css"|url}}" type="text/css" rel="stylesheet" />
+    <link href="{{paste.u_atom}}" type="application/atom+xml" rel="alternate" title="[Atom feed] {{paste.slug|escape}}" />
+    <link href="{{paste.u_raw_text}}" type="text/plain" rel="alternate" title="[Raw text] {{paste.slug|escape}}" />
+{% endblock %}
+
 {%block h1 %}
     {% if u_user %}
     <a href="{{u_user}}"><img class="user" src="{{u_gravatar}}" alt="{{user_name|escape}}" width="48" height="48" /></a>
