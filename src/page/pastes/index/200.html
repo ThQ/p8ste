@@ -1,6 +1,10 @@
 {% extends "../../index.html" %}
 {% block page-title %}Pastes ({{ paste_count }}){% endblock %}
 
+{% block html.head %}
+    <link href="{{u_atom}}" type="application/atom+xml" rel="alternate" title="[Atom feed] Latest pastes" />
+{% endblock %}
+
 {% block h1 %}All pastes{% endblock %}
 
 {% block h1-headers %}Pastes <strong>{{paste_start}} - {{paste_end}}</strong> from <strong>{{paste_count}}</strong>{% endblock %}

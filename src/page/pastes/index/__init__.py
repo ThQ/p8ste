@@ -54,7 +54,6 @@ class Index (app.web.RequestHandler):
         self.content["paste_count"] = self.paste_count
         self.content["pastes"] = pastes
 
-        self.add_atom_feed(app.url("pastes.atom"), "Last pastes", "alternate")
         self.write_out("./200.html")
 
     def get_paste_count (self):
