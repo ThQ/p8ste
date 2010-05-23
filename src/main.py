@@ -11,11 +11,11 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
-
 import os.path
 import sys
-sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), "libs"))
 
+cur_dir = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.join(cur_dir, "libs"))
 
 from google.appengine.api import apiproxy_stub_map
 from google.appengine.ext import webapp
@@ -56,7 +56,10 @@ template.register_template_library('common.url')
 if settings.ENV == "debug":
     import app.appengine.hook
     app.appengine.hook.datastore_logs = []
-    apiproxy_stub_map.apiproxy.GetPreCallHooks().Append('db_log', app.appengine.hook.hook_datastore, 'datastore_v3')
+    apiproxy_stub_map.apiproxy.GetPreCallHooks().Append(
+        'db_log',
+        app.appengine.hook.hook_datastore,
+        'datastore_v3')
 
 re_paste = "P[a-zA-Z0-9_-]+"
 re_user = "[a-zA-Z0-9_-]+"
@@ -77,23 +80,28 @@ pages = [
     ('/(' + re_paste + ')/diff/(' + re_paste + ')', page.pastes.diff.Diff),
     ('/(' + re_paste + ')/recount', page.pastes.recount.Recount),
     ('/(' + re_paste + ')/update', page.pastes.update.Update),
+    # Users
     ('/users/(' + re_user + ')', page.users.user.User),
+    # Threads
     ('/threads/(' + re_paste + ')', page.threads.thread.Thread),
     ('/threads/(' + re_paste + ').atom', page.threads.thread_atom.ThreadAtom),
     ('/sitemap.xml', page.pastes.sitemap.Sitemap),
     ('/sign-in', page.users.signin.SignIn),
     ('/sign-up', page.users.signup.SignUp),
     ('/sign-out', page.users.signout.SignOut),
+    # About
     ('/about', page.about.index.Index),
     ('/about/thanks', page.about.thanks.Thanks),
     ('/about/features', page.about.features.Features),
     ('/languages/auto-detected', page.languages.autodetected.AutoDetected),
-    ('/.*', page.error.error404.Error404)
-]
+    ('/.*', page.error.error404.Error404)]
+
 application = webapp.WSGIApplication(pages, debug=True)
+
 
 def main():
     run_wsgi_app(application)
+
 
 if __name__ == "__main__":
     main()

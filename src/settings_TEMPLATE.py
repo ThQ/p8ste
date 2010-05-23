@@ -1,7 +1,7 @@
 import datetime
 import os
 
-if os.environ["SERVER_NAME"] == "localhost":
+if not "SERVER_NAME" in os.environ or os.environ["SERVER_NAME"] == "localhost":
     ENV = "debug"
 else:
     ENV = "production"

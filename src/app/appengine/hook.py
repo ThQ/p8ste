@@ -4,29 +4,30 @@ import datetime
 datastore_logs = []
 
 
-def stringify_datastore_prop_value (prop):
+def stringify_datastore_prop_value(prop):
     """
     Almost copy/paste from appengine/google/appengine/datastore/entity_pb.py
     """
 
-    res=""
+    res = ""
     if prop.has_int64value_:
-        res=prop.DebugFormatInt64(prop.int64value_)
+        res = prop.DebugFormatInt64(prop.int64value_)
     if prop.has_booleanvalue_:
-        res=prop.DebugFormatBool(prop.booleanvalue_)
+        res = prop.DebugFormatBool(prop.booleanvalue_)
     if prop.has_stringvalue_:
-        res=prop.DebugFormatString(prop.stringvalue_)
+        res = prop.DebugFormatString(prop.stringvalue_)
     if prop.has_doublevalue_:
-        res=prop.DebugFormat(prop.doublevalue_)
+        res = prop.DebugFormat(prop.doublevalue_)
     if prop.has_pointvalue_:
-      res=prop.pointvalue_.__str__()
+        res = prop.pointvalue_.__str__()
     if prop.has_uservalue_:
-      res=prop.uservalue_.__str__()
+        res = prop.uservalue_.__str__()
     if prop.has_referencevalue_:
-      res=prop.referencevalue_.__str__()
+        res = prop.referencevalue_.__str__()
     return res
 
-def arrayze_datastore_properties (prop_list):
+
+def arrayze_datastore_properties(prop_list):
     props = []
     for prop in prop_list:
         field = {}
@@ -36,7 +37,8 @@ def arrayze_datastore_properties (prop_list):
 
     return props
 
-def arrayze_datastore_filters (filter_list):
+
+def arrayze_datastore_filters(filter_list):
     filters = []
     for filter in filter_list:
         prop = filter[0]
@@ -47,7 +49,8 @@ def arrayze_datastore_filters (filter_list):
 
     return filters
 
-def hook_datastore (service, call, request, response):
+
+def hook_datastore(service, call, request, response):
     log = {}
     log["time"] = datetime.datetime.now().strftime("%H:%M:%S.%f")
     qry = ""
@@ -55,15 +58,20 @@ def hook_datastore (service, call, request, response):
 
     if call == "Put":
         for entity in request.entity_list():
+            prop_list = entity.property_list()
             log["entity"] = entity.key().path().element_list()[0].type()
-            log["fields"] = arrayze_datastore_properties(entity.property_list())
+            log["fields"] = arrayze_datastore_properties(prop_list)
 
     elif call == "RunQuery":
         log["entity"] = request.kind()
-        log["fields"] =  []
+        log["fields"] = []
         for filter in request.filter_list():
-            log["fields"].extend(arrayze_datastore_properties(filter.property_list()))
-        qry = " limit " + str(request.offset()) + ", " + str(request.limit()) + ""
+            prop_list = filter.property_list()
+            log["fields"].extend(arrayze_datastore_properties(prop_list))
+        qry = " limit "
+        qry += str(request.offset())
+        qry += ", "
+        qry += str(request.limit())
 
     elif call == "Get":
         qry = "GET"

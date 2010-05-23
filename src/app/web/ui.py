@@ -10,7 +10,9 @@
 # or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 # License for more details.
 
+
 import math
+
 
 class Paging:
 
@@ -36,6 +38,7 @@ class Paging:
         for i in range(int(start), int(end)):
             self.pages.append(self.make_page(i))
 
+
 class CursorPaging (Paging):
 
     def __init__(self):
@@ -45,7 +48,8 @@ class CursorPaging (Paging):
         self.right_margin = 0
 
     def prepare(self):
-        self.page_count = (math.ceil(float(self.items) / float(self.page_length)))
+        self.page_count = \
+            math.ceil(float(self.items) / float(self.page_length))
 
         if (self.left_margin + self.cursor_margin + 1) < self.page:
             self.append_page_range(1, self.left_margin + 1)
@@ -67,12 +71,12 @@ class CursorPaging (Paging):
 
 class Code:
 
-    def __init__ (self):
+    def __init__(self):
         self.content = ""
         self.lines = []
         self.line_count = 0
 
-    def format_code (self, code):
+    def format_code(self, code):
         self.lines = code.split("\n")
         line_nos = ""
         code_lines = ""
@@ -96,7 +100,6 @@ class Code:
                 result += "&nbsp;&nbsp;&nbsp;"
             else:
                 result += line[i:]
-                break;
+                break
             i += 1
         return result
-

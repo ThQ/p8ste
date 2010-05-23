@@ -182,7 +182,7 @@ class Pasty (db.Model):
         elif self.status == kPASTE_STATUS_WAITING_FOR_APPROVAL:
             url = app.image_url("silk/hourglass.png")
         elif self.status == kPASTE_STATUS_PUBLIC:
-            if self.language and smoid.languages.languages.has_key(self.language):
+            if self.language and self.language in smoid.languages.languages:
                 url = app.image_url("languages/%s.png", self.language)
             else:
                 url = app.image_url("silk/page_white_text.png")
