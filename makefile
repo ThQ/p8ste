@@ -21,8 +21,13 @@ check-recaptcha:
 check-settings:
 	@if [ ! -f "${fSETTINGS}" ] ; then echo "${fSETTINGS} cannot be found. Rename ${fSETTINGS_TEMPLATE} to ${fSETTINGS}" ; fi
 
+deploy:
+	python ${APPENGINE_PATH}/appcfg.py update ${dSRC}
+
+pep8:
+	find . -iname "*.py" -not -wholename "*pygments*" -not -wholename "*recaptcha*" -not -wholename "*feedparser*" -exec pep8 {} \;
+
 run:
 	python ${APPENGINE_PATH}/dev_appserver.py ${dSRC}
 
-upload:
-	python ${APPENGINE_PATH}/appcfg.py update ${dSRC}
+upload: deploy
