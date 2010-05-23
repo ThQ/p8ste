@@ -1,7 +1,11 @@
 {% extends "../../index.html" %}
-{% block page-title %}Thread {{paste_slug|escape}} ({{paste_count}} paste{{paste_count|pluralize}}, {{thread_size.0}} {{thread_size.1 }}, {{thread_loc}} LOC){% endblock %}
+{% block page-title %}Thread {{thread_slug|escape}} ({{paste_count}} paste{{paste_count|pluralize}}, {{thread_size.0}} {{thread_size.1 }}, {{thread_loc}} LOC){% endblock %}
 
-{% block h1 %}{{paste_slug|escape}} <small>({{paste_count}} paste{{paste_count|pluralize}})</small>{% endblock %}
+{% block html.head %}
+    <link href="{{u_atom}}" type="application/atom+xml" rel="alternate" title="[Atom feed] Thread {{thread_slug}}" />
+{% endblock %}
+
+{% block h1 %}{{thread_slug|escape}} <small>({{paste_count}} paste{{paste_count|pluralize}})</small>{% endblock %}
 
 {% block page-content %}
 <table>

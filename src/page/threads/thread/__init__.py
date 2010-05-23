@@ -31,8 +31,6 @@ class Thread (app.web.pastes.PasteListRequestHandler):
 
         self.pastes = self.get_pastes(paste_slug)
 
-        self.content["paste_slug"] = paste_slug
-
 
         self.path.add("Pastes", app.url("pastes/"))
         if len(self.pastes) > 0:
@@ -43,7 +41,6 @@ class Thread (app.web.pastes.PasteListRequestHandler):
     def get_200 (self):
         self.path.add(self.paste_slug, app.url("%s", self.paste_slug))
         self.path.add("Thread", app.url("threads/%s", self.paste_slug))
-        self.add_atom_feed(app.url("threads/%s.atom", self.paste_slug), "Thread feed", "alternate")
 
         tpl_pastes = self.templatize_pastes(self.pastes)
 
@@ -55,6 +52,8 @@ class Thread (app.web.pastes.PasteListRequestHandler):
             if o_paste.lines:
                 global_loc += o_paste.lines
 
+        self.content["u_atom"] = app.url("threads/%s.atom", self.paste_slug)
+        self.content["thread_slug"] = self.paste_slug
         self.content["thread_size"] = app.util.make_filesize_readable(global_size)
         self.content["thread_loc"] = global_loc
         self.content["pastes"] = tpl_pastes
