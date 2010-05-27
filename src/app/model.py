@@ -207,6 +207,9 @@ class Pasty (db.Model):
     def get_moderate_url (self):
         return app.url("%s/moderate", self.slug)
 
+    def get_parsed_highlights (self):
+        return Pasty.parse_highlights(self.highlights, self.code.count("\n"))
+
     def get_private_url (self):
         return app.url("%s?key=%s", self.slug, self.secret_key)
 

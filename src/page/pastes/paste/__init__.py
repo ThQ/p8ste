@@ -113,10 +113,11 @@ class Paste (app.web.RequestHandler):
         lines = ""
         code = ""
 
-        complex_formating = self.pasty.highlights != ""
+        highlights = self.pasty.get_parsed_highlights()
+        complex_formating = len(highlights) > 0
 
         if complex_formating:
-            (lines, code) = self.format_complex_code(self.pasty.highlights)
+            (lines, code) = self.format_complex_code(highlights)
         else:
             (lines, code) = self.format_simple_code()
 
