@@ -76,7 +76,7 @@ class GrandChecker:
 
                 for language_name in checker.languages:
                     language = checker.languages[language_name]
-                    if not language_name in self.languages.has_key:
+                    if not language_name in self.languages:
                         lang = {}
                         lang["name"] = language_name
                         lang["probability"] = language.probability
