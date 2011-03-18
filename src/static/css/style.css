@@ -388,10 +388,10 @@ ul.invisible
     padding:15px 20px 15px 20px;
     margin: 0 0 15px 0;
     border-bottom:3px solid #6B75B4;
-    background:url(/images/user_bg.png) repeat-x;
+    background:url(/images/user_bg.png) repeat-x #222222;
     color:#ffffff;
     font-size:0.80em;
-    font-family:Tahoma, Verdana;
+    font-family:arial;
 }
 
 #logo small
