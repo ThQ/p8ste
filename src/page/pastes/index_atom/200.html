@@ -10,7 +10,7 @@
     {% for paste in pastes %}
     <entry>
         <id>{{paste.u}}</id>
-        <title>{{paste.title|escape}} ({{paste.size.0}} {{paste.size.1}})</title>
+        <title>{{paste.user_name}} / {{paste.title|escape}} ({{paste.lines}} LOC)</title>
         <updated>{{paste.posted_at}}</updated>
         <link rel="alternate" href="{{paste.u}}" />
         <summary type="text">{{paste.snippet|escape}}</summary>
