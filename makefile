@@ -6,17 +6,8 @@ fSETTINGS_TEMPLATE=src/settings_TEMPLATE.py
 dROOT=.
 dSRC=${dROOT}/src
 
-check-install: check-pygments check-recaptcha check-settings
-
-check-pygments:
-	@if [ ! -d "${dPYGMENTS}" ] ; then \
-		echo "Pygments does not seem to be installed. Download it from http://pygments.org/download/ and extract it to ${dPYGMENTS}." ; \
-	fi
-
-check-recaptcha:
-	@if [ ! -d "${dRECAPTCHA}" ] ; then \
-		echo "Recaptcha-client does not seem to be installed. Download it from http://pypi.python.org/pypi/recaptcha-client and extract it to ${dRECAPTCHA}." ; \
-	fi
+check-install:check-settings
+	python ${dSRC}/test_install.py
 
 check-settings:
 	@if [ ! -f "${fSETTINGS}" ] ; then echo "${fSETTINGS} cannot be found. Rename ${fSETTINGS_TEMPLATE} to ${fSETTINGS}" ; fi
