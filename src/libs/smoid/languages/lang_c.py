@@ -79,7 +79,7 @@ class CIncludeCheck (Check):
             "cwctype"
         ]
 
-        res_import = """#\s*include\s+(?:"|<|')(.*?)(?:"|<|')(?:\n|\r)"""
+        res_import = """#\s*include\s+(?:"|\<|')(.*?)(?:"|\<|')(?:\n|\r)"""
         self.re_import = re.compile(res_import)
 
     def check (self, content):

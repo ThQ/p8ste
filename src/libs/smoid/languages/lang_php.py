@@ -21,7 +21,7 @@ class PhpClosingTagCheck (Check):
         self.example = "?>"
 
         self.add_language("php")
-        self.add_one_time_match("(^|\n|\r)\?>", 80)
+        self.add_one_time_match("(^|\n|\r)\s*?\?>", 80)
 
 
 class PhpInstanceMemberCheck (Check):
