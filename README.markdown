@@ -1,23 +1,15 @@
 # What is it ?
 
-   Paste-It is a python pastebin (where you paste code) for Google AppEngine. It
-is licensed under GPLv3.
-
-More infos:
-
-* http://en.wikipedia.org/wiki/Pastebin
-* http://python.org
-* http://code.google.com/appengine/
-* http://www.gnu.org/licenses/gpl-3.0.html
+   **Paste-It** is a [python](http://python.org) [pastebin](http://en.wikipedia.org/wiki/Pastebin] (where you paste code) for [Google AppEngine](http://code.google.com/appengine/). It
+is licensed under [GPLv3](http://www.gnu.org/licenses/gpl-3.0.html).
 
 
 
 # Dependencies
 
-* [Python][python]
-* [Google AppEngine][gae]
 * [Pygments][pygments]
 * [recaptcha-client][recaptcha-client]
+* [FeedParser][feedparser]
 
 
 
@@ -27,9 +19,7 @@ More infos:
     `http://github.com/thomas-quemard/p8ste/tarball/master`
   and extract it to a local directory.
 
-* Install [pygments][pygments] system wide or extract it to `/path/to/paste-it/src/`
-
-* Install [recaptcha-client][recaptcha-client] system wide or extract it to `/path/to/paste-it/src/`
+* Extract python dependencies to `/path/to/paste-it/src/`
 
 *  Run
    `cd /path/to/paste-it && make check-install`
@@ -37,6 +27,8 @@ More infos:
 
 Note : The repository does not contain images, if you want them, download the following archive :
 https://github.com/downloads/thomas-quemard/p8ste/p8ste_images.tar.gz
+
+
 
 # Run
 
@@ -49,3 +41,4 @@ https://github.com/downloads/thomas-quemard/p8ste/p8ste_images.tar.gz
 [pygments]: http://pygments.org
 [python]: http://pythong.org
 [recaptcha-client]: http://pypi.python.org/pypi/recaptcha-client
+[feedparser]:http://www.feedparser.org/
