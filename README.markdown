@@ -31,6 +31,10 @@ More infos:
 
 * Install [recaptcha-client][recaptcha-client] system wide or extract it to `/path/to/paste-it/src/`
 
+
+Note : The repository does not contain images, if you want them, download the following archive :
+https://github.com/downloads/thomas-quemard/p8ste/p8ste_images.tar.gz
+
 *  Run
    `cd /path/to/paste-it && make check-install`
 
