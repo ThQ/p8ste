@@ -6,6 +6,9 @@ fSETTINGS_TEMPLATE=src/settings_TEMPLATE.py
 dROOT=.
 dSRC=${dROOT}/src
 
+images-archive:
+	tar czf p8ste_images.tar.gz src/static/images
+
 check-install:check-settings
 	python ${dSRC}/test_install.py
 
