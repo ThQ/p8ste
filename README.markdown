@@ -34,9 +34,6 @@ More infos:
 *  Run
    `cd /path/to/paste-it && make check-install`
 
-* Don't forget to check `src/paste/__init__.py` and `src/paste/private.py`
-  for configuration options.
-
 
 
 # Run
