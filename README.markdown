@@ -1,6 +1,6 @@
 # What is it ?
 
-   **Paste-It** is a [python](http://python.org) [pastebin](http://en.wikipedia.org/wiki/Pastebin] (where you paste code) for [Google AppEngine](http://code.google.com/appengine/). It
+   **Paste-It** is a [python](http://python.org) [pastebin](http://en.wikipedia.org/wiki/Pastebin) (where you paste code) for [Google AppEngine](http://code.google.com/appengine/). It
 is licensed under [GPLv3](http://www.gnu.org/licenses/gpl-3.0.html).
 
 
