@@ -19,7 +19,7 @@ is licensed under [GPLv3](http://www.gnu.org/licenses/gpl-3.0.html).
     `http://github.com/thomas-quemard/p8ste/tarball/master`
   and extract it to a local directory.
 
-* Extract python dependencies to `/path/to/paste-it/src/`
+* Run `make install-python-dependencies` or extract python dependencies to `/path/to/p8ste/src/`
 
 *  Run
    `cd /path/to/paste-it && make check-install`
@@ -33,7 +33,7 @@ https://github.com/downloads/thomas-quemard/p8ste/p8ste_images.tar.gz
 # Run
 
     cd /path/to/google_appengine/
-    python dev_appserver.py /path/to/paste-it/src
+    python dev_appserver.py /path/to/p8ste/src
 
 
 
