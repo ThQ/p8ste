@@ -26,8 +26,6 @@
         {% endif %}
 
         <div id="logo">
-            <a href="{{u_home}}"><strong>PASTE</strong></a>
-            <small>&not; <a href="{{u_pastes}}">All pastes</a></small>
 
             <span style="float:right">
                 {%if user_signed_in__ %}
@@ -44,10 +42,16 @@
                 {% endif %}
                 {% endif %}
             </span>
+
+            <ul>
+            <li><a href="{{u_home}}"><strong>New paste</strong></a></li>
+            <li><small><a href="{{u_pastes}}">All pastes</a></small></li>
+            <li><small><a href="/about">About</a></small></li>
+            </ul>
         </div>
         <div id="content">
 
-            {% if path__ %}
+            {% if 0 %}
             <ul id="path">
                 <li><a href="{{u_home}}">{{APP_NAME}}</a></li>
                 {% for item in path__ %}

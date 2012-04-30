@@ -385,13 +385,15 @@ ul.invisible
 
 #logo
 {
-    padding:6px 20px 6px 20px;
-    margin: 0 0 10px 0;
-    border-bottom:2px solid #6B75B4;
+    padding:15px 20px 15px 20px;
+    margin:10px 20px 10px 20px;
+    border-bottom:0px solid #6B75B4;
     background:url(/images/user_bg.png) repeat-x #222222;
     color:#ffffff;
     font-size:0.80em;
+    border-radius:5px;
     font-family:arial;
+    box-shadow:0px 0px 3px 3px #DDDDDD;
 }
 
 #logo small
@@ -409,6 +411,25 @@ ul.invisible
 {
     color:#ffffff;
     text-decoration:none;
+}
+
+#logo li:first-child
+{
+    border-left:0;
+}
+
+#logo ul
+{
+    margin:0;
+    padding:0;
+}
+
+#logo li
+{
+    display:inline;
+    margin:0;
+    padding:0 10px 0 10px;
+    border-left:1px dotted #808080;
 }
 
 ul#path
