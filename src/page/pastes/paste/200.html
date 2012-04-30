@@ -1,8 +1,10 @@
 {% extends "../../index.html" %}
 
 {%block page-title %}
+    {% if u_user %}
     {{user_name|escape}}
     /
+    {% endif %}
     {{paste.title|escape}} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ paste.loc }} LOC)
 {% endblock %}
 
@@ -19,9 +21,9 @@
 {% block h1-headers %}
     {% if u_user %}
     <a href="{{u_user}}"><img class="user" src="{{u_gravatar}}" alt="{{user_name|escape}}" width="16" height="16" /></a>
-    {% endif%}
-    {%if u_user %}<a href="{{u_user}}">{{user_name|escape}}</a>{%else%}{{user_name|escape}}{%endif%}
+    <a href="{{u_user}}">{{user_name|escape}}</a>
     &middot;
+    {%endif%}
     {{paste.pasted_at}}
 {% endblock %}
 
