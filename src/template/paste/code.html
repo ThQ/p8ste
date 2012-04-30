@@ -14,15 +14,15 @@
 <table class="snippet">
     <thead>
         <tr>
-            <th colspan="2">
+            <th>
                 <a name="{{paste.slug}}"></a>
                 {% if paste.language.name %}
                     <img src="{{paste.language.u_icon}}" alt="{{paste.language.name|escape}}" title="{{paste.language.name|escape}}" width="16" height="16" />
-                    <strong><a href="{{ paste.u }}">{{paste.slug|escape}}</a></strong>
-                {% else %}
-                    <strong>Paste</strong>
                 {% endif %}
-                <small>({% if paste.language.name %}{{paste.language.name|escape}}, {% endif %}{{paste.size.0}} {{paste.size.1}}, {{paste.loc}} LOC)</small>
+            </th>
+            <th>
+                    <strong><a href="{{ paste.u }}">{{paste.slug|escape}}</a></strong>
+                <small>({{paste.loc}} LOC)</small>
                 <ul>
                     <li>
                         <img src="{{"images/silk/page_white_edit.png"|url}}" alt="Fork paste" title="Fork paste" width="16" height="16" />
@@ -30,25 +30,12 @@
                     </li>
                     <li>
                         <img src="{{"images/silk/page_white_text.png"|url}}" alt="Export paste" title="Export paste" width="16" height="16" />
-                        <small><a href="{{paste.u_raw_text}}">Export as text</a> or <a href="{{paste.u_atom}}">atom</a></small>
-                    </li>
-                    <li>
-                        <small><a href="#{{paste.slug}}">#</a></small>
+                        <small><a href="{{paste.u_raw_text}}">Raw text</a></small>
                     </li>
                 </ul>
             </th>
         </tr>
     </thead>
-
-    {% if paste.slug %}
-    <tfoot>
-        <tr>
-            <td colspan="2">
-                &circ; <a href="#{{paste.slug}}">Top</a>
-            </td>
-        </tr>
-    </tfoot>
-    {% endif %}
 
     <tbody>
         <tr>

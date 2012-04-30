@@ -40,6 +40,9 @@ PASTE_SNIPPET_MAX_LENGTH = 50
 # -----------------------------------------------------------------------------
 
 # The default date format
+DATE_FORMAT = "%b, %d %Y"
+
+# The default date format
 DATETIME_FORMAT = "%b, %d %Y - %I:%M%p %z"
 
 # The date format for atom feeds

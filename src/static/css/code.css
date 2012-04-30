@@ -1,10 +1,30 @@
+.snippet
+{
+    border:1px solid #d0d0d0;
+    width:100%;
+    margin:0 0 10px 0;
+    padding:0;
+    box-shadow:0px 0px 4px 2px #DDDDDD;
+}
+
 .snippet th
 {
     border:0;
     border-bottom:1px solid #cfcfcf;
-    background:#e0e0e0 url(/images/box_grey_bg.png) repeat-x;
+    background:#EFEFEF;
     padding:8px;
     margin:0;
+    box-shadow:0px 3px 4px -1px #DDDDDD;
+}
+
+.snippet th small
+{
+   font-weight:normal;
+}
+
+.snippet th:first-child
+{
+   text-align:center;
 }
 
 .snippet tfoot td
@@ -29,15 +49,6 @@
     display:inline;
     padding:0 0 0 10px;
 }
-.snippet
-{
-    border:1px solid #d0d0d0;
-    border-collapse:collapse;
-    border-spacing:0;
-    width:100%;
-    margin:0 0 10px 0;
-    padding:0;
-}
 
 .snippet tr
 {
@@ -60,23 +71,25 @@
 td.lines
 {
     border:0;
-    border-right:1px solid #cfcfcf;
-    background-color:#eaeaea;
     padding:0 15px 0 15px;
     margin:0;
     text-align:right;
     font-family: "Trebuchet MS", verdana;
     font-size:1.2em;
+    border-right:1px dashed #cfcfcf;
+    background:#F5F5F5;
 }
 
 .lines a:link, .lines a:visited
 {
     text-decoration:none;
+    color:#555555;
 }
 
 .lines a:hover
 {
-    text-decoration:underline;
+    text-decoration:none;
+    color:#5252D2;
 }
 
 td.code

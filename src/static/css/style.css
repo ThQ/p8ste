@@ -12,17 +12,17 @@ h1
     font:normal normal normal 36px Georgia;
     letter-spacing:-1px;
     color:#222222;
-    margin:0 0 2px 0;
+    margin:25px 0 2px 0;
     padding:0;
 }
 h2
 {
-    font:normal normal normal 1.6em Georgia;
+    font:normal normal normal 1.8em Georgia;
     color:#222222;
     margin:40px 0 10px 0;
     padding:3px;
     border:0;
-    border-top:2px solid #d0d0d0;
+    border-top:1px dashed #d0d0d0;
 }
 
 h2 strong
@@ -312,7 +312,7 @@ ul.invisible
 
 #h1-hr
 {
-    margin:0 0 20px 0;
+    margin:0 0 35px 0;
 }
 
 #header-hr
@@ -330,7 +330,7 @@ ul.invisible
     margin:0 0 10px 0;
     border-bottom:1px solid #3c488f;
     text-align:right;
-    padding:3px 20px 3px 20px;
+    padding:1px 20px 1px 20px;
     background:url(/images/userbar_bg.png) repeat-x;
     color:#ffffff;
 }
@@ -385,9 +385,9 @@ ul.invisible
 
 #logo
 {
-    padding:15px 20px 15px 20px;
-    margin: 0 0 15px 0;
-    border-bottom:3px solid #6B75B4;
+    padding:6px 20px 6px 20px;
+    margin: 0 0 10px 0;
+    border-bottom:2px solid #6B75B4;
     background:url(/images/user_bg.png) repeat-x #222222;
     color:#ffffff;
     font-size:0.80em;
@@ -417,7 +417,7 @@ ul#path
     color:#555555;
     font-size:0.85em;
     font-family:Tahoma, Arial;
-    margin:0 0 20px 0;
+    margin:0;
 }
 
 ul#path li

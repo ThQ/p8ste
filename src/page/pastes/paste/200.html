@@ -3,7 +3,7 @@
 {%block page-title %}
     {{user_name|escape}}
     /
-    {{paste.title|escape}} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ paste.size.0 }} {{ paste.size.1 }}, {{ paste.loc }} LOC)
+    {{paste.title|escape}} ({% if paste.language.name %}{{paste.language.name}}, {% endif%}{{ paste.loc }} LOC)
 {% endblock %}
 
 {% block html.head %}
@@ -13,16 +13,16 @@
 {% endblock %}
 
 {%block h1 %}
+    {{paste.title|escape}}
+{% endblock %}
+
+{% block h1-headers %}
     {% if u_user %}
     <a href="{{u_user}}"><img class="user" src="{{u_gravatar}}" alt="{{user_name|escape}}" width="48" height="48" /></a>
     {% endif%}
     {%if u_user %}<a href="{{u_user}}">{{user_name|escape}}</a>{%else%}{{user_name|escape}}{%endif%}
-    /
-    <a href="{{paste.u}}">{{paste.title|escape}}</a>
-{% endblock %}
-
-{% block h1-headers %}
-Pasted at {{paste.pasted_at}}
+    &middot;
+    {{paste.pasted_at}}
 {% endblock %}
 
 
