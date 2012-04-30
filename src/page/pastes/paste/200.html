@@ -20,11 +20,10 @@
 
 {% block h1-headers %}
     {% if u_user %}
-    <a href="{{u_user}}"><img class="user" src="{{u_gravatar}}" alt="{{user_name|escape}}" width="16" height="16" /></a>
     <a href="{{u_user}}">{{user_name|escape}}</a>
-    &middot;
+    &bull;
     {%endif%}
-    {{paste.pasted_at}}
+     {{paste.pasted_at}}
 {% endblock %}
 
 

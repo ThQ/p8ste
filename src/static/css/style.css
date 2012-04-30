@@ -292,15 +292,14 @@ ul.invisible
 #h1-headers
 {
     font-size:0.9em;
-    color:#444444;
+    color:#888888;
 }
 
 #h1-headers ul
 {
     margin:0;
     padding:0;
-    list-style-type:none;
-    display:inline;
+    list-style-type:circle;
 }
 #h1-headers li
 {
@@ -309,6 +308,18 @@ ul.invisible
     display:inline;
 }
 
+#h1-headers a:link, #h1-headers a:visited
+{
+    color:#888888;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+#h1-headers a:hover
+{
+    color:#888888;
+    text-decoration:underline;
+}
 
 #h1-hr
 {
