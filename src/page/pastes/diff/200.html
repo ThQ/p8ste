@@ -41,9 +41,9 @@
 
 <table class="snippet">
     <tr>
-        <td class="lines"><pre>{% for line in diff %}<a href="#LL{{line.0}}" name="LL{{line.0}}">{{ line.0 }}</a>
+        <td class="lines"><pre>{% for line in diff %}<a href="#LL{{line.0}}" name="LL{{line.0}}">{{ line.0|escape }}</a>
 {% endfor %}</pre></td>
-        <td class="lines"><pre>{% for line in diff %}<a href="#LR{{line.1}}" name="LR{{line.1}}">{{ line.1 }}</a>
+        <td class="lines"><pre>{% for line in diff %}<a href="#LR{{line.1}}" name="LR{{line.1}}">{{ line.1|escape }}</a>
 {% endfor %}</pre></td>
         <td class="code"><pre>{% for line in diff %}{{ line.2 }}
 {% endfor %}</pre></td>
