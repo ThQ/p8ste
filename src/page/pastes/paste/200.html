@@ -31,7 +31,7 @@
 
 {% include "../../../template/paste/code.html" %}
 
-{% if is_thread or paste.is_public %}
+{% if is_thread %}
     <h2>
         <a href="{{u_thread}}" name="thread"><strong>Thread</strong></a>
         {% if paste.thread.length %}
@@ -41,29 +41,7 @@
             <a href="{{ u_thread_atom }}"><img src="{{"images/silk/feed.png"|url}}" alt="Thread atom feed" width="16" height="16" /></a>
         </small>
     </h2>
-    {% if is_thread %}
-        {% include "../../../template/paste/thread.html" %}
-    {% else %}
-        <p class="dyn">
-            <strong>Did you know ?</strong>
-            You can <a href="{{paste.u_fork}}"><strong>fork</strong></a> this paste :
-            it creates a copy of it so as to let you make whatever change you want on that copy.
-        </p>
-    {% endif %}
-{% endif %}
-
-
-{% if paste.is_diffable %}
-<h2><a name="remote_diff"><strong>Remote diff</strong></a></h2>
-<form action="{{u_remote_diff}}" method="get">
-    <table class="invisible" style="width:500px;">
-        <tr>
-            <td><input name="url" type="text" /></td>
-            <td><input type="submit" value="Diff !" /></td>
-        </tr>
-    </table>
-    <p><small>Compute a diff with any remote HTTP file. Ex: http://github.com/thomas-quemard/p8ste/raw/master/README.markdown</small></p>
-</form>
+    {% include "../../../template/paste/thread.html" %}
 {% endif %}
 
 {% endblock %}
