@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
-  <id>tag:github.com,2008:/thomas-quemard/p8ste/commits/master</id>
-  <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commits/master/" rel="alternate"/>
-  <link type="application/atom+xml" href="http://github.com/thomas-quemard/p8ste/commits/master.atom" rel="self"/>
+  <id>tag:github.com,2008:/thq/p8ste/commits/master</id>
+  <link type="text/html" href="http://github.com/thq/p8ste/commits/master/" rel="alternate"/>
+  <link type="application/atom+xml" href="http://github.com/thq/p8ste/commits/master.atom" rel="self"/>
   <title>Recent Commits to p8ste:master</title>
   <updated>2010-03-21T16:25:27-07:00</updated>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/fae3a5a08dfc9ab9f5ace899e1ee7ea49b268c9b</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/fae3a5a08dfc9ab9f5ace899e1ee7ea49b268c9b" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/fae3a5a08dfc9ab9f5ace899e1ee7ea49b268c9b" rel="alternate"/>
     <title>+ ruby in the list of languages</title>
     <updated>2010-03-21T16:25:27-07:00</updated>
     <content type="html">&lt;pre&gt;m src/paste/model.py
@@ -19,7 +19,7 @@
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/896c04c472e34c36b1cfbaa03a76c65831b11dcf</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/896c04c472e34c36b1cfbaa03a76c65831b11dcf" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/896c04c472e34c36b1cfbaa03a76c65831b11dcf" rel="alternate"/>
     <title>+ smoid.ruby</title>
     <updated>2010-03-21T16:25:00-07:00</updated>
     <content type="html">&lt;pre&gt;m src/smoid/__init__.py
@@ -35,7 +35,7 @@ m src/smoid/ruby.py
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/4bf99e50c7675f4056b3f68bac86292e1810472b</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/4bf99e50c7675f4056b3f68bac86292e1810472b" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/4bf99e50c7675f4056b3f68bac86292e1810472b" rel="alternate"/>
     <title>- thread feed</title>
     <updated>2010-03-21T15:39:40-07:00</updated>
     <content type="html">&lt;pre&gt;m TODO
@@ -47,7 +47,7 @@ m src/smoid/ruby.py
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/66955a87b953f24438ee45ad9009a1c4ed1b51ae</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/66955a87b953f24438ee45ad9009a1c4ed1b51ae" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/66955a87b953f24438ee45ad9009a1c4ed1b51ae" rel="alternate"/>
     <title>+ link to thread atom feed</title>
     <updated>2010-03-21T15:38:30-07:00</updated>
     <content type="html">&lt;pre&gt;m src/page/pasties/pasty.py
@@ -60,7 +60,7 @@ m src/page/pasties/pasty/200.html
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/60b7b47ac765f4954e4fc96040cd9a227db5cee9</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/60b7b47ac765f4954e4fc96040cd9a227db5cee9" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/60b7b47ac765f4954e4fc96040cd9a227db5cee9" rel="alternate"/>
     <title>+__init__.py</title>
     <updated>2010-03-21T15:37:52-07:00</updated>
     <content type="html">&lt;pre&gt;+ src/page/threads/__init__.py
@@ -72,7 +72,7 @@ m src/page/pasties/pasty/200.html
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/6df2c80e829950dd458cd24460e9f98dd51b732a</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/6df2c80e829950dd458cd24460e9f98dd51b732a" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/6df2c80e829950dd458cd24460e9f98dd51b732a" rel="alternate"/>
     <title>new datastore index</title>
     <updated>2010-03-21T15:32:40-07:00</updated>
     <content type="html">&lt;pre&gt;m src/index.yaml
@@ -84,7 +84,7 @@ new datastore index&lt;/pre&gt;</content>
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/39a556b72d937c74a0eeb66e7d460c666ab233b8</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/39a556b72d937c74a0eeb66e7d460c666ab233b8" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/39a556b72d937c74a0eeb66e7d460c666ab233b8" rel="alternate"/>
     <title>Set edited_at and posted_at (no more auto_add)</title>
     <updated>2010-03-21T15:32:08-07:00</updated>
     <content type="html">&lt;pre&gt;m src/page/pasties/add.py
@@ -96,7 +96,7 @@ Set edited_at and posted_at (no more auto_add)&lt;/pre&gt;</content>
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/ff4d5490fb358743e577ef89f01f79f9d523eaba</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/ff4d5490fb358743e577ef89f01f79f9d523eaba" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/ff4d5490fb358743e577ef89f01f79f9d523eaba" rel="alternate"/>
     <title>A thread now have an atom feed</title>
     <updated>2010-03-21T15:31:44-07:00</updated>
     <content type="html">&lt;pre&gt;m src/main.py
@@ -111,7 +111,7 @@ A thread now have an atom feed&lt;/pre&gt;</content>
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/2377f0845aa31473d4d388124597c9c232c7bb01</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/2377f0845aa31473d4d388124597c9c232c7bb01" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/2377f0845aa31473d4d388124597c9c232c7bb01" rel="alternate"/>
     <title>rm auto_now=True for datetime properties (it changes everytime the object is put, not just when its inserted)</title>
     <updated>2010-03-21T15:16:09-07:00</updated>
     <content type="html">&lt;pre&gt;m src/paste/model.py
@@ -123,7 +123,7 @@ rm auto_now=True for datetime properties (it changes everytime the object is put
   </entry>
   <entry>
     <id>tag:github.com,2008:Grit::Commit/a4f3454648c64638820a29aff62e18267580c2be</id>
-    <link type="text/html" href="http://github.com/thomas-quemard/p8ste/commit/a4f3454648c64638820a29aff62e18267580c2be" rel="alternate"/>
+    <link type="text/html" href="http://github.com/thq/p8ste/commit/a4f3454648c64638820a29aff62e18267580c2be" rel="alternate"/>
     <title>best smoid.python test</title>
     <updated>2010-03-21T13:01:55-07:00</updated>
     <content type="html">&lt;pre&gt;m src/smoid/python.py
